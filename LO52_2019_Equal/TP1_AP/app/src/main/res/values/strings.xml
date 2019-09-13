@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TP1_Hello_World_AP</string>
+    <string name="helloWorldButton">Hello World</string>
+    <string name="helloWorld">Hello World!</string>
+</resources>
