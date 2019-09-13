@@ -1,5 +1,5 @@
-Nous somme FGurlsDev!!!
+Nous sommes FGurlsDev!!!
 Bienvenue!!!
-Nous somme un groupe composé par Edwige, Sonia, Xin, Teng!
-Nous somme des geeks!
+Nous sommes un groupe composé de Edwige, Sonia, Xin, Teng!
+Nous sommes des geeks!
 Ouai!!!!!!!!!
