@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">tp1</string>
+    <string name="helloWorld">Hello World!</string>
+    <string name="clickMe">Click Me</string>
+</resources>
