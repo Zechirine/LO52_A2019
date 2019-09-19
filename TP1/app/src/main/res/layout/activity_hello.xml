@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-
-    <Button
-        android:id="@+id/btnHello"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="button"
-></Button>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtHello"
+    android:text="Hello World"
+    android:textSize="24sp"
+    android:gravity="center"
+    ></TextView>
 </LinearLayout>
