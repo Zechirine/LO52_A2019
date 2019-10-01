@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Projet</string>
+    <string name="app_name">Flic You!</string>
+    <string name="flic_app_not_installed">"L'application Flic n'est pas présente sur ce périphérique, elle doit être installée afin de gérer votre flotte de Flic boutons !"</string>
+    <string name="install_Flic_application">"Installer l'application Flic"</string>
 </resources>
