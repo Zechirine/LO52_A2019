@@ -1,22 +1,18 @@
 package com.example.projet
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import io.flic.lib.FlicManager
-import io.flic.lib.FlicAppNotInstalledException
-import android.widget.Toast
-import io.flic.lib.FlicBroadcastReceiverFlags
-import android.content.Intent
 import android.util.Log
-import io.flic.lib.FlicButton
-import io.flic.lib.FlicBroadcastReceiver
-
+import android.widget.Toast
+import io.flic.lib.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         setFlicCredentials()
 
@@ -28,7 +24,9 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.activity_main)
         }
         catch (err: FlicAppNotInstalledException) {
-            setContentView(R.layout.activity_flic_app_not_installed)
+            val flicAppNotInstalledActivity = Intent(getApplicationContext(), FlicAppNotInstalled::class.java)
+            startActivity(flicAppNotInstalledActivity)
+            finish()
         }
     }
 
