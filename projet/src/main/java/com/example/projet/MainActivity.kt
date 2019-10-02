@@ -1,12 +1,11 @@
 package com.example.projet
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import io.flic.lib.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,68 +13,47 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setFlicCredentials()
+        MyFlicManager.setFlicCredentials()
 
         try {
             FlicManager.getInstance(this) { manager ->
-                manager.initiateGrabButton(this@MainActivity)
+                launchChooseAFlicButtonActivity(manager)
             }
-
-            setContentView(R.layout.activity_main)
         }
         catch (err: FlicAppNotInstalledException) {
-            val flicAppNotInstalledActivity = Intent(getApplicationContext(), FlicAppNotInstalled::class.java)
-            startActivity(flicAppNotInstalledActivity)
+            launchFlicAppNotInstalledActivity()
             finish()
         }
+
+        setContentView(R.layout.activity_main)
     }
 
-    private fun setFlicCredentials() {
-        val appId = "b7c91d93-6fb4-424d-bd95-adfb88db5768"
-        val appSecret = "79366696-c022-4fe9-86f8-60fc367bcaab"
-        val appName = "Valink"
-        FlicManager.setAppCredentials(appId, appSecret, appName)
+    private fun launchFlicAppNotInstalledActivity() {
+        val flicAppNotInstalledActivity =
+            Intent(getApplicationContext(), FlicAppNotInstalled::class.java)
+        startActivity(flicAppNotInstalledActivity)
+    }
+
+    private fun launchChooseAFlicButtonActivity(manager: FlicManager) {
+        manager.initiateGrabButton(this@MainActivity)
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // TODO sélectionner plusieurs flic buttons
+
         FlicManager.getInstance(this) { manager ->
             val button = manager.completeGrabButton(requestCode, resultCode, data)
 
             if (button != null) {
                 button.registerListenForBroadcast(FlicBroadcastReceiverFlags.UP_OR_DOWN or FlicBroadcastReceiverFlags.REMOVED)
-                Toast.makeText(this@MainActivity, "Grabbed a button", Toast.LENGTH_SHORT).show()
+
+                grabedButtonText.text = button.toString()
+
             } else {
-                Toast.makeText(this@MainActivity, "Did not grab any button", Toast.LENGTH_SHORT).show()
+                launchChooseAFlicButtonActivity(manager)
+                Toast.makeText(this@MainActivity, "Vous devez sélectionner au moins un bouton pour continuer", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-}
-
-class ExampleBroadcastReceiver : FlicBroadcastReceiver() {
-    override fun onRequestAppCredentials(context: Context) {
-        // Set app credentials by calling FlicManager.setAppCredentials here
-    }
-
-    override fun onButtonUpOrDown(
-        context: Context,
-        button: FlicButton,
-        wasQueued: Boolean,
-        timeDiff: Int,
-        isUp: Boolean,
-        isDown: Boolean
-    ) {
-        if (isUp) {
-            Log.d("MainActivity", "isUp")
-            // Code for button up event here
-        } else {
-            Log.d("MainActivity", "!isUp")
-            // Code for button down event here
-        }
-    }
-
-    override fun onButtonRemoved(context: Context, button: FlicButton) {
-        // Button was removed
-        Log.d("MainActivity", "Button was removed")
-    }
 }

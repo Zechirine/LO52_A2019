@@ -19,7 +19,7 @@
         </activity>
 
         <receiver
-            android:name=".ExampleBroadcastReceiver"
+            android:name=".MyFlicBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
