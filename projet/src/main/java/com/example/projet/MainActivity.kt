@@ -8,6 +8,8 @@ import io.flic.lib.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var myButtonManager: MyButtonManager = MyButtonManager()
+    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,17 +17,14 @@ class MainActivity : AppCompatActivity() {
 
         MyFlicManager.setFlicCredentials()
 
-        try {
-            FlicManager.getInstance(this) { manager ->
-                launchChooseAFlicButtonActivity(manager)
-            }
-        }
-        catch (err: FlicAppNotInstalledException) {
-            launchFlicAppNotInstalledActivity()
-            finish()
-        }
-
         setContentView(R.layout.activity_main)
+        setListeners()
+    }
+
+    private fun setListeners() {
+        addAButtonBtn.setOnClickListener {
+            launchChooseAFlicButtonActivity()
+        }
     }
 
     private fun launchFlicAppNotInstalledActivity() {
@@ -34,26 +33,60 @@ class MainActivity : AppCompatActivity() {
         startActivity(flicAppNotInstalledActivity)
     }
 
-    private fun launchChooseAFlicButtonActivity(manager: FlicManager) {
-        manager.initiateGrabButton(this@MainActivity)
+    private fun launchChooseAFlicButtonActivity() {
+        try {
+            FlicManager.getInstance(this) { manager ->
+                manager.initiateGrabButton(this@MainActivity)
+            }
+        }
+        catch (err: FlicAppNotInstalledException) {
+            launchFlicAppNotInstalledActivity()
+            finish()
+        }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // TODO sélectionner plusieurs flic buttons
-
         FlicManager.getInstance(this) { manager ->
-            val button = manager.completeGrabButton(requestCode, resultCode, data)
+            val flicButton = manager.completeGrabButton(requestCode, resultCode, data)
 
-            if (button != null) {
-                button.registerListenForBroadcast(FlicBroadcastReceiverFlags.UP_OR_DOWN or FlicBroadcastReceiverFlags.REMOVED)
+            if (flicButton != null) {
+                flicButton.registerListenForBroadcast(FlicBroadcastReceiverFlags.UP_OR_DOWN or FlicBroadcastReceiverFlags.REMOVED)
 
-                grabedButtonText.text = button.toString()
-
-            } else {
-                launchChooseAFlicButtonActivity(manager)
-                Toast.makeText(this@MainActivity, "Vous devez sélectionner au moins un bouton pour continuer", Toast.LENGTH_SHORT).show()
+                // TODO move to : when save form
+                if(!isButtonAlreadyAdded(flicButton)){
+                    val roomId = 1 // TODO true roomId
+                    val myButton = MyButton(flicButton, roomId)
+                    addButton(myButton)
+                } else{
+                    Toast.makeText(this@MainActivity, "Ce bouton a déjà été ajouté.", Toast.LENGTH_SHORT).show() // TODO affiché le nom du boutton
+                }
             }
         }
+    }
+
+    private fun addButton(myButton: MyButton) {
+        myButtonManager.myButtons.add(myButton)
+
+        refreshButtonList()
+
+        Toast.makeText(this@MainActivity, "Le bouton a bien été ajouté.", Toast.LENGTH_SHORT).show() // TODO affiché le nom du boutton
+    }
+
+    private fun refreshButtonList() {
+        var flicButtonsAsString = ""
+        for (myFlicButton in myButtonManager.myButtons) {
+            flicButtonsAsString += myFlicButton.toString()
+        }
+        grabedButtonText.text = flicButtonsAsString
+    }
+
+    private fun isButtonAlreadyAdded(flicButton: FlicButton): Boolean {
+        var isButtonAlreadyAdded = false
+        for (myFlicButton in myButtonManager.myButtons) {
+            if (myFlicButton.flicButton.buttonId == flicButton.buttonId)
+                isButtonAlreadyAdded = true
+        }
+        return isButtonAlreadyAdded
     }
 
 }
