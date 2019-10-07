@@ -1,2 +1,2 @@
-include ':tp1', ':projet', ':fliclib'
+include ':tp1', ':projet', ':fliclib', ':wearapplication'
 rootProject.name='LO52_2019_LaVieilleBranche'
