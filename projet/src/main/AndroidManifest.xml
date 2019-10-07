@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/flic_me_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FlicAppNotInstalled"></activity>
+        <activity android:name=".ButtonList"></activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2" />
+        <activity android:name=".AddButton" />
+        <activity android:name=".FlicAppNotInstalled" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

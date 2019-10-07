@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">Flic You!</string>
-    <string name="flic_app_not_installed">"L'application Flic n'est pas présente sur ce périphérique, elle doit être installée afin de gérer votre flotte de Flic boutons !"</string>
-    <string name="install_Flic_application">"Installer l'application Flic"</string>
-    <string name="add_a_button">"Ajouter un bouton"</string>
+    <string name="flic_app_not_installed">L\'application Flic n\'est pas présente sur ce périphérique, elle doit être installée afin de gérer votre flotte de Flic boutons !</string>
+    <string name="install_Flic_application">Installer l\'application Flic</string>
+    <string name="add_a_button">Ajouter un bouton</string>
+    <string name="select_a_button">Sélectionner un bouton</string>
+    <string name="room_number">Numéro de la chambre</string>
+    <string name="this_button_has_already_been_added">Le bouton %1$s a déjà été ajouté.</string>
+    <string name="this_button_has_been_succesfully_added">Le bouton %1$s a bien été ajouté.</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="button_name">Nom du bouton</string>
+    <string name="room_number_example">99</string>
+    <string name="button_name_example">FlicPink1</string>
 </resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@mipmap/ic_launcher"
+        tools:ignore="ContentDescription" />
+
+    <TableLayout
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+
+        <TableRow>
+            <TextView
+                android:padding="3dip"
+                android:text="@string/button_name" />
+            <TextView
+                android:id="@+id/buttonName"
+                android:padding="3dip"
+                android:text="@string/button_name_example" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:padding="3dip"
+                android:text="@string/room_number" />
+            <TextView
+                android:id="@+id/roomNumber"
+                android:padding="3dip"
+                android:text="@string/room_number_example" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
