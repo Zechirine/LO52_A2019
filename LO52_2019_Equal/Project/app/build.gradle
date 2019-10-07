@@ -19,6 +19,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            buildConfigField("String", "BASE_URL", '"https://nyltie3vt9.execute-api.eu-west-1.amazonaws.com"')
+        }
     }
 }
 
@@ -31,4 +35,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
+    implementation 'com.beust:klaxon:5.0.1'
 }
