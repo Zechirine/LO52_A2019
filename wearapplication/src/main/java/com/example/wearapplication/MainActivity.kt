@@ -1,25 +1,22 @@
 package com.example.wearapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : WearableActivity() {
-    lateinit var mText: TextView
-    private val btnOk: Button = findViewById(R.id.btn_ok)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        mText = findViewById(R.id.text)
-        btnOk.setOnClickListener {
-            Toast.makeText(this@MainActivity, "You clicked", Toast.LENGTH_SHORT).show()
-        }
-
         // Enables Always-on
         setAmbientEnabled()
+    }
+    fun onOkButtonClick(view: View){
+        val intent = Intent(this, CurrentTask::class.java)
+        startActivity(intent)
     }
 }
