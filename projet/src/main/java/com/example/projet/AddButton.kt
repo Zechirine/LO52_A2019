@@ -12,7 +12,7 @@ import io.flic.lib.FlicBroadcastReceiverFlags
 import io.flic.lib.FlicButton
 import io.flic.lib.FlicManager
 
-class AddButton() : AppCompatActivity() {
+class AddButton : AppCompatActivity() {
     private val TAG = "AddButton"
     private lateinit var selectButtonButton: Button
     private lateinit var addButtonButton: Button

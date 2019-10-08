@@ -14,4 +14,6 @@
     <string name="button_name">Nom du bouton</string>
     <string name="room_number_example">99</string>
     <string name="button_name_example">FlicPink1</string>
+    <string name="watchs">Montres</string>
+    <string name="buttons">Boutons</string>
 </resources>

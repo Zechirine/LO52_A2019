@@ -12,5 +12,4 @@ class MyFlicManager {
             FlicManager.setAppCredentials(appId, appSecret, appName)
         }
     }
-
 }
