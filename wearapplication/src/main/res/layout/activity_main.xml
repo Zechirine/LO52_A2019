@@ -17,9 +17,21 @@
 
         <TextView
             android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_world" />
+            android:layout_width="102dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/screen_percentage_10"
+            android:text="Chambre X \n Repas" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:padding="10px"
+            android:text="OK" />
+
 
     </FrameLayout>
 </androidx.wear.widget.BoxInsetLayout>
