@@ -3,11 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item1"
-        android:title="Item1"
-        android:icon="@drawable/flic_button_logo"
+        android:id="@+id/button_navigation"
+        android:title="@string/buttons"
+        android:icon="@drawable/ic_radio_button_checked_black_24dp"
         app:showAsAction="ifRoom"
+    />
 
+    <item
+        android:id="@+id/watchs_navigation"
+        android:title="@string/watchs"
+        android:icon="@drawable/ic_watch_black_24dp"
+        app:showAsAction="ifRoom"
     />
 
 </menu>
