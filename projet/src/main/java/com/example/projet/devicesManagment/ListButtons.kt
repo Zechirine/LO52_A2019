@@ -20,6 +20,7 @@ class ListButtons : AppCompatActivity() {
 
         buttons = findViewById(R.id.buttons)
         addButton = findViewById(R.id.addButton)
+//        ejectButton = findViewById(R.id.ejectButton)
 
         MyFlicManager.setFlicCredentials()
 
@@ -33,7 +34,8 @@ class ListButtons : AppCompatActivity() {
         addButton.setOnClickListener {
             launchAddButtonActivity()
         }
-        ejectButton.setOnClickListener {
+        // TODO retrieve button from row button
+//        ejectButton.setOnClickListener {
             // TODO associate ID to eject button or row
             // get it
             // pass it to remove function
@@ -41,7 +43,7 @@ class ListButtons : AppCompatActivity() {
             // unlink Flic Button from app
 //            val myButton = ...
 //            myButtonManager.myButtons.remove(myButton)
-        }
+//        }
     }
 
     private fun launchAddButtonActivity() {
