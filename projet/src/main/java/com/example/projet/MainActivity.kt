@@ -3,7 +3,12 @@ package com.example.projet
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.*
+import com.example.projet.devicesManagment.ListButtons
+import com.example.projet.devicesManagment.ListWatches
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
@@ -15,24 +20,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        buttons = findViewById(R.id.buttons)
-        addButton = findViewById(R.id.addButton)
-
         MyFlicManager.setFlicCredentials()
 
-        buttons.adapter = MyButtonsListViewAdapter(this, myButtonManager.myButtons)
-
-        setListeners()
+//        setListeners()
     }
 
-    private fun setListeners() {
-        addButton.setOnClickListener {
-            launchAddButtonActivity(myButtonManager)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.buttons_managment -> {
+                launchListButtonActivity()
+                true
+            }
+            R.id.watches_managment -> {
+                // TODO
+                launchListWatchesActivity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun launchAddButtonActivity(myButtonManager: MyButtonManager) {
-        val intent = Intent(this, AddButton::class.java)
+    private fun launchListButtonActivity() {
+        val intent = Intent(this, ListButtons::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun launchListWatchesActivity() {
+        val intent = Intent(this, ListWatches::class.java)
         startActivity(intent)
         finish()
     }

@@ -18,7 +18,6 @@ class MyFlicBroadcastReceiver : FlicBroadcastReceiver() {
         isUp: Boolean,
         isDown: Boolean
     ) {
-
         if (isUp) {
             Log.d("MainActivity", "isUp")
             // Code for button up event here
@@ -26,7 +25,6 @@ class MyFlicBroadcastReceiver : FlicBroadcastReceiver() {
             Log.d("MainActivity", "!isUp")
             // Code for button down event here
         }
-
     }
 
     override fun onButtonRemoved(context: Context, button: FlicButton) {

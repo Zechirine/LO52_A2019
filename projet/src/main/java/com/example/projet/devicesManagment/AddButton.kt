@@ -1,4 +1,4 @@
-package com.example.projet
+package com.example.projet.devicesManagment
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.example.projet.*
 import io.flic.lib.FlicAppNotInstalledException
 import io.flic.lib.FlicBroadcastReceiverFlags
 import io.flic.lib.FlicButton
@@ -17,7 +18,8 @@ class AddButton : AppCompatActivity() {
     private lateinit var selectButtonButton: Button
     private lateinit var addButtonButton: Button
     private lateinit var roomNumberTextView: TextView
-    private val myButtonManager: MyButtonManager = MyApplication.myButtonManager
+    private val myButtonManager: MyButtonManager =
+        MyApplication.myButtonManager
     private var roomNumber: Int = 0
     private lateinit var flicButton: FlicButton
 
@@ -45,7 +47,7 @@ class AddButton : AppCompatActivity() {
             val myButton = MyButton(roomNumber, flicButton)
             myButtonManager.myButtons.add(myButton)
 
-            launchMainActivity()
+            launchListButtonActivity()
 
             Toast.makeText(this@AddButton, String.format(getString(R.string.this_button_has_been_succesfully_added), myButton.getName()), Toast.LENGTH_SHORT).show()
         }
@@ -62,8 +64,8 @@ class AddButton : AppCompatActivity() {
         }
     }
 
-    private fun launchMainActivity() {
-        val flicAppNotInstalledActivity = Intent(applicationContext, MainActivity::class.java)
+    private fun launchListButtonActivity() {
+        val flicAppNotInstalledActivity = Intent(applicationContext, ListButtons::class.java)
         startActivity(flicAppNotInstalledActivity)
         finish()
     }

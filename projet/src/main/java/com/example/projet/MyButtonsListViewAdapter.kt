@@ -31,26 +31,6 @@ class MyButtonsListViewAdapter(private val context: Context, private val myButto
         val roomNumberTextView = buttonRowView.findViewById<View>(R.id.roomNumber) as TextView
         roomNumberTextView.text = myButtons[position].roomNumber.toString()
 
-//        var view = view
-//        val viewHolder: MyButtonItemViewHolder
-//
-//        if (view == null) {
-//            val layoutInflater = LayoutInflater.from(context)
-//            view = layoutInflater.inflate(R.layout.button_row, viewGroup, false)
-//
-//            viewHolder = MyButtonItemViewHolder()
-//            viewHolder.roomNumber = view!!.findViewById<View>(R.id.roomNumber) as TextView
-//        } else {
-//            //no need to call findViewById, can use existing ones from saved view holder
-//            viewHolder = view.tag as MyButtonItemViewHolder
-//        }
-//
-//        val attraction = getItem(position)
-//        viewHolder.roomNumber!!.text = attraction!!.roomNumber.toString()
-//
-//        view.tag = viewHolder
-
-
         return buttonRowView
     }
 }
