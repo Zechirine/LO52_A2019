@@ -20,7 +20,7 @@ class MainActivity : WearableActivity() {
     }
 
     private fun launchAddButtonActivity() {
-        val intent = Intent(this, Main2Activity::class.java)
+        val intent = Intent(this, CurrentTaskActivity::class.java)
         startActivity(intent)
         finish()
     }

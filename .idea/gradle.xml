@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/fliclib" />
+            <option value="$PROJECT_DIR$/myapp" />
             <option value="$PROJECT_DIR$/projet" />
             <option value="$PROJECT_DIR$/tp1" />
             <option value="$PROJECT_DIR$/wearapplication" />
