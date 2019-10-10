@@ -3,15 +3,14 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
-import kotlinx.android.synthetic.main.activity_current_task.*
+import kotlinx.android.synthetic.main.activity_pause.*
 
-class CurrentTaskActivity : WearableActivity() {
-
+class PauseActivity: WearableActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_current_task)
+        setContentView(R.layout.activity_pause)
 
-        cancelButton.setOnClickListener {
+        stopPauseButton.setOnClickListener {
             returnToMainActivity()
         }
     }

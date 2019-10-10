@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CurrentTaskActivity">
+    tools:context=".PauseActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,15 +19,15 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="22px"
-        android:text="Chambre X \n Repas \n - En cours" />
+        android:text="En pause" />
 
         <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="80dp"
+            android:id="@+id/stopPauseButton"
+            android:layout_width="70dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom|center"
             android:padding="10px"
-            android:text="Annuler" />
+            android:text="Fin Pause" />
 
         <Button
             android:id="@+id/urgenceButton"
