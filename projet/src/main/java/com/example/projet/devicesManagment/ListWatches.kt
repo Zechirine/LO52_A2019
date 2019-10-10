@@ -1,7 +1,9 @@
 package com.example.projet.devicesManagment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.projet.*
 
 class ListWatches : AppCompatActivity() {
@@ -12,12 +14,10 @@ class ListWatches : AppCompatActivity() {
         setContentView(R.layout.activity_list_watches)
 
         MyFlicManager.setFlicCredentials()
-
-        setListeners()
     }
 
-    private fun setListeners() {
-
+    fun launchBluetoothDevicesListActivity(view : View){
+        val intent = Intent(this, BluetoothDevicesList::class.java)
+        startActivity(intent)
     }
-
 }

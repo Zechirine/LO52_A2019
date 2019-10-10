@@ -3,6 +3,7 @@
     <string name="flic_app_not_installed">L\'application Flic n\'est pas présente sur ce périphérique, elle doit être installée afin de gérer votre flotte de Flic boutons !</string>
     <string name="install_Flic_application">Installer l\'application Flic</string>
     <string name="add_a_button">Ajouter un bouton</string>
+    <string name="button_add_watch">Ajouter une montre</string>
     <string name="select_a_button">Sélectionner un bouton</string>
     <string name="room_number">Numéro de la chambre</string>
     <string name="this_button_has_already_been_added">Le bouton %1$s a déjà été ajouté.</string>
