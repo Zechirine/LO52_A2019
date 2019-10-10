@@ -13,10 +13,19 @@ class MainActivity : WearableActivity() {
 
         // Enables Always-on
         setAmbientEnabled()
-
+        pauseButton.setOnClickListener {
+            launchPauseActivity()
+        }
         button.setOnClickListener {
             launchAddButtonActivity()
         }
+
+    }
+
+    private fun launchPauseActivity() {
+        val intent = Intent(this, PauseActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun launchAddButtonActivity() {

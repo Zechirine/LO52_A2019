@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
         <activity android:name=".CurrentTaskActivity"></activity>
+        <activity android:name=".PauseActivity"></activity>
 
         <uses-library
             android:name="com.google.android.wearable"
