@@ -14,6 +14,7 @@
         android:theme="@android:style/Theme.DeviceDefault">
         <activity android:name=".CurrentTaskActivity"></activity>
         <activity android:name=".PauseActivity"></activity>
+        <activity android:name=".UrgenceActivity"></activity>
 
         <uses-library
             android:name="com.google.android.wearable"
