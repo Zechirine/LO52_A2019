@@ -20,6 +20,7 @@ class MainActivity : WearableActivity() {
             launchAddButtonActivity()
         }
 
+        BluetoothServerController(this).start()
     }
 
     private fun launchPauseActivity() {

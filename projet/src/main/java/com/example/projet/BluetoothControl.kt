@@ -31,12 +31,12 @@ class BluetoothControl: AppCompatActivity() {
 
         ConnectToDevice(this).execute()
 
-        control_led_on.setOnClickListener { sendCommand("a") }
-        control_led_off.setOnClickListener { sendCommand("b") }
+        control_led_on.setOnClickListener { sendCommand("Repas") }
+        control_led_off.setOnClickListener { sendCommand("Toilettes") }
         control_led_disconnect.setOnClickListener { disconnect() }
     }
 
-    private fun sendCommand(input: String) {
+    fun sendCommand(input: String) {
         if (m_bluetoothSocket != null) {
             try {
                 m_bluetoothSocket!!.outputStream.write(input.toByteArray())
