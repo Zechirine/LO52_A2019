@@ -20,9 +20,9 @@
             android:layout_width="102dp"
             android:layout_height="75dp"
             android:layout_gravity="center"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:textSize="22px"
-            android:text="Chambre X \n Repas" />
+            android:text="Pas de tâches à effectuer" />
 
         <Button
             android:id="@+id/button"
@@ -41,6 +41,23 @@
             android:layout_marginTop="20dp"
             android:padding="10px"
             android:text="PAUSE"/>
+
+        <Button
+            android:id="@+id/simulTaskButton"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top"
+            android:text="Simul Task"
+            android:textSize="10px"
+            />
+
+        <Button
+            android:id="@+id/urgenceButton"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|right"
+            android:text="Urgence"
+            android:textSize="12px"/>
 
     </FrameLayout>
 </androidx.wear.widget.BoxInsetLayout>
