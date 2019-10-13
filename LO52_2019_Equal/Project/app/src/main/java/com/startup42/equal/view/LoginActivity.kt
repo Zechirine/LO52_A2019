@@ -1,5 +1,6 @@
 package com.startup42.equal.view
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.startup42.equal.R
@@ -7,6 +8,8 @@ import com.startup42.equal.viewModel.LoginViewModel
 import io.reactivex.rxkotlin.*
 
 import kotlinx.android.synthetic.main.activity_login.*
+
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -22,7 +25,12 @@ class LoginActivity : AppCompatActivity() {
         hashMap.put("password", "Test1234")
 
         viewModel.sendData(hashMap).subscribeBy(
-            onNext = { println(it)},
+            onNext = { println(it)
+                val prefs = getSharedPreferences("Login", Context.MODE_PRIVATE)
+
+                println("Token  : " + prefs.getString("token", "errortoken"))
+                println("UserId : " + prefs.getString("userId", "errorid"))
+            },
             onError = { it.printStackTrace() },
             onComplete = { println("onComplete!") }
 
