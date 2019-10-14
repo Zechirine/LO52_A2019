@@ -1,19 +1,18 @@
 package com.startup42.equal.viewModel
 
 import android.content.Context
-import com.startup42.equal.service.LoginRequest
-import io.reactivex.Observable
-import io.reactivex.rxkotlin.*
 import com.startup42.equal.Equal
+import com.startup42.equal.service.RegisterRequest
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.subscribeBy
 
+class RegisterViewModel {
 
-class LoginViewModel {
-
-    val loginRequest = LoginRequest()
+    val registerRequest = RegisterRequest()
 
     fun sendData(parameters: HashMap<String, Any>): Observable<String> {
         return Observable.create { emitter ->
-            loginRequest.request(parameters).subscribeBy(
+            registerRequest.request(parameters).subscribeBy(
                 onNext = {
                     if (it.error != null) {
                         emitter.onNext(it.error)
@@ -23,11 +22,12 @@ class LoginViewModel {
                         editor.putString("userId", it.result?.userId)
                         editor.putString("userTag",it.result?.userTag)
                         editor.apply()
-                        emitter.onNext("You are logged")
+                        emitter.onNext("You are registered")
                     }
                 },
                 onError = { it.printStackTrace() },
                 onComplete = { println("onComplete!") }
+
             )
         }
     }

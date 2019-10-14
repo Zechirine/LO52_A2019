@@ -20,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+                android:name=".view.RegisterActivity"
+                android:label="@string/title_activity_register"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
