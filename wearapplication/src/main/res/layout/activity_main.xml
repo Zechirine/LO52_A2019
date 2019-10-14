@@ -25,7 +25,7 @@
             android:text="Pas de tâches à effectuer" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/launchTaskButton"
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom|left"
