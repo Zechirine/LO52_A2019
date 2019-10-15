@@ -6,4 +6,8 @@
     <color name="mainColor">#FD7701</color>
     <color name="textColorOnMainColor">#FFFFFF</color>
     <color name="MainHintColor">#C6C6CB</color>
+    <color name="WeakPasswordColor">#61AD85</color>
+    <color name="MediumPasswordColor">#4d8a6a</color>
+    <color name="StrongPasswordColor">#3a674f</color>
+    <color name="VeryStrongPasswordColor">#264535</color>
 </resources>

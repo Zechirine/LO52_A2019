@@ -1,10 +1,21 @@
 <resources>
     <string name="app_name">Equal</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="notRegisteredYet">Not registered yet ?</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="mainTitle">≠EQUAL</string>
+    <string name="goBack">Back</string>
+    <string name="passwordNotEnoughStrong">Password not enough strong</string>
+    <string name="allFieldAreRequired">All fields are required</string>
+    <string name="confirmAndPasswordError">Password and confirm password must be the same</string>
+    <string name="mailAddressFormatError">Mail address format is not valid</string>
+    <string name="accountCreatedConfirmation">Account created, check your mails to confirm</string>
+    <string name="weak">Weak</string>
+    <string name="medium">Medium</string>
+    <string name="strong">Strong</string>
+    <string name="veryStrong">Very Strong</string>
 </resources>
