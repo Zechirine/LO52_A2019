@@ -76,8 +76,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
                             //Back to login activity
-                            val intent = Intent(this, LoginActivity::class.java)
-                            startActivity(intent)
+                            finish()
 
                         } else {
 
