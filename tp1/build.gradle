@@ -6,11 +6,12 @@ android {
 
 
     defaultConfig {
-        applicationId "com.example.tp1"
+        applicationId 'fr.utbm.lo52.tp1'
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion 28
     }
 
     buildTypes {

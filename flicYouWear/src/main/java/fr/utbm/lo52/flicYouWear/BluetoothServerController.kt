@@ -1,4 +1,4 @@
-package fr.utbm.flicYouWear
+package fr.utbm.lo52.flicYouWear
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothServerSocket

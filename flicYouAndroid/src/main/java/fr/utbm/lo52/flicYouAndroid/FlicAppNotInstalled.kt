@@ -1,10 +1,10 @@
-package fr.utbm.flicYouAndroid
+package fr.utbm.lo52.flicYouAndroid
 
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.lo52.projet.R
+import fr.utbm.lo52.flicYouAndroid.R
 import kotlinx.android.synthetic.main.activity_flic_app_not_installed.*
 
 class FlicAppNotInstalled : AppCompatActivity() {

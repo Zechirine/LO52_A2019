@@ -1,4 +1,4 @@
-package fr.utbm.flicYouAndroid
+package fr.utbm.lo52.flicYouAndroid
 
 import android.app.ProgressDialog
 import android.bluetooth.BluetoothAdapter
@@ -9,7 +9,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.lo52.projet.R
+import fr.utbm.lo52.flicYouAndroid.R
 import kotlinx.android.synthetic.main.activity_bluetooth_control.*
 import java.io.IOException
 import java.util.*

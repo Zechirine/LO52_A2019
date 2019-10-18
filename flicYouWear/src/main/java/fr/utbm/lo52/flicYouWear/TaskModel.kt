@@ -1,4 +1,4 @@
-package fr.utbm.flicYouWear
+package fr.utbm.lo52.flicYouWear
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

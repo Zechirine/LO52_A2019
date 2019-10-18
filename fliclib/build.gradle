@@ -5,6 +5,7 @@ android {
     defaultConfig {
         versionCode 1
         versionName "1.0"
+        minSdkVersion 26
     }
     buildTypes {
         release {
@@ -12,7 +13,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileSdkVersion = 28
+    compileSdkVersion = 26
 }
 
 dependencies {

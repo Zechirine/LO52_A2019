@@ -1,9 +1,9 @@
-package fr.utbm.flicYouWear
+package fr.utbm.lo52.flicYouWear
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
-import com.lo52.flicYouWear.R
+import fr.utbm.lo52.flicYouWear.R
 import kotlinx.android.synthetic.main.activity_current_task.*
 
 class CurrentTaskActivity : WearableActivity() {

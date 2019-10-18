@@ -1,10 +1,10 @@
-package com.example.myapplication
+package fr.utbm.lo52.flicYouWear
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
-import com.lo52.flicYouWear.R
-import fr.utbm.flicYouWear.MainActivity
+import fr.utbm.lo52.flicYouWear.R
+import fr.utbm.lo52.flicYouWear.MainActivity
 import kotlinx.android.synthetic.main.activity_urgence.*
 
 class UrgenceActivity: WearableActivity() {

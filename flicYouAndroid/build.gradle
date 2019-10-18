@@ -4,11 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 android {
 
     defaultConfig {
-        applicationId "com.example.projet"
+        applicationId 'fr.utbm.lo52.flicYouAndroid'
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion 28
     }
 
     buildTypes {

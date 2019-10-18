@@ -1,4 +1,4 @@
-package fr.utbm.flicYouAndroid
+package fr.utbm.lo52.flicYouAndroid
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
@@ -10,7 +10,6 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import com.lo52.projet.R
 import kotlinx.android.synthetic.main.activity_bluetooth_devices_list.*
 
 class BluetoothDevicesList : AppCompatActivity() {

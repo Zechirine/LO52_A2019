@@ -1,4 +1,4 @@
-package fr.utbm.tp1
+package fr.utbm.lo52.tp1
 
 import org.junit.Test
 

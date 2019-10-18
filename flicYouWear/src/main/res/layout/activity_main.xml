@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/dark_grey"
     android:padding="@dimen/box_inset_layout_padding"
-    tools:context="fr.utbm.flicYouWear.MainActivity"
+    tools:context="fr.utbm.lo52.flicYouWear.MainActivity"
     tools:deviceIds="wear">
 
     <FrameLayout

@@ -1,4 +1,4 @@
-package fr.utbm.flicYouAndroid
+package fr.utbm.lo52.flicYouAndroid
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,9 +7,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.*
-import com.lo52.projet.R
-import fr.utbm.flicYouAndroid.devicesManagment.ListButtons
-import fr.utbm.flicYouAndroid.devicesManagment.ListWatches
+import fr.utbm.lo52.flicYouAndroid.R
+import fr.utbm.lo52.flicYouAndroid.devicesManagment.ListButtons
+import fr.utbm.lo52.flicYouAndroid.devicesManagment.ListWatches
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"

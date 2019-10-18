@@ -1,4 +1,4 @@
-package fr.utbm.flicYouAndroid.devicesManagment
+package fr.utbm.lo52.flicYouAndroid.devicesManagment
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,11 +7,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.lo52.projet.*
-import fr.utbm.flicYouAndroid.FlicAppNotInstalled
-import fr.utbm.flicYouAndroid.MyApplication
-import fr.utbm.flicYouAndroid.MyButton
-import fr.utbm.flicYouAndroid.MyButtonManager
+import fr.utbm.lo52.flicYouAndroid.*
+import fr.utbm.lo52.flicYouAndroid.FlicAppNotInstalled
+import fr.utbm.lo52.flicYouAndroid.MyApplication
+import fr.utbm.lo52.flicYouAndroid.MyButton
+import fr.utbm.lo52.flicYouAndroid.MyButtonManager
 import io.flic.lib.FlicAppNotInstalledException
 import io.flic.lib.FlicBroadcastReceiverFlags
 import io.flic.lib.FlicButton

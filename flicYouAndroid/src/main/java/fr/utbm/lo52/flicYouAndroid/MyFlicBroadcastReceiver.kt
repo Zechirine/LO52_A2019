@@ -1,4 +1,4 @@
-package fr.utbm.flicYouAndroid
+package fr.utbm.lo52.flicYouAndroid
 
 import android.content.Context
 import android.util.Log

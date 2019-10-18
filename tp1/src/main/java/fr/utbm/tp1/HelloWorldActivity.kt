@@ -1,8 +1,8 @@
-package fr.utbm.tp1
+package fr.utbm.lo52.tp1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.lo52.tp1.R
+import fr.utbm.lo52.tp1.R
 
 class HelloWorldActivity : AppCompatActivity() {
 

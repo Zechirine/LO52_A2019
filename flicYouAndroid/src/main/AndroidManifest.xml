@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lo52.projet">
+    package="fr.utbm.lo52.flicYouAndroid">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -12,13 +12,13 @@
         android:roundIcon="@mipmap/flic_me_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.fr.utbm.lo52.projet.BluetoothControl"/>
-        <activity android:name="com.fr.utbm.lo52.projet.BluetoothDevicesList" />
-        <activity android:name="com.fr.utbm.lo52.projet.devicesManagment.ListButtons" />
-        <activity android:name="com.fr.utbm.lo52.projet.devicesManagment.AddButton" />
-        <activity android:name="com.fr.utbm.lo52.projet.devicesManagment.ListWatches" />
-        <activity android:name="com.fr.utbm.lo52.projet.FlicAppNotInstalled" />
-        <activity android:name="com.fr.utbm.lo52.projet.MainActivity">
+        <activity android:name="fr.utbm.lo52.flicYouAndroid.BluetoothControl"/>
+        <activity android:name="fr.utbm.lo52.flicYouAndroid.BluetoothDevicesList" />
+        <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.ListButtons" />
+        <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.AddButton" />
+        <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.ListWatches" />
+        <activity android:name="fr.utbm.lo52.flicYouAndroid.FlicAppNotInstalled" />
+        <activity android:name="fr.utbm.lo52.flicYouAndroid.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +27,7 @@
         </activity>
 
         <receiver
-            android:name="com.fr.utbm.lo52.projet.MyFlicBroadcastReceiver"
+            android:name="fr.utbm.lo52.flicYouAndroid.MyFlicBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

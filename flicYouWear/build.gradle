@@ -5,9 +5,10 @@ android {
     compileSdkVersion 26
 
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId 'fr.utbm.lo52.flicYouWear'
         versionCode 1
         versionName "1.0"
+        minSdkVersion 26
     }
     buildTypes {
         release {

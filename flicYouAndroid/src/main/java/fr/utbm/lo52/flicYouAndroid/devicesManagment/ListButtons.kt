@@ -1,14 +1,14 @@
-package fr.utbm.flicYouAndroid.devicesManagment
+package fr.utbm.lo52.flicYouAndroid.devicesManagment
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
-import com.lo52.projet.*
-import fr.utbm.flicYouAndroid.MyApplication
-import fr.utbm.flicYouAndroid.MyButtonManager
-import fr.utbm.flicYouAndroid.MyButtonsListViewAdapter
-import fr.utbm.flicYouAndroid.MyFlicManager
+import fr.utbm.lo52.flicYouAndroid.*
+import fr.utbm.lo52.flicYouAndroid.MyApplication
+import fr.utbm.lo52.flicYouAndroid.MyButtonManager
+import fr.utbm.lo52.flicYouAndroid.MyButtonsListViewAdapter
+import fr.utbm.lo52.flicYouAndroid.MyFlicManager
 
 class ListButtons : AppCompatActivity() {
     private val TAG = "ListButtons"

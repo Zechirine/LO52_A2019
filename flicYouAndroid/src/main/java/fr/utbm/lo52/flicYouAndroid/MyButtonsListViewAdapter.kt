@@ -1,4 +1,4 @@
-package fr.utbm.flicYouAndroid
+package fr.utbm.lo52.flicYouAndroid
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.lo52.projet.R
+import fr.utbm.lo52.flicYouAndroid.R
 import kotlin.collections.ArrayList
 
 class MyButtonsListViewAdapter(private val context: Context, private val myButtons: ArrayList<MyButton>):BaseAdapter() {

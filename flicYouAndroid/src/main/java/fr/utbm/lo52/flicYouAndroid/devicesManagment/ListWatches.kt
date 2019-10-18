@@ -1,12 +1,12 @@
-package fr.utbm.flicYouAndroid.devicesManagment
+package fr.utbm.lo52.flicYouAndroid.devicesManagment
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.lo52.projet.*
-import fr.utbm.flicYouAndroid.BluetoothDevicesList
-import fr.utbm.flicYouAndroid.MyFlicManager
+import fr.utbm.lo52.flicYouAndroid.*
+import fr.utbm.lo52.flicYouAndroid.BluetoothDevicesList
+import fr.utbm.lo52.flicYouAndroid.MyFlicManager
 
 class ListWatches : AppCompatActivity() {
     private val TAG = "ListWatches"
