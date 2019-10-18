@@ -2,12 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
 
     defaultConfig {
         applicationId "com.example.projet"
-        minSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -20,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileSdkVersion = 28
 
 }
 
