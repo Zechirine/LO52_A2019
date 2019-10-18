@@ -22,7 +22,7 @@ class BluetoothServer(private val socket: BluetoothSocket, private val activity:
                     break
                 } else if (text != "") {
                     Log.i("server", "Message received:" + text)
-                    activity.task.text = text
+                    activity.text.text = text
                 }
             } catch (e: Exception) {
                 Log.e("BluetoothServer", "Cannot read data", e)

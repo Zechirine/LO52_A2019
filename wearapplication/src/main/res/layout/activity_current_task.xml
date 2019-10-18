@@ -23,11 +23,25 @@
 
         <Button
             android:id="@+id/cancelButton"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|left"
             android:padding="10px"
-            android:text="Annuler" />
+            android:text="Annuler"
+            android:textSize="10dp"/>
+
+        <Button
+            android:id="@+id/doneButton"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|right"
+            android:padding="10px"
+            android:textSize="10dp"
+            android:text="FIN" />
 
         <Button
             android:id="@+id/urgenceButton"
