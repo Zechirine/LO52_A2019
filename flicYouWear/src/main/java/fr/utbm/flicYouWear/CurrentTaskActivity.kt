@@ -21,15 +21,17 @@ class CurrentTaskActivity : WearableActivity() {
         // val task = bundle.getParcelable<MainActivity.Task>("key")
         // text.text = "Chambre ${task?.roomNumber} \n ${task?.typeOfTask}"
         cancelButton.setOnClickListener {
-            returnToMainActivity()
+            returnToMainActivity(task)
         }
         doneButton.setOnClickListener {
-            returnToMainActivity()
+            task?.status = true
+            returnToMainActivity(task)
         }
     }
 
-    private fun returnToMainActivity() {
+    private fun returnToMainActivity(task: TaskModel?) {
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("task", task)
         startActivity(intent)
         finish()
     }

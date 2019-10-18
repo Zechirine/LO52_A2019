@@ -3,8 +3,6 @@ package fr.utbm.flicYouWear
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.support.wearable.activity.WearableActivity
 import com.lo52.flicYouWear.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,57 +11,42 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : WearableActivity() {
 
     @SuppressLint("ParcelCreator")
-    class Task(val typeOfTask: String?, val roomNumber: Number, var status: Boolean): Parcelable {
 
-        constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readInt(),
-            parcel.readBoolean()
-        )
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeString(typeOfTask)
-            parcel.writeValue(roomNumber)
-            parcel.writeBoolean(status)
-        }
-
-        override fun describeContents(): Int {
-            return 0
-        }
-
-        companion object CREATOR : Parcelable.Creator<Task> {
-            override fun createFromParcel(parcel: Parcel): Task {
-                return Task(parcel)
-            }
-
-            override fun newArray(size: Int): Array<Task?> {
-                return arrayOfNulls(size)
-            }
-        }
-
-    }
-
+    private val waitingTaskText: String = "En attente de tâches..."
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val parcel = Task("Manger", 4, false)
-        text.text = ""
+        var task = TaskModel("Manger", 4, false)
+        text.text = waitingTaskText
+
+        var data = intent.extras
+        if (data?.getParcelable<TaskModel>("task") !== null) {
+            task = data.getParcelable<TaskModel?>("task") as TaskModel
+            if (!task.status) {
+                text.text = "Chambre ${task.roomNumber} \n ${task.typeOfTask}"
+            } else {
+                text.text = "Tâche terminée"
+            }
+        } else {
+            TaskModel("Manger", 4, false)
+        }
+
         // Enables Always-on
         setAmbientEnabled()
         pauseButton.setOnClickListener {
             launchPauseActivity()
         }
         launchTaskButton.setOnClickListener {
-            if (text.text !== "") {
-                launchTaskActivity(parcel)
+            if (text.text !== waitingTaskText) {
+                launchTaskActivity(task)
             } else {
                 // TODO log "no activity"
             }
         }
         simulTaskButton.setOnClickListener {
-            text.text = "Chambre ${parcel.roomNumber} \n ${parcel.typeOfTask}"
+            text.text = "Chambre ${task.roomNumber} \n ${task.typeOfTask}"
         }
         urgenceButton.setOnClickListener {
             launchUrgenceActivity()
@@ -84,11 +67,11 @@ class MainActivity : WearableActivity() {
         finish()
     }
 
-    private fun launchTaskActivity(parcel: Task) {
-        if (text.text != "") {
+    private fun launchTaskActivity(task: TaskModel) {
+        if (text.text != waitingTaskText) {
             val intent = Intent(this, CurrentTaskActivity::class.java)
 
-            intent.putExtra("task", TaskModel("Manger", 4, false))
+            intent.putExtra("task", task)
 
             startActivity(intent)
             //finish()
