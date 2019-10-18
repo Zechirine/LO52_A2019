@@ -3,10 +3,7 @@ package com.example.myapplication
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.support.wearable.activity.WearableActivity
-import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -20,8 +17,21 @@ class MainActivity : WearableActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val task = TaskModel("Manger", 4, false)
+        var task = TaskModel("Manger", 4, false)
         text.text = waitingTaskText
+
+        var data = intent.extras
+        if (data?.getParcelable<TaskModel>("task") !== null) {
+            task = data.getParcelable<TaskModel?>("task") as TaskModel
+            if (!task.status) {
+                text.text = "Chambre ${task.roomNumber} \n ${task.typeOfTask}"
+            } else {
+                text.text = "Tâche terminée"
+            }
+        } else {
+            TaskModel("Manger", 4, false)
+        }
+
         // Enables Always-on
         setAmbientEnabled()
         pauseButton.setOnClickListener {
