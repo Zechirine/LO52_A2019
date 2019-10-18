@@ -16,7 +16,7 @@
         app:boxedEdges="all">
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/task"
             android:layout_width="102dp"
             android:layout_height="75dp"
             android:layout_gravity="center"

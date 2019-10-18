@@ -8,20 +8,24 @@ class BluetoothServer(private val socket: BluetoothSocket, private val activity:
     private val inputStream = this.socket.inputStream
 
     override fun run() {
-        Log.i("BLUETOOTHSERVER", "LOOP")
-
         while(true) {
             try {
                 val available = inputStream.available()
                 val bytes = ByteArray(available)
                 inputStream.read(bytes, 0, available)
                 val text = String(bytes)
-                if(text != "") {
+
+                if (text == "disconnect") {
+                    inputStream.close()
+                    socket.close()
+                    this.interrupt()
+                    break
+                } else if (text != "") {
                     Log.i("server", "Message received:" + text)
-                    activity.text.setText(text)
+                    activity.task.text = text
                 }
             } catch (e: Exception) {
-                Log.e("client", "Cannot read data", e)
+                Log.e("BluetoothServer", "Cannot read data", e)
             }
         }
     }

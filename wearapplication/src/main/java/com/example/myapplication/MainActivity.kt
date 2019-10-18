@@ -22,7 +22,7 @@ class MainActivity : WearableActivity() {
             launchAddButtonActivity()
         }
         simulTaskButton.setOnClickListener {
-            text.text = simulatedTask
+            task.text = simulatedTask
         }
         urgenceButton.setOnClickListener {
             launchUrgenceActivity()

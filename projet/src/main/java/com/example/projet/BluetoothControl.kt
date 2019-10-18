@@ -1,5 +1,6 @@
 package com.example.projet
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -33,7 +34,7 @@ class BluetoothControl: AppCompatActivity() {
 
         control_led_on.setOnClickListener { sendCommand("Repas") }
         control_led_off.setOnClickListener { sendCommand("Toilettes") }
-        control_led_disconnect.setOnClickListener { disconnect() }
+        control_led_disconnect.setOnClickListener { sendCommand("disconnect"); disconnect() }
     }
 
     fun sendCommand(input: String) {
@@ -61,11 +62,8 @@ class BluetoothControl: AppCompatActivity() {
 
     private class ConnectToDevice(c: Context) : AsyncTask<Void, Void, String>() {
         private var connectSuccess: Boolean = true
-        private val context: Context
-
-        init {
-            this.context = c
-        }
+        @SuppressLint("StaticFieldLeak")
+        private val context: Context = c
 
         override fun onPreExecute() {
             Log.i("Connection", "onPreExecute")
@@ -78,9 +76,12 @@ class BluetoothControl: AppCompatActivity() {
             try {
                 if (m_bluetoothSocket == null || !m_isConnected) {
                     m_bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
                     val device: BluetoothDevice = m_bluetoothAdapter.getRemoteDevice(m_address)
-                    m_bluetoothSocket = device.createInsecureRfcommSocketToServiceRecord(m_myUUID)
+                    m_bluetoothSocket = device.createRfcommSocketToServiceRecord(m_myUUID)
+
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery()
+
                     m_bluetoothSocket!!.connect()
                 }
             } catch (e: IOException) {

@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothServerSocket
 import android.bluetooth.BluetoothSocket
 import android.util.Log
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.util.*
 
@@ -17,27 +16,24 @@ class BluetoothServerController(private val activity: MainActivity) : Thread() {
     init {
         val btAdapter = BluetoothAdapter.getDefaultAdapter()
         if (btAdapter != null) {
-            this.serverSocket = btAdapter.listenUsingRfcommWithServiceRecord("test", uuid) // 1
+            this.serverSocket = btAdapter.listenUsingRfcommWithServiceRecord("test", uuid)
             this.cancelled = false
         } else {
             this.serverSocket = null
             this.cancelled = true
         }
-
     }
 
     override fun run() {
         var socket: BluetoothSocket
 
         while(true) {
-            Log.i("BLUETOOTHSERVERCONTOLLER", "LOOP")
-
             if (this.cancelled) {
                 break
             }
 
             try {
-                socket = serverSocket!!.accept()  // 2
+                socket = serverSocket!!.accept()
             } catch(e: IOException) {
                 break
             }
@@ -45,7 +41,7 @@ class BluetoothServerController(private val activity: MainActivity) : Thread() {
             if (!this.cancelled && socket != null) {
                 Log.i("server", "Connecting")
 
-                BluetoothServer(socket, activity).start() // 3
+                BluetoothServer(socket, activity).start()
             }
         }
     }
