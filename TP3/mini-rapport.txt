@@ -1,0 +1,47 @@
+1.
+sync.c include  libusbi.h
+descriptor.c include  libusbi.h
+io.c include  libusbi.h
+core.c include  libusb.h && libusbi.h
+
+linux_usbfs.c 	libusb && libusbi && linux_usbfs
+
+2.
+On a cherché a quoi correspond LOCAL_PATH :
+/external/libusb/
+
+3.
+ajouter dans io.c : 
+"
+#define TIMESPEC_TO_TIMEVAL(tv, ts)                                     \
+        do {                                                            \
+                (tv)->tv_sec = (ts)->tv_sec;                            \
+                (tv)->tv_usec = (ts)->tv_nsec / 1000;                   \
+        } while (0)
+"
+
+4.
+LOCAL_SHARED_LIBRARIES := libc libusb
+
+5.
+$(call inherit-product, device/Linaro/hikey.mk)
+#
+# Overrides
+PRODUCT_NAME := lo52_SandraJaiFroid
+PRODUCT_DEVICE := lo52_SandraJaiFroid
+PRODUCT_PROPERTY_OVERRIDES := \
+    ro.hw=lo_52 \
+    net.dns1=8.8.8.8 \
+    net.dns2=4.4.4.4
+
+6.
+Fichier est dans le projet SoftKeyboard, répertoire res/drawable-mdpi
+Surcharge -> notion d'Overlay
+	-> Créer un dossier overlay
+	-> Dans ce dossier, créer une arborescence mirroir du repository du fichier voulu
+	-> Y placer un fichier avec le même nom
+	-> Hop, fichier surchargé
+PRODUCT_PACKAGE_OVERLAYS := overlay
+
+7.
+PRODUCT_PACKAGES := libusb
