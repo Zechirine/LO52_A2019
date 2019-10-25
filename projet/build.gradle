@@ -12,7 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.my_progress_bar.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -37,8 +37,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+//    androidTestImplementation 'androidx.my_progress_bar:runner:1.2.0'
+//    androidTestImplementation 'androidx.my_progress_bar.espresso:espresso-core:3.2.0'
     implementation project(path: ':fliclib')
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 }

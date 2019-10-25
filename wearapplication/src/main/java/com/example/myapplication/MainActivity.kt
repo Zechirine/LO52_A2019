@@ -1,9 +1,11 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : WearableActivity() {
@@ -50,7 +52,23 @@ class MainActivity : WearableActivity() {
             launchUrgenceActivity()
         }
 
+        checkBluetoothState()
         BluetoothServerController(this).start()
+    }
+    private fun checkBluetoothState() {
+        var m_bluetoothAdapter: BluetoothAdapter? = null
+        val REQUEST_ENABLE_BLUETOOTH = 1
+        m_bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
+        if(m_bluetoothAdapter == null){
+            Toast.makeText(applicationContext,"This device doesn't support bluetooth", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if(!m_bluetoothAdapter!!.isEnabled){
+            val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BLUETOOTH)
+        }
     }
 
     private fun launchUrgenceActivity() {

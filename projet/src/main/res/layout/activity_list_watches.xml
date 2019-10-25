@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context=".devicesManagment.ListWatches">
 
+    <ListView
+        android:id="@+id/watches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
     <Button
         android:id="@+id/addWatch"
         android:layout_width="match_parent"

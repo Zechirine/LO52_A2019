@@ -8,29 +8,28 @@ import java.io.IOException
 import java.util.*
 
 class BluetoothServerController(private val activity: MainActivity) : Thread() {
-
-    val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-    private var cancelled: Boolean
-    private val serverSocket: BluetoothServerSocket?
+    private val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+    private val btAdapter = BluetoothAdapter.getDefaultAdapter()
+    private var serverSocket: BluetoothServerSocket? = null
+    private var cancelled: Boolean = true
+    private lateinit var socket: BluetoothSocket
 
     init {
-        val btAdapter = BluetoothAdapter.getDefaultAdapter()
         if (btAdapter != null) {
-            this.serverSocket = btAdapter.listenUsingRfcommWithServiceRecord("test", uuid)
-            this.cancelled = false
-        } else {
-            this.serverSocket = null
-            this.cancelled = true
+            try {
+                serverSocket = btAdapter.listenUsingRfcommWithServiceRecord("bluetoothConnectionListener", uuid)
+                cancelled = false
+            } catch (e: IOException) {
+                e.printStackTrace()
+                serverSocket = null
+                cancelled = true
+            }
         }
     }
 
     override fun run() {
-        var socket: BluetoothSocket
-
         while(true) {
-            if (this.cancelled) {
-                break
-            }
+            if (cancelled) break
 
             try {
                 socket = serverSocket!!.accept()
@@ -38,16 +37,8 @@ class BluetoothServerController(private val activity: MainActivity) : Thread() {
                 break
             }
 
-            if (!this.cancelled && socket != null) {
-                Log.i("server", "Connecting")
-
-                BluetoothServer(socket, activity).start()
-            }
+            Log.i("server", "Connecting")
+            BluetoothServer(socket, activity).start()
         }
-    }
-
-    fun cancel() {
-        this.cancelled = true
-        this.serverSocket!!.close()
     }
 }
