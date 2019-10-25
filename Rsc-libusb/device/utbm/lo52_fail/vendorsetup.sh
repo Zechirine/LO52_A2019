@@ -1,0 +1,3 @@
+add_lunch_combo lo52_fail-eng
+add_lunch_combo lo52_fail-user
+add_lunch_combo lo52_fail-userdebug
