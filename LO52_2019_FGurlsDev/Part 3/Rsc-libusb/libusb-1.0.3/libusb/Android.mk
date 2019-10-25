@@ -7,8 +7,8 @@ LOCAL_SRC_FILES:= \
 	io.c \
 	sync.c \
 	os/linux_usbfs.c
-LOCAL_C_INCLUDES += \
+LOCAL_C_INCLUDES+= \
 	$(LOCAL_PATH)\
 	$(LOCAL_PATH)/os
-LOCAL_MODULE:= libusb
+LOCAL_MODULE:=libusb
 include $(BUILD_SHARED_LIBRARY)
