@@ -6,6 +6,7 @@ LOCAL_SRC_FILES:= \
 	descriptor.c \
 	io.c \
 	sync.c \
+	os/darwin_usb.c \
 	os/linux_usbfs.c
 LOCAL_C_INCLUDES+= \
 	$(LOCAL_PATH)\
