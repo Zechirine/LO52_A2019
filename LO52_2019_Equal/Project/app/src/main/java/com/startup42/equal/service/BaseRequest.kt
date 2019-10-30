@@ -1,8 +1,10 @@
 package com.startup42.equal.service
 
+import android.content.Context
 import okhttp3.*
 import java.util.HashMap
 import com.google.gson.GsonBuilder
+import com.startup42.equal.Equal
 
 
 class BaseRequest(client: OkHttpClient) {
@@ -18,6 +20,9 @@ class BaseRequest(client: OkHttpClient) {
         .disableHtmlEscaping()
         .create()
 
+    var token = Equal.context.getSharedPreferences("Login", Context.MODE_PRIVATE).
+        getString("token","Unauthorized")
+
     companion object {
         val JSON = MediaType.parse("application/json; charset=utf-8")
     }
@@ -30,7 +35,6 @@ class BaseRequest(client: OkHttpClient) {
             .post(body)
             .build()
 
-
         val call = client.newCall(request)
         call.enqueue(callback)
         return call
@@ -42,10 +46,9 @@ class BaseRequest(client: OkHttpClient) {
         var body = RequestBody.create(JSON, json)
         val request = Request.Builder()
             .url(url)
-            .addHeader("Authorization","Bearer"/* + Token*/)
+            .addHeader("Authorization","Bearer " + token)
             .post(body)
             .build()
-
 
         val call = client.newCall(request)
         call.enqueue(callback)
@@ -55,7 +58,7 @@ class BaseRequest(client: OkHttpClient) {
     fun GET(url: String, callback: Callback): Call {
         val request = Request.Builder()
             .url(url)
-            .addHeader("Authorization","Bearer"/* + Token*/)
+            .addHeader("Authorization","Bearer " + token)
             .build()
 
         val call = client.newCall(request)

@@ -1,7 +1,5 @@
 package com.startup42.equal.view
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
@@ -45,19 +43,7 @@ class RegisterActivity : AppCompatActivity() {
                                 .doOnNext {
 
                                     if (it == "You are registered") {
-                                        println(it)
-                                        val prefs =
-                                            getSharedPreferences("Login", Context.MODE_PRIVATE)
-
-                                        //TODO redirect
-
-                                        println(
-                                            "Token  : " + prefs.getString(
-                                                "token",
-                                                "errortoken"
-                                            )
-                                        )
-                                        println("UserId : " + prefs.getString("userId", "errorid"))
+                                        finish()
                                     } else {
                                         this.runOnUiThread {
                                             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
@@ -110,7 +96,6 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-
             finish()
         }
     }
