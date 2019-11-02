@@ -7,8 +7,18 @@
         tools:actionBarNavMode="standard"
         tools:context=".view.HomeActivity">
 
+    <ListView
+            android:id="@+id/wallets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundListView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+    </ListView>
+
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/addWalletButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -19,32 +29,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:maxImageSize="56dp"
-            app:srcCompat="@drawable/add_button" />
-
-    <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Column 1"/>
-        </TableRow>
-
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-    </TableLayout>
+            app:srcCompat="@drawable/add_button"
+            android:focusable="true" />
 
 </android.support.constraint.ConstraintLayout>

@@ -6,10 +6,10 @@ class HomeResponse {
 }
 
 class HomeResult {
-    val walletId: String? = null
-    val title: String? = null
-    val description: String? = null
-    val members: Int? = null
-    val shared: Int? = null
-    val userBalance: Double? = null
+    val walletId: String = ""
+    val title: String = ""
+    val description: String = ""
+    val members: Int = 0
+    val shared: Int = 0
+    val userBalance: Double = 0.0
 }

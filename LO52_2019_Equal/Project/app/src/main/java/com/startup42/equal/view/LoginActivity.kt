@@ -32,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
                             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
+                            finish()
                         } else {
                             this.runOnUiThread{
                                 Toast.makeText(this, it, Toast.LENGTH_LONG).show()
@@ -49,10 +50,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         notRegisteredYetLink.setOnClickListener{
-
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
-
         }
     }
 
