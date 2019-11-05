@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
                 hashMap.put("email", emailInput.text.toString())
                 hashMap.put("password", passwordInput.text.toString())
 
+                loginButton.isEnabled = false
                 viewModel.sendData(hashMap)
                     .doOnNext {
 
@@ -35,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
                             finish()
                         } else {
                             this.runOnUiThread{
+                                loginButton.isEnabled = true
                                 Toast.makeText(this, it, Toast.LENGTH_LONG).show()
                             }
                         }

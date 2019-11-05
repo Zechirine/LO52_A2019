@@ -3,12 +3,12 @@ package com.startup42.equal.view
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.startup42.equal.R
 import com.startup42.equal.model.HomeResult
 import com.startup42.equal.viewModel.HomeViewModel
@@ -18,22 +18,27 @@ class HomeActivity : AppCompatActivity() {
 
     val viewModel = HomeViewModel()
     var wallets: ArrayList<HomeResult>? = null
+    private var adapter: HomeAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val prefs = getSharedPreferences("Login", Context.MODE_PRIVATE)
-        val userId = prefs.getString("userId", "errorid")
+        val userId = getSharedPreferences("Login", Context.MODE_PRIVATE)
+            .getString("userId", "errorid")
 
         val listView = findViewById<ListView>(R.id.wallets)
-
+        val swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
+        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.customToolbar)
+        setSupportActionBar(toolbar)
+        setupToolBar()
 
         viewModel.receiveData(userId)
             .doOnNext {
                 wallets = it
                 this.runOnUiThread{
-                    listView.adapter = HomeAdapter(this,it)
+                    adapter =  HomeAdapter(this,it)
+                    listView.adapter = adapter
                 }
             }
             .doOnError { it.printStackTrace() }
@@ -46,13 +51,38 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
 */
         }
+
+        swipeRefresh.setOnRefreshListener(object:SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+
+                //TODO call to the api to refresh data
+                val handler = Handler()
+                handler.postDelayed(object:Runnable {
+                    override fun run() {
+                        if (swipeRefresh.isRefreshing())
+                        {
+                            swipeRefresh.setRefreshing(false)
+                        }
+                    }
+                }, 1000)
+            }
+        })
     }
 
+    private fun setupToolBar(){
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        backButton.visibility = View.INVISIBLE
+
+        val usertag = findViewById<TextView>(R.id.titleTextView)
+        usertag.setTextColor(getResources().getColor(R.color.textColorOnMainColor))
+        usertag.text = getSharedPreferences("Login", Context.MODE_PRIVATE)
+            .getString("userTag", "userTagError")
+    }
 
     private class HomeAdapter(context: Context, wallets: ArrayList<HomeResult>): BaseAdapter() {
 
         private val mContext: Context = context
-        private val mWallets: ArrayList<HomeResult> = wallets
+        private var mWallets: ArrayList<HomeResult> = wallets
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val layoutInflater = LayoutInflater.from(mContext)
@@ -105,6 +135,5 @@ class HomeActivity : AppCompatActivity() {
 
             return row
         }
-
     }
 }
