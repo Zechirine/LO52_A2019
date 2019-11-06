@@ -2,6 +2,7 @@
     <string name="app_name">Equal</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="notRegisteredYet">Not registered yet ?</string>

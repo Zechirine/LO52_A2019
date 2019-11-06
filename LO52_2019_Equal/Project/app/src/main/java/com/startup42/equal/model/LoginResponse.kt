@@ -6,7 +6,7 @@ class LoginResponse {
 }
 
 class LoginResult {
-    val userId: String? = null
-    val token: String? = null
-    val userTag: String? = null
+    val userId: String= ""
+    val token: String = ""
+    val userTag: String = ""
 }

@@ -6,7 +6,6 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.*
 import com.startup42.equal.Equal
 
-
 class LoginViewModel {
 
     val loginRequest = LoginRequest()
