@@ -19,4 +19,9 @@
     <string name="medium">Medium</string>
     <string name="strong">Strong</string>
     <string name="veryStrong">Very Strong</string>
+    <string name="WalletName">Wallet Name</string>
+    <string name="WalletDescription">Wallet Description</string>
+    <string name="WalletInformation">Wallet Information</string>
+    <string name="Members">Members</string>
+    <string name="Me">It\'s me :</string>
 </resources>

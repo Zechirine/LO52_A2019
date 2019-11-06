@@ -31,7 +31,7 @@
             android:ems="10"
             android:hint="@string/Email"
             android:inputType="textEmailAddress"
-            android:textColor="@color/MainHintColor"
+            android:textColor="@color/MainColorOnMainBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Title" />
@@ -44,6 +44,7 @@
             android:ems="10"
             android:hint="@string/Password"
             android:inputType="textPassword"
+            android:textColor="@color/MainColorOnMainBackground"
             android:textColorHint="@color/MainHintColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

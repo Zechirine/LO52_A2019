@@ -31,6 +31,7 @@
             android:ems="10"
             android:hint="Firstname"
             android:inputType="textPersonName"
+            android:textColor="@color/MainColorOnMainBackground"
             android:textColorHint="@color/MainHintColor"
             app:layout_constraintBottom_toTopOf="@+id/lastNameInput"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +48,7 @@
             android:ems="10"
             android:hint="Lastname"
             android:inputType="textPersonName"
+            android:textColor="@color/MainColorOnMainBackground"
             android:textColorHint="@color/MainHintColor"
             app:layout_constraintBottom_toTopOf="@+id/emailInput"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +63,7 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
+            android:textColor="@color/MainColorOnMainBackground"
             android:textColorHint="@color/MainHintColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,6 +78,7 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
+            android:textColor="@color/MainColorOnMainBackground"
             android:textColorHint="@color/MainHintColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,6 +94,7 @@
             android:ems="10"
             android:hint="ConfirmPassword"
             android:inputType="textPassword"
+            android:textColor="@color/MainColorOnMainBackground"
             android:textColorHint="@color/MainHintColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,15 +128,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.022" />
-
-    <TextureView
-            android:id="@+id/strenghtIndice"
-            android:layout_width="41dp"
-            android:layout_height="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/confirmPasswordInput"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.571"
-            app:layout_constraintStart_toEndOf="@+id/passwordInput"
-            app:layout_constraintTop_toBottomOf="@+id/emailInput" />
 
 </android.support.constraint.ConstraintLayout>
