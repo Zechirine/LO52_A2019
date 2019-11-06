@@ -18,7 +18,9 @@ class HomeActivity : AppCompatActivity() {
 
     val viewModel = HomeViewModel()
     var wallets: ArrayList<HomeResult>? = null
+
     private var adapter: HomeAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
                 this.runOnUiThread{
                     adapter =  HomeAdapter(this,it)
                     listView.adapter = adapter
+
                 }
             }
             .doOnError { it.printStackTrace() }
@@ -52,21 +55,27 @@ class HomeActivity : AppCompatActivity() {
 */
         }
 
-        swipeRefresh.setOnRefreshListener(object:SwipeRefreshLayout.OnRefreshListener {
-            override fun onRefresh() {
-
-                //TODO call to the api to refresh data
-                val handler = Handler()
-                handler.postDelayed(object:Runnable {
-                    override fun run() {
-                        if (swipeRefresh.isRefreshing())
-                        {
-                            swipeRefresh.setRefreshing(false)
-                        }
+        swipeRefresh.setOnRefreshListener {
+            viewModel.receiveData(userId)
+                .doOnNext {
+                    this@HomeActivity.runOnUiThread {
+                        this@HomeActivity.adapter?.updateWallets(it)
+                        this@HomeActivity.adapter?.notifyDataSetChanged()
                     }
-                }, 1000)
-            }
-        })
+                }
+                .doOnError { it.printStackTrace() }
+                .doOnComplete{ println("onComplete!") }
+                .subscribe()
+
+            val handler = Handler()
+            handler.postDelayed(object:Runnable {
+                override fun run() {
+                    if (swipeRefresh.isRefreshing()) {
+                        swipeRefresh.setRefreshing(false)
+                    }
+                }
+            }, 1000)
+        }
     }
 
     private fun setupToolBar(){
@@ -101,6 +110,10 @@ class HomeActivity : AppCompatActivity() {
 
         override fun getCount(): Int {
             return mWallets.size
+        }
+
+        fun updateWallets(wallets: ArrayList<HomeResult>){
+            mWallets = wallets
         }
 
         private fun setupCell(row: View, wallet: HomeResult): View {
