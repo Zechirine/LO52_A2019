@@ -1,6 +1,7 @@
 package com.startup42.equal.view
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +14,7 @@ import com.startup42.equal.R
 import com.startup42.equal.model.HomeResult
 import com.startup42.equal.viewModel.HomeViewModel
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.custom_toolbar.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -49,10 +51,8 @@ class HomeActivity : AppCompatActivity() {
             .subscribe()
 
         addWalletButton.setOnClickListener{
-/* TODO redirect to the add wallet activity
-            val intent = Intent(this, ::class.java)
+            val intent = Intent(this, CreateWalletActivity::class.java)
             startActivity(intent)
-*/
         }
 
         swipeRefresh.setOnRefreshListener {
@@ -79,12 +79,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupToolBar(){
-        val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.visibility = View.INVISIBLE
 
-        val usertag = findViewById<TextView>(R.id.titleTextView)
-        usertag.setTextColor(getResources().getColor(R.color.textColorOnMainColor))
-        usertag.text = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        titleTextView.setTextColor(getResources().getColor(R.color.textColorOnMainColor))
+        titleTextView.text = getSharedPreferences("Login", Context.MODE_PRIVATE)
             .getString("userTag", "userTagError")
     }
 

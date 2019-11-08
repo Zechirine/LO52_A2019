@@ -13,4 +13,5 @@
     <color name="backgroundListView">#F2F2F7</color>
     <color name="MainColorOnMainBackground">#000000</color>
     <color name="MainClickable">#5460FE</color>
+    <color name="Transparent">#00FFFFFF</color>
 </resources>

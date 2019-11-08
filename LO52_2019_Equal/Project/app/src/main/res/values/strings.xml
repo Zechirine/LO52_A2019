@@ -2,6 +2,8 @@
     <string name="app_name">Equal</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_createwallet">CreateWallet</string>
+    <string name="newwallet">New Wallet</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
@@ -24,4 +26,6 @@
     <string name="WalletInformations">Wallet Informations</string>
     <string name="Members">Members</string>
     <string name="Me">It\'s me :</string>
+    <string name="Done">Done</string>
+    <string name="Name">Name</string>
 </resources>
