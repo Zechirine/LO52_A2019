@@ -1,4 +1,4 @@
-package com.example.projet
+package fr.utbm.lo52.flicYouAndroid
 
 class MyWatchManager {
     val myWatches: ArrayList<MyWatch> = ArrayList()

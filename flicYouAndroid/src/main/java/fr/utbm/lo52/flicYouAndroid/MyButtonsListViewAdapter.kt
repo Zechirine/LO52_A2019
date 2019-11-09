@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import fr.utbm.lo52.flicYouAndroid.R
 import kotlin.collections.ArrayList
 
 class MyButtonsListViewAdapter(private val context: Context, private val myButtons: ArrayList<MyButton>):BaseAdapter() {

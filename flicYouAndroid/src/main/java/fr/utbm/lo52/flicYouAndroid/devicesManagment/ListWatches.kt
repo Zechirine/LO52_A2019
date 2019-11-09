@@ -5,15 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import com.example.projet.*
-import kotlinx.android.synthetic.main.activity_bluetooth_devices_list.*
-import kotlinx.android.synthetic.main.activity_list_watches.*
-import kotlinx.android.synthetic.main.button_row.*
-import android.view.View
 import fr.utbm.lo52.flicYouAndroid.*
+import kotlinx.android.synthetic.main.activity_list_watches.*
 import fr.utbm.lo52.flicYouAndroid.BluetoothDevicesList
-import fr.utbm.lo52.flicYouAndroid.MyFlicManager
 
 class ListWatches : AppCompatActivity() {
     private val TAG = "ListWatches"
@@ -35,6 +29,10 @@ class ListWatches : AppCompatActivity() {
             launchBluetoothDevicesListActivity()
         }
 
+        test.setOnClickListener {
+            launchBluetoothTestActivity()
+        }
+
         watches.adapter
         watches.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             val watch = myWatchManager.myWatches.get(position)
@@ -44,6 +42,11 @@ class ListWatches : AppCompatActivity() {
 
     fun launchBluetoothDevicesListActivity(){
         val intent = Intent(this, BluetoothDevicesList::class.java)
+        startActivity(intent)
+    }
+
+    private fun launchBluetoothTestActivity() {
+        val intent = Intent(applicationContext, BluetoothControl::class.java)
         startActivity(intent)
     }
 }

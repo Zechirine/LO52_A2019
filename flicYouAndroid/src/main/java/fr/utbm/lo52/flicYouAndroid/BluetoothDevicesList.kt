@@ -12,8 +12,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import com.example.projet.MyWatch
-import com.example.projet.MyWatchManager
 import fr.utbm.lo52.flicYouAndroid.devicesManagment.ListWatches
 import kotlinx.android.synthetic.main.activity_bluetooth_devices_list.*
 import java.io.IOException
@@ -86,7 +84,6 @@ class BluetoothDevicesList : AppCompatActivity() {
             address = devices[position].address
 
             val intent = Intent(this, BluetoothDevicesList::class.java)
-            intent.putExtra(EXTRA_ADDRESS, address)
 //            startActivity(intent)
             connectionAttemptToDevice()
         }
@@ -119,8 +116,9 @@ class BluetoothDevicesList : AppCompatActivity() {
                     Log.i("data", "Device isn't connect")
                 } else {
                     Log.i("data", "Device is connect")
-                    val myWatch = MyWatch()
+                    val myWatch = MyWatch(socket)
                     myWatchManager.myWatches.add(myWatch)
+                    intent.putExtra(EXTRA_ADDRESS, myWatchManager.myWatches.lastIndexOf(myWatch))
                     launchListWatchActivity()
                 }
                 myProgressBar2.visibility = View.GONE

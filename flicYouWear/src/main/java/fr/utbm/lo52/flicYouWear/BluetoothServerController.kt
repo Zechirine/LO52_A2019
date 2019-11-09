@@ -28,17 +28,17 @@ class BluetoothServerController(private val activity: MainActivity) : Thread() {
     }
 
     override fun run() {
-        while(true) {
-            if (cancelled) break
+//        while(true) {
+//            if (cancelled) break
 
             try {
                 socket = serverSocket!!.accept()
             } catch(e: IOException) {
-                break
+//                    break
             }
 
             Log.i("server", "Connecting")
             BluetoothServer(socket, activity).start()
-        }
+//        }
     }
 }

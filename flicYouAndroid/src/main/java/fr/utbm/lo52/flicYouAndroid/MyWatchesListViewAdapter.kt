@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.projet.MyWatch
 
 class MyWatchesListViewAdapter(private val context: Context, private val myWatches: ArrayList<MyWatch>): BaseAdapter() {
     override fun getItem(position: Int): Any {
