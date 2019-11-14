@@ -1,0 +1,26 @@
+- CRUD des participants && Equipes
+	- Création à partir d'un fichier excel ?
+	- Possibilité assigner une personne à une seule équipe (modifiable)
+
+- Pour les participants :
+	- n participants
+	- Chaque participant à un groupe g (représentant son niveau)
+
+- Pour les équipes : 
+	- Si possible équipe de 3
+	- Ordre de passage pour chaque personne de l'équipe
+	- Quid de l'abandon d'une personne ?
+
+- Pour la course :
+	- 1 tour sprint
+	- 1 tour fractionné
+	- Pit stop
+	- 1 tour sprint
+	- 1 tour fractionné
+	
+	-> Mesurer tous les temps (sprint/frac/pit stop) 
+		- Donner moyenne
+		- Etape (kesako ???) ( Si je me trompe pas 1 etape = 1 tour sprint + 1 tour fractionné)
+	-> Fenêtre de récap à la fin 
+	
+- Historique (bonus)
