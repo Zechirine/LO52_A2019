@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Tp4Jni</string>
+    <string name="default_edit_text">Def</string>
+    <string name="name_btn_up">UP</string>
+    <string name="name_btn_down">DOWN</string>
+    <string name="name_btn_left">LEFT</string>
+    <string name="name_btn_right">RIGHT</string>
+    <string name="name_btn_read">READ</string>
+    <string name="name_btn_write">WRITE</string>
+</resources>
