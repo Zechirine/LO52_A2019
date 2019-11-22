@@ -1,0 +1,44 @@
+Implémentation de la libusb
+1
+core.c descriptor.c io.c sync.c ,os/linux_usbfs.c
+
+2
+
+
+3
+io.c ajouter ceci: 
+#define TIMESPEC_TO_TIMEVAL(tv, ts)                                     \
+        do {                                                            \
+                (tv)->tv_sec = (ts)->tv_sec;                            \
+                (tv)->tv_usec = (ts)->tv_nsec / 1000;                   \
+        } while (0)
+
+
+4
+for error: build/tools/apriori/prelinkmap.c(137): library ‘libusb.so’ not in prelink map. This is because Android keeps track of all the shared libraries of the root file system (RFS). Therefore we need to add the library to the prelinked map found in ./build/core/prelink-linux-arm.map.
+libusb.so           0xA8000000
+
+mais le build/envsetup.sh n'est utilise maintenant, on ne sais pas comment le compiler
+
+Implémentation d’un nouveau produit Android
+1
+PRODUCT_NAME := lo52_KeepIt
+
+2
+$(call inherit-product, Linaro/product/hikey.mk)
+
+3
+PRODUCT_PROPERTY_OVERRIDES := \
+    ro.hw=lo_52 \
+    net.dns1=8.8.8.8 \
+    net.dns2=4.4.4.4
+
+4
+
+
+5
+PRODUCT_PACKAGES := libusb
+
+
+
+
