@@ -8,7 +8,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.hw=lo_52 \
     net.dns1=8.8.8.8 \
     net.dns2=4.4.4.4
-PRODUCT_PACKAGES:= libusb
+PRODUCT_PACKAGES+= libusb
 PRODUCT_PACKAGE_OVERLAYS := overlay/
 
 
