@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TP4_JNI</string>
+    <string name="UP">UP</string>
+    <string name="Down">DOWN</string>
+    <string name="RIGHT">RIGHT</string>
+    <string name="LEFT">LEFT</string>
+    <string name="READ">READ</string>
+    <string name="WRITE">WRITE</string>
+    <string name="DEF">DEF</string>
+</resources>

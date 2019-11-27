@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/UP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/UP"
+        app:layout_constraintBottom_toTopOf="@+id/LEFT"
+        app:layout_constraintStart_toEndOf="@+id/LEFT" />
+
+    <Button
+        android:id="@+id/Down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:text="@string/Down"
+        app:layout_constraintEnd_toStartOf="@+id/RIGHT"
+        app:layout_constraintTop_toBottomOf="@+id/RIGHT" />
+
+    <Button
+        android:id="@+id/LEFT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="296dp"
+        android:text="@string/LEFT"
+        app:layout_constraintEnd_toEndOf="@+id/READ"
+        app:layout_constraintStart_toStartOf="@+id/READ"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/RIGHT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:text="@string/RIGHT"
+        app:layout_constraintStart_toEndOf="@+id/UP"
+        app:layout_constraintTop_toBottomOf="@+id/UP" />
+
+    <Button
+        android:id="@+id/READ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="169dp"
+        android:layout_marginBottom="170dp"
+        android:text="@string/READ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LEFT" />
+
+    <Button
+        android:id="@+id/WRITE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="169dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="167dp"
+        android:text="@string/WRITE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RIGHT" />
+
+    <EditText
+        android:id="@+id/Def"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/DEF"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="48dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
