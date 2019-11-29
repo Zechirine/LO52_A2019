@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">fail</string>
+    <string name="title_activity_dummy">DummyActivity</string>
+</resources>
