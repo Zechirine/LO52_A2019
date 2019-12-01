@@ -11,6 +11,7 @@ import utbm.lo52.fail.db.Race
 
 class DummyActivity : AppCompatActivity() {
 
+    @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dummy)
@@ -21,10 +22,11 @@ class DummyActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
             Log.v("INFO", "TEST")
             val helper = DBHelper(this, null)
-            val races = helper.getAllRaces()
-            for (race in races) {
-                Log.v("COURSE", "${race.id}, ${race.name}, ${race.lap}")
-            }
+            Log.v("SAVING", helper.save(Race(null, "ceci est un test", 5) as Race).toString())
+            val race = helper.request(Race::class).get("id", 3) as Race
+            Log.v("RACE", race.toString())
+            race.lap = 19
+            helper.save(race)
         }
     }
 

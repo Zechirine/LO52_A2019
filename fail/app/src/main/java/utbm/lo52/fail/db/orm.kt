@@ -2,28 +2,70 @@ package utbm.lo52.fail.db
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.ColorSpace
 import android.util.Log
-import android.view.Display
-import java.util.logging.Logger
-import kotlin.reflect.KProperty
-import kotlin.reflect.typeOf
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.reflect.*
+import kotlin.reflect.full.memberProperties
 
-abstract class ModelClass
+@ExperimentalStdlibApi
+fun Cursor.getType(type: KType, name: String): Any? = when (type) {
+    typeOf<Int?>() -> this.getInt(this.getColumnIndex(name))
+    typeOf<Int>() -> this.getInt(this.getColumnIndex(name))
+    typeOf<String>() -> this.getString(this.getColumnIndex(name))
+    typeOf<ForeignKey>() -> ForeignKey(name, this.getInt(this.getColumnIndex("${name}_id")))
+    else -> null
+}
 
-class ForeignKey(val related: String, var id: Int)
+abstract class ModelClass(open val id: Int? = null) {
+    companion object {
+        @ExperimentalStdlibApi
+        fun modelClassFromDBFactory(klass: KClass<*>, cursor: Cursor): ModelClass {
+            val kwargs = HashMap<KParameter, Any?>()
+            val constructor = klass.constructors.first()
+            for (arg in constructor.parameters) {
+                kwargs[arg] = cursor.getType(arg.type, arg.name!!)
+            }
+            return klass.constructors.first().callBy(kwargs) as ModelClass
+        }
 
-class Player(val id: Int, var name: String, order: Int, val team: ForeignKey) : ModelClass()
+        fun modelClassCopyWithNewIDFactory(obj: ModelClass, id: Int): ModelClass {
+            val kwargs = HashMap<KParameter, Any?>()
+            val constructor = obj::class.constructors.first()
+            for (arg in constructor.parameters) {
+                if (arg.name!! == "id")
+                    kwargs[arg] = id
+                else
+                    kwargs[arg] =
+                        obj::class.memberProperties.find { it.name == arg.name }?.getter?.call(obj)
+            }
+            return constructor.callBy(kwargs) as ModelClass
+        }
 
-class Team(val id: Int, var name: String, val race: ForeignKey) : ModelClass()
+        fun modelClassToContentValuesExceptID(obj: ModelClass): ContentValues{
+            val properties = ContentValues()
+            for (property in obj::class.memberProperties) {
+                properties.put(property.name, property.getter.call(obj).toString())
+            }
+            properties.remove("id")
+            return properties
+        }
+    }
+}
 
-class Race(val id: Int, var name: String, var lap: Int) : ModelClass()
+data class ForeignKey(val related: String, var id: Int)
 
-class Lap(val id: Int, var time: Int, val type: ForeignKey, val player: ForeignKey) : ModelClass()
+fun typeSQLConverter(type: Any) = when (type) {
+    is Int -> "INTEGER"
+    is String -> "TEXT"
+    is ForeignKey -> "INTEGER"
+    else -> ""
+}
 
-class Type(val id: Int, var label: String) : ModelClass()
 
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -41,9 +83,9 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                     continue
                 }
                 table += when (member.returnType) {
-                    typeOf<Int>() -> "${member.name} INTEGER NOT NULL,"
-                    typeOf<String>() -> " ${member.name} TEXT NOT NULL,"
-                    typeOf<ForeignKey>() -> " ${member.name}_id NOT NULL,"
+                    typeOf<Int>() -> " ${member.name} ${typeSQLConverter(17)} NOT NULL,"
+                    typeOf<String>() -> " ${member.name} ${typeSQLConverter("")} NOT NULL,"
+                    typeOf<ForeignKey>() -> " ${member.name}_id ${typeSQLConverter(17)} NOT NULL,"
                     else -> ""
                 }
             }
@@ -53,41 +95,62 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         }
     }
 
-    fun saveRace(race: Race) {
-        val db = this.writableDatabase
-        val values = ContentValues()
-        values.put("name", race.name)
-        values.put("lap", race.lap)
-        this.writableDatabase.insert("race", null, values)
+    inner class SQLRequest(val db: SQLiteDatabase, val klass: KClass<*>, val request: String?) {
+
+        private val lastRequest: String
+            get() = if (request == null) "SELECT * FROM ${klass.simpleName} WHERE" else "$request AND"
+
+        @ExperimentalStdlibApi
+        fun get(attribute: String, value: Any): ModelClass? {
+            val cursor = db.rawQuery("$lastRequest ${attribute}='${value.toString()}'", null)
+            if (cursor!!.count == 0)
+                return null
+            cursor.moveToFirst()
+            return ModelClass.modelClassFromDBFactory(klass, cursor)
+        }
+
+        @ExperimentalStdlibApi
+        fun all(): List<ModelClass> {
+            val list = ArrayList<ModelClass>()
+            // Remove last word from last query (remove WHERE and AND)
+            val request = lastRequest.subSequence(0, lastRequest.length - 4).toString()
+            val cursor = db.rawQuery(request, null)
+            if (cursor!!.count == 0)
+                return list
+            cursor.moveToFirst()
+            list.add(ModelClass.modelClassFromDBFactory(klass, cursor))
+            while (cursor.moveToNext())
+                list.add(ModelClass.modelClassFromDBFactory(klass, cursor))
+            return list
+        }
+
+        fun filter(attribute: String, value: Any): SQLRequest =
+            SQLRequest(db, klass, "$lastRequest ${attribute}='${value.toString()}'")
+
     }
 
-    fun getAllRaces(): List<Race> {
-        val cursor = this.writableDatabase.rawQuery("SELECT * FROM race", null)
-        val list = ArrayList<Race>()
-        cursor!!.moveToFirst()
-        list.add(
-            Race(
-                cursor.getInt(cursor.getColumnIndex("id")),
-                cursor.getString(cursor.getColumnIndex("name")),
-                cursor.getInt(cursor.getColumnIndex("lap"))
-            )
-        )
-        while (cursor.moveToNext()) {
-            list.add(
-                Race(
-                    cursor.getInt(cursor.getColumnIndex("id")),
-                    cursor.getString(cursor.getColumnIndex("name")),
-                    cursor.getInt(cursor.getColumnIndex("lap"))
-                )
-            )
-        }
-        return list
+    private fun insert(obj: ModelClass): ModelClass {
+        this.writableDatabase.insert(obj::class.simpleName, null, ModelClass.modelClassToContentValuesExceptID((obj)))
+        val cursor = this.writableDatabase.rawQuery("SELECT last_insert_rowid() AS last_id FROM ${obj::class.simpleName}", null)
+        cursor.moveToFirst()
+        return ModelClass.modelClassCopyWithNewIDFactory(obj, cursor.getInt(cursor.getColumnIndex("last_id")))
     }
-//    fun saveModel(model: ModelClass){
-//        for (member in model::class.members){
-//
-//        }
-//    }
+
+    private fun update(obj: ModelClass): ModelClass {
+        this.writableDatabase.update(obj::class.simpleName,ModelClass.modelClassToContentValuesExceptID(obj), "id=${obj.id}", null)
+        return obj
+    }
+
+    fun save(obj: ModelClass): ModelClass {
+        if (obj.id == null) {
+            // that's an insert
+            return insert(obj)
+        }
+        // that's an update
+        return update(obj)
+    }
+
+    fun request(klass: KClass<*>) = SQLRequest(this.writableDatabase, klass, null)
 
     @ExperimentalStdlibApi
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
