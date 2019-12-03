@@ -13,7 +13,6 @@ import java.io.IOException
 class HomeRequest {
 
     private fun url(userId: String) : String{
-        //TODO Set config
         return BuildConfig.BASE_URL + "/dev/users/" + userId + "/wallets"
     }
 

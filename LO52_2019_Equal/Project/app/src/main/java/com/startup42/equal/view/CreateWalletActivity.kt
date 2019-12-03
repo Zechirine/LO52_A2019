@@ -20,6 +20,8 @@ class CreateWalletActivity : AppCompatActivity() {
 
     val viewModel = CreateWalletViewModel()
 
+    var isDone = false
+
 
     private fun setupToolBar() {
 
@@ -30,6 +32,10 @@ class CreateWalletActivity : AppCompatActivity() {
             ContextCompat.getColor(this, R.color.textColorOnMainColor),
             android.graphics.PorterDuff.Mode.MULTIPLY
         )
+
+        backButton.setOnClickListener{
+            finish()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +50,7 @@ class CreateWalletActivity : AppCompatActivity() {
 
             //Create the new member view (row_createwallet)
             val view = LayoutInflater.from(Equal.context)
-                .inflate(com.startup42.equal.R.layout.row_createwallet, null, false)
+                .inflate(R.layout.row_createwallet, null, false)
 
             //Add Listener on the check box to check if just 1 checkbox is true
             view.ItsMeInput.setOnCheckedChangeListener { _, isChecked ->
@@ -71,53 +77,63 @@ class CreateWalletActivity : AppCompatActivity() {
 
         DoneButton.setOnClickListener {
 
-            val userId = getSharedPreferences("Login", Context.MODE_PRIVATE)
-                .getString("userId", "errorid")
+            if(!isDone) {
 
-            var members = mutableListOf<String>()
-            var me: String = ""
+                isDone = true
 
-            for (i in 0..InputVerticalList.childCount) {
-                try {
-                    if (InputVerticalList.getChildAt(i).MemberNameInput.text.toString() != "") {
-                        members.add(InputVerticalList.getChildAt(i).MemberNameInput.text.toString().trim())
+                val userId = getSharedPreferences("Login", Context.MODE_PRIVATE)
+                    .getString("userId", "errorid")
+
+                var members = mutableListOf<String>()
+                var me: String = ""
+
+                for (i in 0..InputVerticalList.childCount) {
+                    try {
+                        if (InputVerticalList.getChildAt(i).MemberNameInput.text.toString() != "") {
+                            members.add(InputVerticalList.getChildAt(i).MemberNameInput.text.toString().trim())
+                        }
+
+                        if (InputVerticalList.getChildAt(i).ItsMeInput.isChecked) {
+                            me = InputVerticalList.getChildAt(i).MemberNameInput.text.toString()
+                        }
+                    } catch (e: Exception) {
                     }
+                }
 
-                    if (InputVerticalList.getChildAt(i).ItsMeInput.isChecked) {
-                        me = InputVerticalList.getChildAt(i).MemberNameInput.text.toString()
-                    }
-                } catch (e: Exception) {}
-            }
+                var array = members.toTypedArray()
 
-            var array = members.toTypedArray()
+                if (me != "") {
+                    val hashMap = HashMap<String, Any>()
+                    hashMap.put("title", WalletNameInput.text.toString())
+                    hashMap.put("owner", userId)
+                    hashMap.put("members", array)
+                    hashMap.put("description", DescriptionInput.text.toString())
+                    hashMap.put("me", me)
 
-            if (me != "") {
-                val hashMap = HashMap<String, Any>()
-                hashMap.put("title", WalletNameInput.text.toString())
-                hashMap.put("owner", userId)
-                hashMap.put("members", array)
-                hashMap.put("description", DescriptionInput.text.toString())
-                hashMap.put("me", me)
+                    viewModel.sendData(hashMap)
+                        .doOnNext {
 
-                viewModel.sendData(hashMap)
-                    .doOnNext {
-
-                        if (it == "Wallet created") {
-                            val intent = Intent(this@CreateWalletActivity, HomeActivity::class.java)
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            this.runOnUiThread {
-                                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+                            if (it == "Wallet created") {
+                                val intent =
+                                    Intent(this@CreateWalletActivity, HomeActivity::class.java)
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                this.runOnUiThread {
+                                    Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+                                    isDone = false
+                                }
                             }
                         }
-                    }
-                    .doOnError { it.printStackTrace() }
-                    .doOnComplete { println("onComplete!") }
-                    .subscribe()
-            } else {
-                Toast.makeText(this, "me is empty", Toast.LENGTH_LONG).show()
+                        .doOnError { it.printStackTrace() ; isDone = false}
+                        .doOnComplete { println("onComplete!") }
+                        .subscribe()
+                } else {
+                    Toast.makeText(this, "me is empty", Toast.LENGTH_LONG).show()
+                    isDone = false
+
+                }
             }
         }
     }

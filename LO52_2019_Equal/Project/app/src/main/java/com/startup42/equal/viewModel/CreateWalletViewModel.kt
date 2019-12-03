@@ -18,13 +18,6 @@ class CreateWalletViewModel {
                     if (it.error != null) {
                         emitter.onNext(it.error)
                     } else {
-                        val editor = Equal.context.getSharedPreferences("CreateWallet", Context.MODE_PRIVATE).edit()
-                        editor.putString("title" ,it.result?.title)
-                        editor.putString("owner" ,it.result?.owner)
-                        editor.putString("description",it.result?.description)
-                        editor.putInt("members",it.result?.members!!)
-                        editor.putString("me",it.result?.me)
-                        editor.apply()
                         emitter.onNext("Wallet created")
                     }
                 },
