@@ -44,4 +44,4 @@ Surcharge -> notion d'Overlay
 PRODUCT_PACKAGE_OVERLAYS := overlay
 
 7.
-PRODUCT_PACKAGES := libusb
+PRODUCT_PACKAGES += libusb
