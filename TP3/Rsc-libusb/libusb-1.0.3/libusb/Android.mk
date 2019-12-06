@@ -10,7 +10,7 @@ LOCAL_SRC_FILES:= \
 	 sync.c \
 	 os/linux_usbfs.c 
 
-LOCAL_C_INCLUDE +=	/external/libusb/libusb.h \
+LOCAL_C_INCLUDES +=	/external/libusb/libusb.h \
 					/external/libusb/libusbi.h \
 					/external/libusb/os/linux_usbfs.h 
 
