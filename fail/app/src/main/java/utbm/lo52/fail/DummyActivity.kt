@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_dummy.*
 import utbm.lo52.fail.db.DBHelper
+import utbm.lo52.fail.db.ForeignKey
 import utbm.lo52.fail.db.Race
+import utbm.lo52.fail.db.Team
 
 class DummyActivity : AppCompatActivity() {
 
@@ -27,6 +29,11 @@ class DummyActivity : AppCompatActivity() {
             Log.v("RACE", race.toString())
             race.lap = 19
             helper.save(race)
+            val team = Team(null, "test", ForeignKey(Race::class, race.id))
+            helper.save(team)
+            val fetchedTeam = helper.request(Team::class).get("id", 1) as Team
+            Log.v("TEAM", fetchedTeam.toString())
+            Log.v("TESTONS", fetchedTeam.race.getRelated(helper).toString())
         }
     }
 

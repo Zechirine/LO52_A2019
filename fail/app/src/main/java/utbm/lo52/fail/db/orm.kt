@@ -17,7 +17,10 @@ fun Cursor.getType(type: KType, name: String): Any? = when (type) {
     typeOf<Int?>() -> this.getInt(this.getColumnIndex(name))
     typeOf<Int>() -> this.getInt(this.getColumnIndex(name))
     typeOf<String>() -> this.getString(this.getColumnIndex(name))
-    typeOf<ForeignKey>() -> ForeignKey(name, this.getInt(this.getColumnIndex("${name}_id")))
+    typeOf<ForeignKey>() -> ForeignKey(
+        DBHelper.classFromAttributeName(name) as KClass<ModelClass>,
+        this.getInt(this.getColumnIndex("${name}_id"))
+    )
     else -> null
 }
 
@@ -46,10 +49,14 @@ abstract class ModelClass(open val id: Int? = null) {
             return constructor.callBy(kwargs) as ModelClass
         }
 
-        fun modelClassToContentValuesExceptID(obj: ModelClass): ContentValues{
+        @ExperimentalStdlibApi
+        fun modelClassToContentValuesExceptID(obj: ModelClass): ContentValues {
             val properties = ContentValues()
             for (property in obj::class.memberProperties) {
-                properties.put(property.name, property.getter.call(obj).toString())
+                when (property.returnType) {
+                    typeOf<ForeignKey>() -> properties.put("${property.name}_id", (property.getter.call(obj) as ForeignKey).id)
+                    else -> properties.put(property.name, property.getter.call(obj).toString())
+                }
             }
             properties.remove("id")
             return properties
@@ -57,7 +64,15 @@ abstract class ModelClass(open val id: Int? = null) {
     }
 }
 
-data class ForeignKey(val related: String, var id: Int)
+data class ForeignKey(val klass: KClass<out ModelClass>, var id: Int?){
+
+    @ExperimentalStdlibApi
+    private var related: ModelClass? = null
+        set(value) { related = value; id = related?.id }
+
+    @ExperimentalStdlibApi
+    fun getRelated(helper: DBHelper) = if (id == null) null else helper.request(klass).get("id", id!!)
+}
 
 fun typeSQLConverter(type: Any) = when (type) {
     is Int -> "INTEGER"
@@ -67,6 +82,7 @@ fun typeSQLConverter(type: Any) = when (type) {
 }
 
 
+@ExperimentalStdlibApi
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
     @ExperimentalStdlibApi
@@ -130,24 +146,51 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     private fun insert(obj: ModelClass): ModelClass {
-        this.writableDatabase.insert(obj::class.simpleName, null, ModelClass.modelClassToContentValuesExceptID((obj)))
-        val cursor = this.writableDatabase.rawQuery("SELECT last_insert_rowid() AS last_id FROM ${obj::class.simpleName}", null)
+        this.writableDatabase.insert(
+            obj::class.simpleName,
+            null,
+            ModelClass.modelClassToContentValuesExceptID((obj))
+        )
+        val cursor = this.writableDatabase.rawQuery(
+            "SELECT last_insert_rowid() AS last_id FROM ${obj::class.simpleName}",
+            null
+        )
         cursor.moveToFirst()
-        return ModelClass.modelClassCopyWithNewIDFactory(obj, cursor.getInt(cursor.getColumnIndex("last_id")))
+        return ModelClass.modelClassCopyWithNewIDFactory(
+            obj,
+            cursor.getInt(cursor.getColumnIndex("last_id"))
+        )
     }
 
     private fun update(obj: ModelClass): ModelClass {
-        this.writableDatabase.update(obj::class.simpleName,ModelClass.modelClassToContentValuesExceptID(obj), "id=${obj.id}", null)
+        this.writableDatabase.update(
+            obj::class.simpleName,
+            ModelClass.modelClassToContentValuesExceptID(obj),
+            "id=${obj.id}",
+            null
+        )
         return obj
     }
 
-    fun save(obj: ModelClass): ModelClass {
+    fun save(obj: ModelClass?): ModelClass? {
+        if (obj == null)
+            return null
+        // Save all related foreign keys
+        for (property in obj::class.memberProperties){
+            when (property.returnType){
+                typeOf<ForeignKey>() -> save((property.getter?.call(obj) as ForeignKey).getRelated(this))
+            }
+        }
         if (obj.id == null) {
             // that's an insert
             return insert(obj)
         }
         // that's an update
         return update(obj)
+    }
+
+    fun delete(obj: ModelClass) {
+        this.writableDatabase.delete(obj::class.simpleName, "id=${obj.id}", null)
     }
 
     fun request(klass: KClass<*>) = SQLRequest(this.writableDatabase, klass, null)
@@ -167,6 +210,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
             listOf(Player::class, Team::class, Race::class, Lap::class, Type::class)
         private val DATABASE_VERSION = 1
         private val DATABASE_NAME = "fail.db"
+        fun classFromAttributeName(name: String) =
+            MODELS.find { it.simpleName == name.capitalize() }
     }
 }
 
