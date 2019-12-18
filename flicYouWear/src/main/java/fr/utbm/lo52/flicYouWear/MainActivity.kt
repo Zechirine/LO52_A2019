@@ -2,18 +2,43 @@ package fr.utbm.lo52.flicYouWear
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
+import android.util.Log
+import android.view.View
 import android.widget.Toast
-import fr.utbm.lo52.flicYouWear.R
 import kotlinx.android.synthetic.main.activity_main.*
+import android.content.IntentFilter
+
+
 
 class MainActivity : WearableActivity() {
 
     @SuppressLint("ParcelCreator")
 
     private val waitingTaskText: String = "En attente de tâches..."
+
+    var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val data = intent.getStringExtra("TASK")
+            text.text = data
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("com.example.andy.myapplication")
+        registerReceiver(broadcastReceiver, intentFilter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(broadcastReceiver)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +79,9 @@ class MainActivity : WearableActivity() {
         }
 
         checkBluetoothState()
-        BluetoothServerController(this).start()
+        startService(Intent(this, BluetoothServerController::class.java))
     }
+
     private fun checkBluetoothState() {
         var m_bluetoothAdapter: BluetoothAdapter? = null
         val REQUEST_ENABLE_BLUETOOTH = 1
