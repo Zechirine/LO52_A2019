@@ -10,11 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".RunnerInscriptionActivity"
+            android:label="@string/title_activity_runner_inscription"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".RunnerStateActivity" />
+        <activity android:name=".RaceStateActivity" />
+        <activity android:name=".ArchiveActivity" />
+        <activity android:name=".RaceActivity" />
+        <activity android:name=".InscriptionActivity" />
+        <activity android:name=".MainActivity" />
+        <activity
             android:name=".DummyActivity"
             android:label="@string/title_activity_dummy"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
