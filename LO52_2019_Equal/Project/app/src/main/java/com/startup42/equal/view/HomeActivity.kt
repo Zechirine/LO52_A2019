@@ -5,7 +5,6 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,10 +30,7 @@ class HomeActivity : AppCompatActivity() {
         val userId = getSharedPreferences("Login", Context.MODE_PRIVATE)
             .getString("userId", "errorid")
 
-        val listView = findViewById<ListView>(R.id.wallets)
-        val swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
-        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.customToolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(customToolbar)
         setupToolBar()
 
         viewModel.receiveData(userId)
@@ -42,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
                 wallets = it
                 this.runOnUiThread{
                     adapter =  HomeAdapter(this,it)
-                    listView.adapter = adapter
+                    walletsListView.adapter = adapter
 
                 }
             }
@@ -52,6 +48,14 @@ class HomeActivity : AppCompatActivity() {
 
         addWalletButton.setOnClickListener{
             val intent = Intent(this, CreateWalletActivity::class.java)
+            startActivity(intent)
+        }
+
+        walletsListView.setOnItemClickListener { parent, view, position, id ->
+            /** TODO Redirect to flux view */
+            val intent = Intent(this, CreateFluxActivity::class.java)
+            val wallet = wallets?.get(position)
+            //intent.putExtra("wallet",wallet)
             startActivity(intent)
         }
 

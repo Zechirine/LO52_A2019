@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.CreateFluxActivity">
+
+    <include
+            android:id="@+id/include"
+            layout="@layout/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Flux informations"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <co.ceryle.segmentedbutton.SegmentedButtonGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:sbg_animateSelector="bounce"
+            app:sbg_animateSelectorDuration="1000"
+            app:sbg_backgroundColor="#FFFFFF"
+            app:sbg_dividerColor="@color/darkGreen"
+            app:sbg_dividerPadding="10dp"
+            app:sbg_dividerRadius="10dp"
+            app:sbg_dividerSize="1dp"
+            app:sbg_position="1"
+            app:sbg_radius="2dp"
+            app:sbg_ripple="true"
+            app:sbg_rippleColor="@color/darkGreen"
+            app:sbg_selectorColor="@color/darkGreen"
+            app:layout_constraintStart_toStartOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/editText">
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="10dp"
+                android:text="Button 1"
+                android:textAllCaps="false" />
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="10dp"
+                android:text="Button 2"
+                android:textAllCaps="false" />
+
+    </co.ceryle.segmentedbutton.SegmentedButtonGroup>
+
+</android.support.constraint.ConstraintLayout>
