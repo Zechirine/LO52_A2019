@@ -2,6 +2,7 @@ package com.startup42.equal.view
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.startup42.equal.Equal
 import com.startup42.equal.R
 import com.startup42.equal.model.HomeResult
 import com.startup42.equal.viewModel.HomeViewModel
@@ -115,7 +117,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         private fun setupCell(row: View, wallet: HomeResult): View {
-            val walletNameTextView = row.findViewById<TextView>(R.id.walletName)
+            val walletNameTextView = row.findViewById<TextView>(R.id.walletNameSharePopup)
             walletNameTextView.text = wallet.title
 
             var membersString = ""
@@ -144,7 +146,17 @@ class HomeActivity : AppCompatActivity() {
 
             userBalanceTextView.text = text + wallet.userBalance.toString() + "€"
 
+            row.setOnClickListener{
+
+                val intent = Intent(Equal.context, WalletActivity::class.java)
+                intent.putExtra("walletId", wallet.walletId)
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                Equal.context.startActivity(intent)
+            }
+
             return row
         }
+
+
     }
 }

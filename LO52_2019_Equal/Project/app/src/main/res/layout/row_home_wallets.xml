@@ -8,7 +8,7 @@
         android:maxHeight="@dimen/cell_size">
 
     <TextView
-            android:id="@+id/walletName"
+            android:id="@+id/walletNameSharePopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -26,8 +26,8 @@
             android:layout_marginBottom="5dp"
             android:text="Member"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/walletName"
-            app:layout_constraintTop_toBottomOf="@+id/walletName" />
+            app:layout_constraintStart_toStartOf="@+id/walletNameSharePopup"
+            app:layout_constraintTop_toBottomOf="@+id/walletNameSharePopup" />
 
     <TextView
             android:id="@+id/userBalance"
@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="Balance"
-            app:layout_constraintStart_toEndOf="@+id/walletName"
-            app:layout_constraintTop_toTopOf="@+id/walletName" />
+            app:layout_constraintStart_toEndOf="@+id/walletNameSharePopup"
+            app:layout_constraintTop_toTopOf="@+id/walletNameSharePopup" />
 
     <ImageView
             android:id="@+id/imageView"

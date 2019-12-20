@@ -30,6 +30,9 @@
                 android:name=".view.CreateWalletActivity"
                 android:label="@string/title_activity_createwallet"/>
         <activity
+                android:name=".view.WalletActivity"
+                android:label="@string/title_activity_createwallet"/>
+        <activity
                 android:name=".view.HomeActivity"
                 android:label="@string/title_activity_home"/>
     </application>
