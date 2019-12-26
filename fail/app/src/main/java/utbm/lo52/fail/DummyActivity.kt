@@ -25,15 +25,14 @@ class DummyActivity : AppCompatActivity() {
             Log.v("INFO", "TEST")
             val helper = DBHelper(this, null)
             Log.v("SAVING", helper.save(Race(null, "ceci est un test", 5) as Race).toString())
-            val race = helper.request(Race::class).get("id", 3) as Race
-            Log.v("RACE", race.toString())
-            race.lap = 19
-            helper.save(race)
-            val team = Team(null, "test", ForeignKey(Race::class, race.id))
-            helper.save(team)
             val fetchedTeam = helper.request(Team::class).get("id", 1) as Team
             Log.v("TEAM", fetchedTeam.toString())
             Log.v("TESTONS", fetchedTeam.race.getRelated(helper).toString())
+            Log.v("HIIIIIIIIII", "HIIIIIIIIII")
+            val test = helper.request(Team::class).filterRelated(Race::class, "lap", 19).all() as List<Team>
+            for (t in test){
+                Log.v("HELLO", t.toString())
+            }
         }
     }
 

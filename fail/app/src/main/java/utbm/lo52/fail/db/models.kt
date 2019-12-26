@@ -6,7 +6,7 @@ data class Team(override val id: Int? = null, var name: String, val race: Foreig
 
 data class Race(override val id: Int? = null, var name: String, var lap: Int) : ModelClass(id)
 
-data class Lap(override val id: Int? = null, var time: Int, val type: ForeignKey, val player: ForeignKey) : ModelClass(id)
+data class Lap(override val id: Int? = null, var chrono: Int, val type: ForeignKey, val player: ForeignKey) : ModelClass(id)
 
 data class Type(override val id: Int? = null, var label: String) : ModelClass(id)
 
