@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">fail</string>
+    <string name="activity_main_begin_race">Commencer la Course</string>
+    <string name="title_activity_dummy">Manequin</string>
+    <string name="title_activity_inscription">Inscriptions</string>
+    <string name="title_activity_main">Menu principal</string>
+    <string name="title_activity_runner_inscription">Inscription des coureurs</string>
+    <string name="title_dashboard">Tableau de bord</string>
+    <string name="title_home">Acceuil</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="activity_main_history">Historique</string>
+    <string name="registration_player_placeholder">Nom du joueur</string>
+</resources>

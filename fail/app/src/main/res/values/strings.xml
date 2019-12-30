@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">fail</string>
-    <string name="title_activity_dummy">DummyActivity</string>
-    <string name="title_activity_inscription">inscriptionActivity</string>
+    <string name="title_activity_dummy">Dummy</string>
+    <string name="title_activity_inscription">Registration</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_activity_runner_inscription">RunnerInscriptionActivity</string>
+    <string name="title_activity_runner_inscription">Runner Registration</string>
+    <string name="title_activity_main">Main menu</string>
+    <string name="activity_main_begin_race">BEGIN RACE</string>
+    <string name="activity_main_history">History</string>
+    <string name="registration_player_placeholder">Player name</string>
 </resources>

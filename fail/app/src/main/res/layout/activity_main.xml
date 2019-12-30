@@ -7,11 +7,11 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/beginRace"
+        android:id="@+id/beginRaceButton"
         android:layout_width="140dp"
         android:layout_height="153dp"
         android:background="#7B4D83"
-        android:text="Commencer la Course"
+        android:text="@string/activity_main_begin_race"
         android:textColor="#FFEB3B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,15 +20,15 @@
         app:layout_constraintVertical_bias="0.29000002" />
 
     <Button
-        android:id="@+id/historyRace"
+        android:id="@+id/historyRaceButton"
         android:layout_width="172dp"
         android:layout_height="79dp"
         android:background="#7B4D83"
-        android:text="Historique"
+        android:text="@string/activity_main_history"
         android:textColor="#FFEB3B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/beginRace"
+        app:layout_constraintTop_toBottomOf="@+id/beginRaceButton"
         app:layout_constraintVertical_bias="0.76" />
 </androidx.constraintlayout.widget.ConstraintLayout>

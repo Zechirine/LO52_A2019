@@ -5,12 +5,12 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.graphics.ColorSpace
 import android.util.Log
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.reflect.*
+import kotlin.reflect.KClass
+import kotlin.reflect.KParameter
+import kotlin.reflect.KType
 import kotlin.reflect.full.memberProperties
+import kotlin.reflect.typeOf
 
 /**
  * Choose automatically the right method from a given type to query data
@@ -24,10 +24,13 @@ fun Cursor.getType(type: KType, name: String): Any? = when (type) {
     typeOf<Int?>() -> this.getInt(this.getColumnIndex(name))
     typeOf<Int>() -> this.getInt(this.getColumnIndex(name))
     typeOf<String>() -> this.getString(this.getColumnIndex(name))
-    typeOf<ForeignKey>() -> ForeignKey(
-        DBHelper.classFromAttributeName(name) as KClass<ModelClass>,
-        this.getInt(this.getColumnIndex("${name}_id"))
-    )
+    typeOf<ForeignKey>() -> {
+        val className = name.split("__").last().capitalize()
+        ForeignKey(
+            DBHelper.classFromAttributeName(className) as KClass<out ModelClass>,
+            this.getInt(this.getColumnIndex("${name}_id"))
+        )
+    }
     else -> null
 }
 
@@ -51,7 +54,7 @@ abstract class ModelClass(open val id: Int? = null) {
             val kwargs = HashMap<KParameter, Any?>()
             val constructor = klass.constructors.first()
             for (arg in constructor.parameters) {
-                kwargs[arg] = cursor.getType(arg.type, arg.name!!)
+                kwargs[arg] = cursor.getType(arg.type, "${klass.simpleName}__${arg.name!!}")
             }
             return klass.constructors.first().callBy(kwargs) as ModelClass
         }
@@ -197,7 +200,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     inner class SQLRequest(val db: SQLiteDatabase, val klass: KClass<*>, val request: String?) {
 
         private val lastRequest: String
-            get() = if (request == null) "SELECT * FROM ${klass.simpleName} ${joinKeys()} WHERE" else "$request AND"
+            get() = if (request == null) "SELECT ${craftSelect(klass)} FROM ${klass.simpleName} ${joinKeys()} WHERE" else "$request AND"
 
         /**
          * Add a systematic left join on every foreign key
@@ -208,14 +211,39 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
          */
         private fun joinKeys(): String {
             var join = ""
-            for (member in klass.memberProperties){
-                join += when (member.returnType){
+            for (member in klass.memberProperties) {
+                join += when (member.returnType) {
                     typeOf<ForeignKey>() -> "left join ${member.name.capitalize()} on " +
                             "${klass.simpleName}.${member.name}_id=${member.name.capitalize()}.id "
                     else -> ""
                 }
             }
             return join
+        }
+
+        /**
+         * Enumerate all select possibilities to avoid clash with left joins
+         * Recursively get all foreign classes to also name them
+         * The format is always Table__attribute
+         *
+         * @return select to apply to lastRequest
+         */
+        private fun craftSelect(klass: KClass<*>, recurse: Boolean = true): String {
+            var select = ""
+            for (member in klass.memberProperties) {
+                select += when (member.returnType) {
+                    typeOf<ForeignKey>() -> "${klass.simpleName}.${member.name}_id AS ${klass.simpleName}__${member.name}_id," +
+                            if (recurse) {
+                                craftSelect(
+                                    classFromAttributeName(member.name)!!,
+                                    false
+                                ) + ","
+                            } else ""
+                    else -> "${klass.simpleName}.${member.name} AS ${klass.simpleName}__${member.name},"
+                }
+            }
+
+            return select.subSequence(0, select.length - 1).toString()
         }
 
         /**
@@ -256,8 +284,9 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         @ExperimentalStdlibApi
         fun all(): List<ModelClass> {
             val list = ArrayList<ModelClass>()
-            // Remove last word from last query (remove WHERE and AND)
-            val cursor = db.rawQuery(toSQL(), null)
+            // Execute request
+            val request = toSQL()
+            val cursor = db.rawQuery(request, null)
             if (cursor!!.count == 0)
                 return list
             cursor.moveToFirst()
@@ -286,7 +315,21 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
          * @return a newly generated SQLRequest
          */
         fun filterRelated(relatedClass: KClass<*>, attribute: String, value: Any): SQLRequest =
-            SQLRequest(db, klass, "$lastRequest ${relatedClass.simpleName}.${attribute}='${value.toString()}'")
+            SQLRequest(
+                db,
+                klass,
+                "$lastRequest ${relatedClass.simpleName}__${attribute}='${value.toString()}'"
+            )
+
+        /**
+         * Check if an object exists for this request and return a boolean
+         * WARNING : This is not optimized
+         *
+         * @return Boolean
+         */
+        fun exists(): Boolean {
+            return first() != null
+        }
     }
 
     /**
