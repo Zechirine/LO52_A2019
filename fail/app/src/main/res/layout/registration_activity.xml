@@ -22,18 +22,20 @@
         app:rippleColor="#03A9F4" />
 
     <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="555dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/addPlayerButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/PlayerList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
