@@ -5,23 +5,17 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/playerNameText"
+        android:id="@+id/teamNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
         android:focusable="true"
-        android:hint="@string/registration_player_placeholder"
+        android:hint="@string/registration_team_placeholder"
         android:inputType="textPersonName" />
 
-    <Spinner
-        android:id="@+id/teamSpinner"
-        android:layout_width="148dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/deletePlayerButton"
+        android:id="@+id/deleteTeamButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"

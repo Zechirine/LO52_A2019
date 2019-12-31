@@ -11,4 +11,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="activity_main_history">Historique</string>
     <string name="registration_player_placeholder">Nom du joueur</string>
+    <string name="registration_team_placeholder">Nom d\'équipe</string>
+    <string name="registration_team_base_name">Équipe</string>
 </resources>

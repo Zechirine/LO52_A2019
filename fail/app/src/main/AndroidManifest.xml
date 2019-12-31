@@ -17,11 +17,12 @@
         <activity android:name=".RaceStateActivity" />
         <activity android:name=".ArchiveActivity" />
         <activity android:name=".RaceActivity" />
-        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".PlayerRegistrationActivity" />
+        <activity android:name=".TeamRegistrationActivity" />
         <activity
             android:name=".DummyActivity"
             android:label="@string/title_activity_dummy"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">

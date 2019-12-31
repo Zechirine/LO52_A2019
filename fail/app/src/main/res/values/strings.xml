@@ -10,4 +10,6 @@
     <string name="activity_main_begin_race">BEGIN RACE</string>
     <string name="activity_main_history">History</string>
     <string name="registration_player_placeholder">Player name</string>
+    <string name="registration_team_placeholder">Team name</string>
+    <string name="registration_team_base_name">Team</string>
 </resources>

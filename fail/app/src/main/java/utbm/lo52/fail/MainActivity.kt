@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 raceName += "bis"
             }
             val race = db.save(Race(null, raceName, LAP_PER_RACE))
-            val intent = Intent(this, RegistrationActivity::class.java)
+            val intent = Intent(this, TeamRegistrationActivity::class.java)
             intent.putExtra("raceID", race!!.id)
             startActivity(intent)
         }

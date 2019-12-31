@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity">
+    tools:context=".PlayerRegistrationActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addPlayerButton"
+        android:id="@+id/addElementButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#3F51B5"
@@ -24,7 +24,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addPlayerButton"
+        app:layout_constraintBottom_toTopOf="@+id/addElementButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/PlayerList"
+            android:id="@+id/ItemList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" />
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/addPlayerButton"
+        app:layout_constraintEnd_toStartOf="@+id/addElementButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.97"
@@ -57,7 +57,7 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addPlayerButton"
+        app:layout_constraintStart_toEndOf="@+id/addElementButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.97"
         app:srcCompat="?attr/actionModeCloseDrawable" />

@@ -3,10 +3,12 @@ package utbm.lo52.fail
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.BaseAdapter
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,14 +21,15 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @ExperimentalStdlibApi
-class RegistrationActivity : AppCompatActivity() {
+class PlayerRegistrationActivity : AppCompatActivity() {
 
+    val teams = ArrayList<Team>()
     private var players = LinkedList<Player>()
-    private val teams = ArrayList<Team>()
 
     private lateinit var playerAdapter: PlayerAdapter
     private lateinit var db: DBHelper
     private lateinit var race: Race
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,7 @@ class RegistrationActivity : AppCompatActivity() {
         db = DBHelper(this, null)
         playerAdapter = PlayerAdapter(this, db)
 
+        // Get the current race
         // This should not fail, normally
         race = db.request(Race::class).get(
             "id",
@@ -43,10 +47,8 @@ class RegistrationActivity : AppCompatActivity() {
                 if (savedInstanceState != null) savedInstanceState?.getInt("raceID", 0) else 0
             )
         ) as Race
-        if (!db.request(Team::class).filterRelated(Race::class, "id", race.id!!).exists())
-            db.save(Team(null, "team 1", ForeignKey(Race::class, race.id)))
 
-        // Restore player list
+        // Restore player and team list
         for (team in db.request(Team::class).filterRelated(
             Race::class,
             "id",
@@ -61,11 +63,11 @@ class RegistrationActivity : AppCompatActivity() {
             }
 
         }
-        PlayerList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        PlayerList.adapter = playerAdapter
+        ItemList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        ItemList.adapter = playerAdapter
         playerAdapter.submitList(players)
 
-        addPlayerButton.setOnClickListener {
+        addElementButton.setOnClickListener {
             addPlayer()
         }
 
@@ -82,8 +84,6 @@ class RegistrationActivity : AppCompatActivity() {
         players = LinkedList(players)
         players.add(player)
         playerAdapter.submitList(players)
-//        playerAdapter.notifyDataSetChanged()
-        Log.v("players", players.toString())
     }
 
     fun removePlayer(id: Int?) {
@@ -91,6 +91,8 @@ class RegistrationActivity : AppCompatActivity() {
         for (player in players) {
             if (player.id != id) {
                 newPlayers.add(player)
+            } else {
+                db.delete(player)
             }
         }
         players = newPlayers
@@ -106,13 +108,19 @@ class RegistrationActivity : AppCompatActivity() {
 
 
 @UseExperimental(ExperimentalStdlibApi::class)
-class PlayerAdapter(val activity: RegistrationActivity, val db: DBHelper) :
-    ListAdapter<Player, PlayerAdapter.PlayerViewHolder>(DiffCallback()) {
+class PlayerAdapter(private val activity: PlayerRegistrationActivity, private val db: DBHelper) :
+    ListAdapter<Player, PlayerAdapter.PlayerViewHolder>(PlayerDiffCallback()) {
 
     @ExperimentalStdlibApi
-    class PlayerViewHolder(val view: View, val activity: RegistrationActivity, val db: DBHelper) :
+    class PlayerViewHolder(
+        private val view: View,
+        private val activity: PlayerRegistrationActivity,
+        val db: DBHelper
+    ) :
         RecyclerView.ViewHolder(view) {
         fun bind(player: Player) {
+
+            // Handle Text entry
             if (player.name != "") {
                 view.playerNameText.setText(player.name)
             }
@@ -131,6 +139,35 @@ class PlayerAdapter(val activity: RegistrationActivity, val db: DBHelper) :
                     db.save(player)
                 }
             })
+
+            // Handle drop down team list
+            val adapter = TeamSpinnerAdapter(activity.teams)
+            view.teamSpinner.adapter = adapter
+            view.teamSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    pos: Int,
+                    id: Long
+                ) {
+                    // Save the selected team for the player
+                    val player = Player(
+                        player.id,
+                        player.name,
+                        player.ordering,
+                        ForeignKey(Team::class, adapter.getItem(pos).id)
+                    )
+                    db.save(player)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // It can not happen (hopefully)
+                }
+
+            }
+            view.teamSpinner.setSelection(adapter.getPositionFromDbId(player.team.id))
+
+            // Handle delete button
             view.deletePlayerButton.setOnClickListener {
                 activity.removePlayer(player.id)
             }
@@ -151,7 +188,7 @@ class PlayerAdapter(val activity: RegistrationActivity, val db: DBHelper) :
 }
 
 
-class DiffCallback : DiffUtil.ItemCallback<Player>() {
+class PlayerDiffCallback : DiffUtil.ItemCallback<Player>() {
     override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
         return oldItem.id == newItem.id
     }
@@ -160,3 +197,34 @@ class DiffCallback : DiffUtil.ItemCallback<Player>() {
         return oldItem == newItem
     }
 }
+
+class TeamSpinnerAdapter(private val teams: List<Team>) : BaseAdapter() {
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val view = LayoutInflater.from(parent?.context)
+            .inflate(android.R.layout.simple_spinner_dropdown_item, parent, false) as TextView
+        view.text = this.getItem(position).name
+        return view
+    }
+
+    override fun getItem(position: Int): Team {
+        return teams[position]
+    }
+
+    override fun getItemId(position: Int): Long {
+        return teams[position].id!!.toLong()
+    }
+
+    override fun getCount(): Int {
+        return teams.size
+    }
+
+    fun getPositionFromDbId(id: Int?): Int {
+        for ((pos, team) in teams.withIndex()) {
+            if (team.id == id)
+                return pos
+        }
+        return 0
+    }
+}
+
