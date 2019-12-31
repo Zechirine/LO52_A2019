@@ -68,6 +68,14 @@ class TeamRegistrationActivity : AppCompatActivity() {
             addTeam()
         }
 
+        cancelButton.setOnClickListener {
+            // Delete and clean the race
+            db.delete(race) // Normally, the ORM should delete everything with db constraints
+            // Go back to main menu
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         // If there is no team, add at least two teams
         if (teams.isEmpty()) {
             addTeam()

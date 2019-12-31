@@ -1,5 +1,6 @@
 package utbm.lo52.fail
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -69,6 +70,13 @@ class PlayerRegistrationActivity : AppCompatActivity() {
 
         addElementButton.setOnClickListener {
             addPlayer()
+        }
+
+        cancelButton.setOnClickListener {
+            // Go back to team creation without touching anything
+            val intent = Intent(this, TeamRegistrationActivity::class.java)
+            intent.putExtra("raceID", race!!.id)
+            startActivity(intent)
         }
 
         // If there is no player, there are as many default player as the number of team
