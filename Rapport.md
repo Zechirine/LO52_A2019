@@ -87,4 +87,51 @@ libusb.so           0xA8000000
 
 ## Implémentation d'un nouveau produit Android
 
+Pour ajouter le nouveau produit Android, il est nécessaire de remplir les fichiers suivant :
+
+```bash
+# Rsc-libusb/device/utbm/lo52_fail/vendorsetup.sh
+# On définie les cibles pour lunch en user, engineering et userdebug
+add_lunch_combo lo52_fail-eng
+add_lunch_combo lo52_fail-user
+add_lunch_combo lo52_fail-userdebug
+```
+
+```makefile
+# Rsc-libusb/device/utbm/lo52_fail/BoardConfig.mk
+# On hérite du produit hikey de Linaro pour le matériel
+include device/linaro/hikey.mk/BoardConfig.mk
+```
+
+```makefile
+# Rsc-libusb/device/utbm/lo52_fail/AndroidProducts.mk
+# On défini le Makefile à utiliser pour ce produit Android
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/lo52_fail.mk
+```
+
+```makefile
+# Rsc-libusb/device/utbm/lo52_fail/lo52_fail.mk
+# On hérite du produit hikey de Linaro pour le makefile
+$(call inherit-product, device/linaro/hikey.mk)
+
+# On a joute la libusb
+PRODUCT_PACKAGES += libusb
+# On ajoute les propriétés demandées dans le projet
+PRODUCT_PROPERTY_OVERRIDES += ro.hw=lo52 \
+                              net.dns1=8.8.8.8 \
+                              net.dns2=4.4.4.4
+# On définie le dossier où mettre les fichiers d'overlay
+PRODUCT_PACKAGE_OVERLAYS := device/utbm/lo52_fail/overlay
+
+# On choisis les noms du produit
+PRODUCT_NAME := lo52_fail
+PRODUCT_DEVICE := lo52_fail
+PRODUCT_BRAND := lo52_fail
+PRODUCT_MODEL := lo52_fail
+
+include $(call all-subdir-makefiles)
+```
+
+Enfin, on surcharge le fichier *sym_keyboard_delete.png* en le plaçant dans *Rsc-libusb/device/utbm/lo52_fail/overlay/sample/SoftKeyboard/res/drawable-mdpi*.
+
 # Utilisation de la JNI
