@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Equal</string>
+    <string name="app_name">≠Equal</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_createwallet">CreateWallet</string>
