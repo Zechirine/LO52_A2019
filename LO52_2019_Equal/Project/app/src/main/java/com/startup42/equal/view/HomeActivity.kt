@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.custom_toolbar.*
 
 class HomeActivity : AppCompatActivity() {
 
-    val viewModel = HomeViewModel()
-    var wallets: ArrayList<HomeResult>? = null
+    private val viewModel = HomeViewModel()
+    private var wallets: ArrayList<HomeResult>? = null
 
     private var adapter: HomeAdapter? = null
 
@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        walletsListView.setOnItemClickListener { parent, view, position, id ->
+        walletsListView.setOnItemClickListener { _, _, position, _ ->
             /** TODO Redirect to flux view */
             val intent = Intent(this, CreateFluxActivity::class.java)
             val wallet = wallets?.get(position)
@@ -72,11 +72,9 @@ class HomeActivity : AppCompatActivity() {
                 .subscribe()
 
             val handler = Handler()
-            handler.postDelayed(object:Runnable {
-                override fun run() {
-                    if (swipeRefresh.isRefreshing()) {
-                        swipeRefresh.setRefreshing(false)
-                    }
+            handler.postDelayed({
+                if (swipeRefresh.isRefreshing) {
+                    swipeRefresh.isRefreshing = false
                 }
             }, 1000)
         }
