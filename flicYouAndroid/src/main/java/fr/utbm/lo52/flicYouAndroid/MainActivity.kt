@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
 //        setListeners()
         //to initiate Model's Data
-        initDatabase()
+        //initDatabase()
 
 //        daoZone.removeAll()
 //        Log.i("DATA", "Zones supprimées")
