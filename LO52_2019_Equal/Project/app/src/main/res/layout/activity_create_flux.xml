@@ -6,6 +6,21 @@
         android:layout_height="match_parent"
         tools:context=".view.CreateFluxActivity">
 
+    <TextView
+            android:id="@+id/doneButtonFlux"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:text="@string/Done"
+            android:textColor="@color/textColorOnMainColor"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/include"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     <include
             android:id="@+id/include"
             layout="@layout/custom_toolbar"
@@ -75,57 +90,14 @@
             app:layout_constraintEnd_toEndOf="@+id/fluxNameTextField"
             app:layout_constraintTop_toBottomOf="@+id/fluxNameTextField" />
 
-    <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="409dp"
             android:layout_height="0dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/segmentedButton"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="-43dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/amountTextField" />
 
-        <android.support.constraint.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="Members participations"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <ListView
-                    android:id="@+id/participationListView"
-                    android:layout_width="409dp"
-                    android:layout_height="219dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3">
-
-            </ListView>
-
-            <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="Members involements"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/participationListView" />
-
-            <ListView
-                    android:id="@+id/involveListView"
-                    android:layout_width="409dp"
-                    android:layout_height="248dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4">
-
-            </ListView>
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

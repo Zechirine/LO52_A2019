@@ -9,11 +9,15 @@ class CreateFluxViewModel {
 
     val createFluxRequest = CreateFluxRequest()
 
-    fun sendData(parameters: HashMap<String, Any>): Observable<CreateFluxResult> {
+    fun sendData(parameters: HashMap<String, Any>): Observable<String> {
         return Observable.create { emitter ->
             createFluxRequest.request(parameters).subscribeBy(
                 onNext = {
-                    it.result?.let { result -> emitter.onNext(result) }
+                    if (it.error != null) {
+                        emitter.onNext(it.error)
+                    } else {
+                        emitter.onNext("Flux created")
+                    }
                 },
                 onError = { it.printStackTrace() },
                 onComplete = { println("onComplete!") }

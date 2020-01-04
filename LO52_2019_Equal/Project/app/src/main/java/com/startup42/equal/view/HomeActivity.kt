@@ -54,8 +54,7 @@ class HomeActivity : AppCompatActivity() {
         walletsListView.setOnItemClickListener { _, _, position, _ ->
             /** TODO Redirect to flux view */
             val intent = Intent(this, CreateFluxActivity::class.java)
-            val wallet = wallets?.get(position)
-            //intent.putExtra("wallet",wallet)
+            intent.putExtra("walletID",wallets?.get(position)?.walletId)
             startActivity(intent)
         }
 
