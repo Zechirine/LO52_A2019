@@ -29,7 +29,7 @@ class CreateFluxActivity : AppCompatActivity() {
     val viewModel = CreateFluxViewModel()
     var amount: Int? = null
     var type: String = "expense"
-    var members = ArrayList<MembersCreateFlux>()
+     var members = ArrayList<MembersCreateFlux>()
 
     var isDone = false
 
@@ -48,34 +48,19 @@ class CreateFluxActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_flux)
-
+    private fun setupView(memberList: ArrayList<String>){
         setSupportActionBar(customToolbar)
         setupToolBar()
 
         segmentedButton.setTintColor(getResources().getColor(R.color.mainColor))
         segmentedButton.check(R.id.expenseSB)
 
-        //val memberList = intent.getStringArrayListExtra("memberList")
-        val walletId = intent.getStringExtra("walletID")
-
-        val memberList = ArrayList<String>()
-        memberList.add("Alban")
-        memberList.add("Anthony")
-        memberList.add("Thomas")
-
-        for (member in memberList) {
-            members.add(MembersCreateFlux(member,0.0,0.0))
-        }
-
         val sec1 = SectionParicipation(memberList,SectionParameters.builder()
             .itemResourceId(R.layout.row_createflux)
             .headerResourceId(R.layout.header_createflux)
             .build())
 
-        val sec2 = SectionParicipation(memberList,SectionParameters.builder()
+        val sec2 = SectionInvolvement(memberList,SectionParameters.builder()
             .itemResourceId(R.layout.row_createflux)
             .headerResourceId(R.layout.header_createflux)
             .build())
@@ -87,8 +72,25 @@ class CreateFluxActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = sectionAdapter
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_create_flux)
 
+        //val memberList = intent.getStringArrayListExtra("memberList")
+        val walletId = intent.getStringExtra("walletID")
+
+        //TODO Remove
+        val memberList = ArrayList<String>()
+        memberList.add("Alban")
+        memberList.add("Anthony")
+
+        setupView(memberList)
+
+        for (member in memberList) {
+            members.add(MembersCreateFlux(member,0.0,0.0))
+        }
 
         amountTextField.addTextChangedListener(object : TextWatcher {
 
@@ -127,10 +129,11 @@ class CreateFluxActivity : AppCompatActivity() {
                 hashMap.put("title", fluxNameTextField.text.toString())
                 hashMap.put("walletId",walletId)
                 hashMap.put("type",type)
-                hashMap.put("amount", amountTextField.text.toString())
+                hashMap.put("amount", amountTextField.text.toString().toDouble())
                 hashMap.put("members", membersToSend)
                 hashMap.put("userId", userId)
 
+                println(hashMap)
 
                 viewModel.sendData(hashMap)
                     .doOnNext {
@@ -162,7 +165,7 @@ class CreateFluxActivity : AppCompatActivity() {
         return dictMember
     }
 
-    private class SectionParicipation(val nameMembers: ArrayList<String>,
+    inner class SectionParicipation(val nameMembers: ArrayList<String>,
                                       sectionParameters: SectionParameters ): Section(sectionParameters) {
 
         override fun getContentItemsTotal(): Int {
@@ -170,8 +173,8 @@ class CreateFluxActivity : AppCompatActivity() {
         }
 
         override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-            val myItemViewHodler = holder as MyItemViewHodler
-            myItemViewHodler.bind(nameMembers.get(position))
+            val myItemViewHodler = holder as ViewHodlerParticipation
+            myItemViewHodler.bind(nameMembers.get(position),position)
         }
 
         override fun getItemViewHolder(view: View?): RecyclerView.ViewHolder {
@@ -179,30 +182,113 @@ class CreateFluxActivity : AppCompatActivity() {
                 val checkBox = view.findViewById<CheckBox>(R.id.isConcerned)
                 checkBox.isChecked = !checkBox.isChecked
             }
-
-            val amount = view?.findViewById<EditText>(R.id.amountRowTextField)
-            // TODO listener to amount and percentage
-            return MyItemViewHodler(view!!)
+            return ViewHodlerParticipation(view!!)
         }
     }
 
-    private class MyItemViewHodler(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(name: String) {
+    inner class ViewHodlerParticipation(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(name: String,position: Int) {
             setupCell(itemView,name)
+
+            val amountTextField = itemView.findViewById<EditText>(R.id.amountRowTextField)
+            amountTextField.addTextChangedListener(object : TextWatcher {
+
+                override fun afterTextChanged(s: Editable) {}
+
+                override fun beforeTextChanged(s: CharSequence, start: Int,
+                                               count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int,
+                                           before: Int, count: Int) {
+
+                    val checkBox = itemView.findViewById<CheckBox>(R.id.isConcerned)
+                    if (s.isNotEmpty()){
+                        members.get(position).from = s.toString().toDouble()
+                        checkBox.isChecked = true
+                    } else {
+                        checkBox.isChecked = false
+                    }
+                }
+            })
         }
 
         private fun setupCell(row: View, memberName: String): View {
             val memberNameTextView = row.findViewById<TextView>(R.id.nameMember)
             memberNameTextView.text = memberName
-/* TODO cells
 
-            val amountTextField = row.findViewById<EditText>(R.id.amountRowTextField)
-            amountTextField.isEnabled = false
-            amountTextField.isFocusable = false
+            return row
+        }
+    }
 
-            val percentageTextField = row.findViewById<EditText>(R.id.percentageTextField)
-            percentageTextField.isEnabled = false
-            percentageTextField.isFocusable = false*/
+    inner class SectionInvolvement(val nameMembers: ArrayList<String>,
+                                      sectionParameters: SectionParameters ): Section(sectionParameters) {
+
+        override fun getContentItemsTotal(): Int {
+            return nameMembers.size
+        }
+
+        override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+            val myItemViewHodler = holder as ViewHodlerInvolvement
+            myItemViewHodler.bind(nameMembers.get(position),position)
+        }
+
+        override fun getItemViewHolder(view: View?): RecyclerView.ViewHolder {
+            view?.setOnClickListener { view
+                val checkBox = view.findViewById<CheckBox>(R.id.isConcerned)
+                checkBox.isChecked = !checkBox.isChecked
+            }
+            return ViewHodlerInvolvement(view!!)
+        }
+    }
+
+    inner class ViewHodlerInvolvement(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(name: String,position: Int) {
+            setupCell(itemView,name)
+
+            val amountTextField = itemView.findViewById<EditText>(R.id.amountRowTextField)
+            amountTextField.addTextChangedListener(object : TextWatcher {
+
+                override fun afterTextChanged(s: Editable) {}
+
+                override fun beforeTextChanged(s: CharSequence, start: Int,
+                                               count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int,
+                                           before: Int, count: Int) {
+                    val checkBox = itemView.findViewById<CheckBox>(R.id.isConcerned)
+                    if (s.isNotEmpty()){
+                        members.get(position).to = s.toString().toDouble()
+                        checkBox.isChecked = true
+                    } else {
+                        checkBox.isChecked = false
+                    }
+                }
+            })
+
+            val percentageTextField = itemView.findViewById<EditText>(R.id.percentageTextField)
+            percentageTextField.addTextChangedListener(object : TextWatcher {
+
+                override fun afterTextChanged(s: Editable) {}
+
+                override fun beforeTextChanged(s: CharSequence, start: Int,
+                                               count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int,
+                                           before: Int, count: Int) {
+                    if (s.isNotEmpty()){
+
+                        //members.add(MembersCreateFlux(name,0.0,s.toString().toDouble()))
+                    }
+                }
+            })
+        }
+
+        private fun setupCell(row: View, memberName: String): View {
+            val memberNameTextView = row.findViewById<TextView>(R.id.nameMember)
+            memberNameTextView.text = memberName
 
             return row
         }
