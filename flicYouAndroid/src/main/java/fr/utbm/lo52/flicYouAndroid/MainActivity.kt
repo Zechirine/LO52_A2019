@@ -118,13 +118,11 @@ class MainActivity : AppCompatActivity() {
     private fun launchListButtonActivity() {
         val intent = Intent(this, ListButtons::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun launchListWatchesActivity() {
         val intent = Intent(this, ListWatches::class.java)
         startActivity(intent)
-        finish()
     }
 
     //to destroy instance of database and close it

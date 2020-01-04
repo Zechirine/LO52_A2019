@@ -86,7 +86,7 @@ class AddButton : AppCompatActivity() {
             val flicButtonPending = manager.completeGrabButton(requestCode, resultCode, data)
 
             if (flicButtonPending != null) {
-                flicButtonPending.registerListenForBroadcast(FlicBroadcastReceiverFlags.UP_OR_DOWN or FlicBroadcastReceiverFlags.REMOVED)
+                flicButtonPending.registerListenForBroadcast(FlicBroadcastReceiverFlags.CLICK_OR_DOUBLE_CLICK_OR_HOLD)
 
                 if(!isButtonAlreadyAdded(flicButtonPending)){
                     flicButton = flicButtonPending
