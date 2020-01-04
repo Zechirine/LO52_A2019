@@ -26,17 +26,16 @@ class CreateFluxActivity : AppCompatActivity() {
 
     class MembersCreateFlux(val name: String, var from: Double, var to: Double)
 
+    private var type: String = "expense"
+    private var isDone = false
     val viewModel = CreateFluxViewModel()
     var amount: Int? = null
-    var type: String = "expense"
-     var members = ArrayList<MembersCreateFlux>()
-
-    var isDone = false
+    var members = ArrayList<MembersCreateFlux>()
 
     private fun setupToolBar() {
 
-        titleTextView.setTextColor(getResources().getColor(R.color.textColorOnMainColor))
-        titleTextView.text = "New Flux"
+        titleTextView.setTextColor(this.resources.getColor(R.color.textColorOnMainColor))
+        titleTextView.text = getString(R.string.newFlux)
 
         backButton.setColorFilter(
             ContextCompat.getColor(this, R.color.textColorOnMainColor),
@@ -65,7 +64,6 @@ class CreateFluxActivity : AppCompatActivity() {
             .headerResourceId(R.layout.header_createflux)
             .build())
 
-
         val sectionAdapter = SectionedRecyclerViewAdapter()
         sectionAdapter.addSection(sec1)
         sectionAdapter.addSection(sec2)
@@ -78,7 +76,7 @@ class CreateFluxActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_flux)
 
-        //val memberList = intent.getStringArrayListExtra("memberList")
+        //val memberList = intent.getStringArrayListExtra("memberList") TODO
         val walletId = intent.getStringExtra("walletID")
 
         //TODO Remove
@@ -118,7 +116,7 @@ class CreateFluxActivity : AppCompatActivity() {
 
                 val membersToSend = membersToSend()
 
-                segmentedButton.setOnCheckedChangeListener { group, checkedId ->
+                segmentedButton.setOnCheckedChangeListener { _, checkedId ->
                     when(checkedId) {
                         R.id.expenseSB -> type = "expense"
                         R.id.incomeSB -> type = "income"
@@ -126,14 +124,12 @@ class CreateFluxActivity : AppCompatActivity() {
                 }
 
                 val hashMap = HashMap<String, Any>()
-                hashMap.put("title", fluxNameTextField.text.toString())
-                hashMap.put("walletId",walletId)
-                hashMap.put("type",type)
-                hashMap.put("amount", amountTextField.text.toString().toDouble())
-                hashMap.put("members", membersToSend)
-                hashMap.put("userId", userId)
-
-                println(hashMap)
+                hashMap["title"] = fluxNameTextField.text.toString()
+                hashMap["walletId"] = walletId
+                hashMap["type"] = type
+                hashMap["amount"] = amountTextField.text.toString().toDouble()
+                hashMap["userId"] = membersToSend
+                hashMap["userId"] = userId
 
                 viewModel.sendData(hashMap)
                     .doOnNext {
@@ -154,15 +150,23 @@ class CreateFluxActivity : AppCompatActivity() {
     }
 
     private fun membersToSend(): ArrayList<HashMap<String,Any>> {
-    var dictMember: ArrayList<HashMap<String,Any>> = ArrayList()
+    val dictMember: ArrayList<HashMap<String,Any>> = ArrayList()
         for (memberLine in 0..(members.size-1)) {
             val hashmap = HashMap<String, Any>()
-            hashmap.put("name",members[memberLine].name)
-            hashmap.put("from",members[memberLine].from)
-            hashmap.put("to",members[memberLine].to)
+            hashmap["name"] = members[memberLine].name
+            hashmap["from"] = members[memberLine].from
+            hashmap["to"] = members[memberLine].to
             dictMember.add(hashmap)
         }
         return dictMember
+    }
+
+    private class HeaderViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+        val header:TextView
+
+        init{
+            header = itemView.findViewById(R.id.headerName)
+        }
     }
 
     inner class SectionParicipation(val nameMembers: ArrayList<String>,
@@ -178,11 +182,20 @@ class CreateFluxActivity : AppCompatActivity() {
         }
 
         override fun getItemViewHolder(view: View?): RecyclerView.ViewHolder {
-            view?.setOnClickListener { view
+            view?.setOnClickListener {
                 val checkBox = view.findViewById<CheckBox>(R.id.isConcerned)
                 checkBox.isChecked = !checkBox.isChecked
             }
             return ViewHodlerParticipation(view!!)
+        }
+
+        override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder?) {
+            val headerViewHolder = holder as HeaderViewHolder
+            headerViewHolder.header.text = getString(R.string.headerParticipation)
+        }
+
+        override fun getHeaderViewHolder(view: View?): RecyclerView.ViewHolder {
+            return HeaderViewHolder(view!!)
         }
     }
 
@@ -223,11 +236,16 @@ class CreateFluxActivity : AppCompatActivity() {
 
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
-                    if (s.isNotEmpty()){
-                        val percentage = s.toString().toDouble()/100
-                        val amountWithPercentage = amount?.times(percentage)
-                        val amountTextField = itemView.findViewById<EditText>(R.id.amountRowTextField)
-                        amountTextField.setText(amountWithPercentage.toString())
+                    if (s.isNotEmpty() && amount != null){
+                        val percentageDouble = s.toString().toDouble()
+                        if (percentageDouble < 100.0) {
+                            val amountWithPercentage = amount?.times((percentageDouble / 100))
+                            val amountTextField =
+                                itemView.findViewById<EditText>(R.id.amountRowTextField)
+                            amountTextField.setText(amountWithPercentage.toString())
+                        } else {
+                            Toast.makeText(this@CreateFluxActivity,getString(R.string.errorPercentage),Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             })
@@ -254,11 +272,20 @@ class CreateFluxActivity : AppCompatActivity() {
         }
 
         override fun getItemViewHolder(view: View?): RecyclerView.ViewHolder {
-            view?.setOnClickListener { view
+            view?.setOnClickListener {
                 val checkBox = view.findViewById<CheckBox>(R.id.isConcerned)
                 checkBox.isChecked = !checkBox.isChecked
             }
             return ViewHodlerInvolvement(view!!)
+        }
+
+        override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder?) {
+            val headerViewHolder = holder as HeaderViewHolder
+            headerViewHolder.header.text = getString(R.string.headerInvolvements)
+        }
+
+        override fun getHeaderViewHolder(view: View?): RecyclerView.ViewHolder {
+            return HeaderViewHolder(view!!)
         }
     }
 
@@ -298,11 +325,16 @@ class CreateFluxActivity : AppCompatActivity() {
 
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
-                    if (s.isNotEmpty()){
-                        val percentage = s.toString().toDouble()/100
-                        val amountWithPercentage = amount?.times(percentage)
-                        val amountTextField = itemView.findViewById<EditText>(R.id.amountRowTextField)
-                        amountTextField.setText(amountWithPercentage.toString())
+                    if (s.isNotEmpty() && amount != null){
+                        val percentageDouble = s.toString().toDouble()
+                        if (percentageDouble < 100.0) {
+                            val amountWithPercentage = amount?.times((percentageDouble / 100))
+                            val amountTextField =
+                                itemView.findViewById<EditText>(R.id.amountRowTextField)
+                            amountTextField.setText(amountWithPercentage.toString())
+                        } else {
+                        Toast.makeText(this@CreateFluxActivity,getString(R.string.errorPercentage),Toast.LENGTH_LONG).show()
+                    }
                     }
                 }
             })

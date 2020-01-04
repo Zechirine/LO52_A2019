@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroundListView"
         tools:context=".view.CreateFluxActivity">
 
     <TextView
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:text="Flux informations"
+            android:text="@string/headerInformations"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include" />
 
@@ -46,8 +47,10 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
             android:ems="10"
+            android:hint="@string/fluxName"
             android:inputType="textPersonName"
-            android:hint="Name"
+            android:textColor="@color/MainColorOnMainBackground"
+            android:textColorHint="@color/MainHintColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView"
@@ -71,14 +74,14 @@
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expense" />
+                android:text="@string/expense" />
 
         <RadioButton
                 android:id="@+id/incomeSB"
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Income" />
+                android:text="@string/income" />
     </info.hoang8f.android.segmented.SegmentedGroup>
 
     <EditText
@@ -86,7 +89,10 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/amount"
             android:inputType="numberDecimal"
+            android:textColor="@color/MainColorOnMainBackground"
+            android:textColorHint="@color/MainHintColor"
             app:layout_constraintEnd_toEndOf="@+id/fluxNameTextField"
             app:layout_constraintTop_toBottomOf="@+id/fluxNameTextField" />
 

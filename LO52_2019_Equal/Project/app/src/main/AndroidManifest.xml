@@ -16,17 +16,22 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".view.LoginActivity">
+        <activity android:name=".view.LoginActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.RegisterActivity"/>
-        <activity android:name=".view.CreateWalletActivity"/>
-        <activity android:name=".view.HomeActivity"/>
-        <activity android:name=".view.CreateFluxActivity"/>
+        <activity android:name=".view.RegisterActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.CreateWalletActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.HomeActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.CreateFluxActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

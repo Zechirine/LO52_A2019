@@ -5,7 +5,7 @@
         android:id="@+id/row_createflux"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/textColorOnMainColor"
+        android:background="@color/backgroundListView"
         android:maxHeight="@dimen/cell_size">
 
     <CheckBox
@@ -33,8 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:ems="10"
-            android:hint="Amount"
+            android:hint="@string/amount"
             android:inputType="numberDecimal"
+            android:textColor="@color/MainColorOnMainBackground"
+            android:textColorHint="@color/MainHintColor"
             app:layout_constraintEnd_toStartOf="@+id/percentageTextField"
             app:layout_constraintTop_toTopOf="@+id/percentageTextField" />
 
@@ -44,9 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:ems="10"
-            android:hint="%"
+            android:hint="@string/symbolPercentage"
             android:inputType="numberDecimal"
             android:textAlignment="textEnd"
+            android:textColor="@color/MainColorOnMainBackground"
+            android:textColorHint="@color/MainHintColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
