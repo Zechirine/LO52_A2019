@@ -211,6 +211,26 @@ class CreateFluxActivity : AppCompatActivity() {
                     }
                 }
             })
+
+            val percentageTextField = itemView.findViewById<EditText>(R.id.percentageTextField)
+            percentageTextField.addTextChangedListener(object : TextWatcher {
+
+                override fun afterTextChanged(s: Editable) {}
+
+                override fun beforeTextChanged(s: CharSequence, start: Int,
+                                               count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int,
+                                           before: Int, count: Int) {
+                    if (s.isNotEmpty()){
+                        val percentage = s.toString().toDouble()/100
+                        val amountWithPercentage = amount?.times(percentage)
+                        val amountTextField = itemView.findViewById<EditText>(R.id.amountRowTextField)
+                        amountTextField.setText(amountWithPercentage.toString())
+                    }
+                }
+            })
         }
 
         private fun setupCell(row: View, memberName: String): View {
@@ -279,8 +299,10 @@ class CreateFluxActivity : AppCompatActivity() {
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
                     if (s.isNotEmpty()){
-
-                        //members.add(MembersCreateFlux(name,0.0,s.toString().toDouble()))
+                        val percentage = s.toString().toDouble()/100
+                        val amountWithPercentage = amount?.times(percentage)
+                        val amountTextField = itemView.findViewById<EditText>(R.id.amountRowTextField)
+                        amountTextField.setText(amountWithPercentage.toString())
                     }
                 }
             })
