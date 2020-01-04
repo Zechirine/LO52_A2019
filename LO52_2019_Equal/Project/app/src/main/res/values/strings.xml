@@ -29,6 +29,7 @@
     <string name="Done">Done</string>
     <string name="Name">Name</string>
     <string name="errorPercentage">The percentage is between 0 or 100</string>
+    <string name="errorAmount">You need to enter an amount for the flux</string>
     <string name="headerParticipation">Member Participations</string>
     <string name="headerInvolvements">Member Involvements</string>
     <string name="headerInformations">Flux informations</string>

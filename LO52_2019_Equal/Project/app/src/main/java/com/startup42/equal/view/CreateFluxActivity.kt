@@ -150,7 +150,7 @@ class CreateFluxActivity : AppCompatActivity() {
     }
 
     private fun membersToSend(): ArrayList<HashMap<String,Any>> {
-    val dictMember: ArrayList<HashMap<String,Any>> = ArrayList()
+        val dictMember: ArrayList<HashMap<String,Any>> = ArrayList()
         for (memberLine in 0..(members.size-1)) {
             val hashmap = HashMap<String, Any>()
             hashmap["name"] = members[memberLine].name
@@ -162,23 +162,19 @@ class CreateFluxActivity : AppCompatActivity() {
     }
 
     private class HeaderViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        val header:TextView
-
-        init{
-            header = itemView.findViewById(R.id.headerName)
-        }
+        val header:TextView = itemView.findViewById(R.id.headerName)
     }
 
     inner class SectionParicipation(val nameMembers: ArrayList<String>,
-                                      sectionParameters: SectionParameters ): Section(sectionParameters) {
+                                    sectionParameters: SectionParameters ): Section(sectionParameters) {
 
         override fun getContentItemsTotal(): Int {
             return nameMembers.size
         }
 
         override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-            val myItemViewHodler = holder as ViewHodlerParticipation
-            myItemViewHodler.bind(nameMembers.get(position),position)
+            val myItemViewHolder = holder as ViewHolderParticipation
+            myItemViewHolder.bind(nameMembers.get(position),position)
         }
 
         override fun getItemViewHolder(view: View?): RecyclerView.ViewHolder {
@@ -186,7 +182,7 @@ class CreateFluxActivity : AppCompatActivity() {
                 val checkBox = view.findViewById<CheckBox>(R.id.isConcerned)
                 checkBox.isChecked = !checkBox.isChecked
             }
-            return ViewHodlerParticipation(view!!)
+            return ViewHolderParticipation(view!!)
         }
 
         override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder?) {
@@ -199,7 +195,7 @@ class CreateFluxActivity : AppCompatActivity() {
         }
     }
 
-    inner class ViewHodlerParticipation(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolderParticipation(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(name: String,position: Int) {
             setupCell(itemView,name)
 
@@ -214,13 +210,20 @@ class CreateFluxActivity : AppCompatActivity() {
 
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
-
-                    val checkBox = itemView.findViewById<CheckBox>(R.id.isConcerned)
-                    if (s.isNotEmpty()){
-                        members.get(position).from = s.toString().toDouble()
-                        checkBox.isChecked = true
+                    if(amount != null) {
+                        val checkBox = itemView.findViewById<CheckBox>(R.id.isConcerned)
+                        if (s.isNotEmpty()) {
+                            members.get(position).from = s.toString().toDouble()
+                            checkBox.isChecked = true
+                        } else {
+                            checkBox.isChecked = false
+                        }
                     } else {
-                        checkBox.isChecked = false
+                        Toast.makeText(
+                            this@CreateFluxActivity,
+                            getString(R.string.errorAmount),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             })
@@ -236,15 +239,27 @@ class CreateFluxActivity : AppCompatActivity() {
 
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
-                    if (s.isNotEmpty() && amount != null){
-                        val percentageDouble = s.toString().toDouble()
-                        if (percentageDouble < 100.0) {
-                            val amountWithPercentage = amount?.times((percentageDouble / 100))
-                            val amountTextField =
-                                itemView.findViewById<EditText>(R.id.amountRowTextField)
-                            amountTextField.setText(amountWithPercentage.toString())
+                    if (s.isNotEmpty()) {
+                        if (amount != null) {
+                            val percentageDouble = s.toString().toDouble()
+                            if (percentageDouble < 100.0) {
+                                val amountWithPercentage = amount?.times((percentageDouble / 100))
+                                val amountTextField =
+                                    itemView.findViewById<EditText>(R.id.amountRowTextField)
+                                amountTextField.setText(amountWithPercentage.toString())
+                            } else {
+                                Toast.makeText(
+                                    this@CreateFluxActivity,
+                                    getString(R.string.errorPercentage),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         } else {
-                            Toast.makeText(this@CreateFluxActivity,getString(R.string.errorPercentage),Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                this@CreateFluxActivity,
+                                getString(R.string.errorAmount),
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                 }
@@ -260,15 +275,15 @@ class CreateFluxActivity : AppCompatActivity() {
     }
 
     inner class SectionInvolvement(val nameMembers: ArrayList<String>,
-                                      sectionParameters: SectionParameters ): Section(sectionParameters) {
+                                   sectionParameters: SectionParameters ): Section(sectionParameters) {
 
         override fun getContentItemsTotal(): Int {
             return nameMembers.size
         }
 
         override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-            val myItemViewHodler = holder as ViewHodlerInvolvement
-            myItemViewHodler.bind(nameMembers.get(position),position)
+            val myItemViewHolder = holder as ViewHolderInvolvement
+            myItemViewHolder.bind(nameMembers.get(position),position)
         }
 
         override fun getItemViewHolder(view: View?): RecyclerView.ViewHolder {
@@ -276,7 +291,7 @@ class CreateFluxActivity : AppCompatActivity() {
                 val checkBox = view.findViewById<CheckBox>(R.id.isConcerned)
                 checkBox.isChecked = !checkBox.isChecked
             }
-            return ViewHodlerInvolvement(view!!)
+            return ViewHolderInvolvement(view!!)
         }
 
         override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder?) {
@@ -289,7 +304,7 @@ class CreateFluxActivity : AppCompatActivity() {
         }
     }
 
-    inner class ViewHodlerInvolvement(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolderInvolvement(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(name: String,position: Int) {
             setupCell(itemView,name)
 
@@ -304,12 +319,20 @@ class CreateFluxActivity : AppCompatActivity() {
 
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
-                    val checkBox = itemView.findViewById<CheckBox>(R.id.isConcerned)
-                    if (s.isNotEmpty()){
-                        members.get(position).to = s.toString().toDouble()
-                        checkBox.isChecked = true
+                    if (amount != null) {
+                        val checkBox = itemView.findViewById<CheckBox>(R.id.isConcerned)
+                        if (s.isNotEmpty()) {
+                            members.get(position).to = s.toString().toDouble()
+                            checkBox.isChecked = true
+                        } else {
+                            checkBox.isChecked = false
+                        }
                     } else {
-                        checkBox.isChecked = false
+                        Toast.makeText(
+                            this@CreateFluxActivity,
+                            getString(R.string.errorAmount),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             })
@@ -325,16 +348,20 @@ class CreateFluxActivity : AppCompatActivity() {
 
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
-                    if (s.isNotEmpty() && amount != null){
-                        val percentageDouble = s.toString().toDouble()
-                        if (percentageDouble < 100.0) {
-                            val amountWithPercentage = amount?.times((percentageDouble / 100))
-                            val amountTextField =
-                                itemView.findViewById<EditText>(R.id.amountRowTextField)
-                            amountTextField.setText(amountWithPercentage.toString())
+                    if (s.isNotEmpty()){
+                        if (amount != null){
+                            val percentageDouble = s.toString().toDouble()
+                            if (percentageDouble < 100.0) {
+                                val amountWithPercentage = amount?.times((percentageDouble / 100))
+                                val amountTextField =
+                                    itemView.findViewById<EditText>(R.id.amountRowTextField)
+                                amountTextField.setText(amountWithPercentage.toString())
+                            } else {
+                                Toast.makeText(this@CreateFluxActivity,getString(R.string.errorPercentage),Toast.LENGTH_LONG).show()
+                            }
                         } else {
-                        Toast.makeText(this@CreateFluxActivity,getString(R.string.errorPercentage),Toast.LENGTH_LONG).show()
-                    }
+                            Toast.makeText(this@CreateFluxActivity,getString(R.string.errorAmount),Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             })
@@ -343,7 +370,6 @@ class CreateFluxActivity : AppCompatActivity() {
         private fun setupCell(row: View, memberName: String): View {
             val memberNameTextView = row.findViewById<TextView>(R.id.nameMember)
             memberNameTextView.text = memberName
-
             return row
         }
     }
