@@ -150,6 +150,7 @@ class HomeActivity : AppCompatActivity() {
 
                 val intent = Intent(Equal.context, WalletActivity::class.java)
                 intent.putExtra("walletId", wallet.walletId)
+                intent.putExtra("walletName", wallet.title)
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
                 Equal.context.startActivity(intent)
             }

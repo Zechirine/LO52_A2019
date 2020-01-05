@@ -246,9 +246,6 @@ class HistoryFragment : Fragment() {
 
                                 println("You just approved the flux")
 
-                                val intent = Intent(Equal.context, WalletActivity::class.java)
-                                Equal.context.startActivity(intent)
-
 
                             } else {
                                 println(it)
@@ -272,9 +269,6 @@ class HistoryFragment : Fragment() {
 
                                 println("You just declined the flux")
 
-                                val intent = Intent(Equal.context, WalletActivity::class.java)
-                                Equal.context.startActivity(intent)
-
 
                             } else {
                                 println(it)
@@ -292,7 +286,8 @@ class HistoryFragment : Fragment() {
                     "declined" -> {approvedButton?.visibility = View.GONE
                         declinedButton?.visibility = View.GONE
                     }
-                    "pending" -> {approvedButton?.visibility = View.VISIBLE
+                    "pending" -> {
+                        approvedButton?.visibility = View.VISIBLE
                         declinedButton?.visibility = View.VISIBLE
                     }
                     else -> {approvedButton?.visibility = View.GONE
@@ -353,10 +348,6 @@ class HistoryFragment : Fragment() {
             val view : View =LayoutInflater.from(Equal.context).inflate(
                 R.layout.row_wallet_item, parent, false)
             return SimpleViewHolder(view)
-        }
-
-        fun updateFlux(flux: ArrayList<WalletFlux>){
-            fluxList = flux
         }
 
         override fun getItemId(position: Int): Long {

@@ -10,19 +10,17 @@ import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
-import com.startup42.equal.Equal
 import com.startup42.equal.R
 import com.startup42.equal.model.WalletResult
 import com.startup42.equal.viewModel.ShareViewModel
 import com.startup42.equal.viewModel.WalletViewModel
 import kotlinx.android.synthetic.main.activity_wallet.*
-import kotlinx.android.synthetic.main.popup_share.*
-import kotlinx.android.synthetic.main.popup_share.view.*
+import kotlinx.android.synthetic.main.custom_toolbar.*
 
 
 class WalletActivity : AppCompatActivity(), HistoryFragment.OnFragmentInteractionListener,
@@ -32,15 +30,20 @@ class WalletActivity : AppCompatActivity(), HistoryFragment.OnFragmentInteractio
 
     var walletId : String = ""
     var userId : String = ""
+    var walletName : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         walletId = intent.getStringExtra("walletId")
+        walletName = intent.getStringExtra("walletName")
         userId = getSharedPreferences("Login", Context.MODE_PRIVATE)
             .getString("userId", "errorid")
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wallet)
+
+        setSupportActionBar(customToolbar)
+        setupToolBar()
 
 
 
@@ -72,6 +75,21 @@ class WalletActivity : AppCompatActivity(), HistoryFragment.OnFragmentInteractio
             dialog.show(supportFragmentManager, "ShareDialogFragment")
         }
     }
+
+    private fun setupToolBar() {
+
+        titleTextView.setTextColor(getResources().getColor(R.color.textColorOnMainColor))
+        titleTextView.text = walletName
+
+        backButton.setColorFilter(
+            ContextCompat.getColor(this, R.color.textColorOnMainColor),
+            android.graphics.PorterDuff.Mode.MULTIPLY
+        )
+
+        backButton.setOnClickListener{
+            finish()
+        }
+    }
 }
 
 private const val ARG_PARAM1 = "param1"
@@ -81,7 +99,7 @@ class ShareDialogFragment : DialogFragment() {
     val viewModel = WalletViewModel()
     private var walletId: String = ""
     var wallets: WalletResult? = null
-    var walletNameText : String? = null
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
