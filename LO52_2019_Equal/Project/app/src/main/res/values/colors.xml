@@ -14,4 +14,7 @@
     <color name="MainColorOnMainBackground">#000000</color>
     <color name="MainClickable">#5460FE</color>
     <color name="Transparent">#00FFFFFF</color>
+    <color name="ApproveColor">#00FF11</color>
+    <color name="DeclineColor">#FF0D00</color>
+    <color name="White">#FFFFFF</color>
 </resources>

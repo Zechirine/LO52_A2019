@@ -32,7 +32,6 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".view.CreateFluxActivity"
                   android:screenOrientation="portrait"/>
-
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_createwallet">CreateWallet</string>
+    <string name="title_activity_wallet">Wallet</string>
     <string name="newwallet">New Wallet</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="Email">Email</string>
@@ -28,6 +29,15 @@
     <string name="Me">It\'s me :</string>
     <string name="Done">Done</string>
     <string name="Name">Name</string>
+    <string name="Edit">Edit</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Share">Share</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="History">History</string>
+    <string name="More">More</string>
+    <string name="Approve">Approve</string>
+    <string name="Decline">Decline</string>
+    <string name="MemberName">Member name</string>
     <string name="errorPercentage">The percentage is between 0 or 100</string>
     <string name="errorAmount">You need to enter an amount for the flux</string>
     <string name="headerParticipation">Member Participations</string>

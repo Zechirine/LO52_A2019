@@ -55,11 +55,11 @@ class CreateWalletActivity : AppCompatActivity() {
             //Add Listener on the check box to check if just 1 checkbox is true
             view.ItsMeInput.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    for (i in 0..InputVerticalList.childCount) {
+                    for (i in 0..historyVerticalList.childCount) {
 
-                        if (InputVerticalList.getChildAt(i) != view) {
+                        if (historyVerticalList.getChildAt(i) != view) {
                             try {
-                                InputVerticalList.getChildAt(i).ItsMeInput.isChecked = false
+                                historyVerticalList.getChildAt(i).ItsMeInput.isChecked = false
                             } catch (e: Exception) {}
                         }
                     }
@@ -68,7 +68,7 @@ class CreateWalletActivity : AppCompatActivity() {
             }
 
             //Add view to scrollView
-            InputVerticalList.addView(view, InputVerticalList.childCount - 1)
+            historyVerticalList.addView(view, historyVerticalList.childCount - 1)
             //Set ScrollView at the end
             scrollView.post {
                 scrollView.fullScroll(View.FOCUS_DOWN)
@@ -87,14 +87,14 @@ class CreateWalletActivity : AppCompatActivity() {
                 var members = mutableListOf<String>()
                 var me: String = ""
 
-                for (i in 0..InputVerticalList.childCount) {
+                for (i in 0..historyVerticalList.childCount) {
                     try {
-                        if (InputVerticalList.getChildAt(i).MemberNameInput.text.toString() != "") {
-                            members.add(InputVerticalList.getChildAt(i).MemberNameInput.text.toString().trim())
+                        if (historyVerticalList.getChildAt(i).MemberNameInput.text.toString() != "") {
+                            members.add(historyVerticalList.getChildAt(i).MemberNameInput.text.toString().trim())
                         }
 
-                        if (InputVerticalList.getChildAt(i).ItsMeInput.isChecked) {
-                            me = InputVerticalList.getChildAt(i).MemberNameInput.text.toString()
+                        if (historyVerticalList.getChildAt(i).ItsMeInput.isChecked) {
+                            me = historyVerticalList.getChildAt(i).MemberNameInput.text.toString()
                         }
                     } catch (e: Exception) {
                     }
