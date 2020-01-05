@@ -20,12 +20,13 @@ class BaseRequest(client: OkHttpClient) {
         .disableHtmlEscaping()
         .create()
 
-    var token = Equal.context.getSharedPreferences("Login", Context.MODE_PRIVATE).
-        getString("token","Unauthorized")
-
     companion object {
         val JSON = MediaType.parse("application/json; charset=utf-8")
     }
+
+    var token = Equal.context.getSharedPreferences("Login", Context.MODE_PRIVATE).
+            getString("token","Unauthorized")
+
 
     fun unAuthenticatedPOST(url: String, parameters: HashMap<String,Any>, callback: Callback): Call {
         val json = gson.toJson(parameters)
@@ -41,7 +42,6 @@ class BaseRequest(client: OkHttpClient) {
     }
 
     fun POST(url: String, parameters: HashMap<String,Any>, callback: Callback): Call {
-
         val json = gson.toJson(parameters)
         var body = RequestBody.create(JSON, json)
         val request = Request.Builder()

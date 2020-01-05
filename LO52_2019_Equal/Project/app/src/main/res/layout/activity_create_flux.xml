@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundListView"
+        tools:context=".view.CreateFluxActivity">
+
+    <TextView
+            android:id="@+id/doneButtonFlux"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:text="@string/Done"
+            android:textColor="@color/textColorOnMainColor"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/include"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+            android:id="@+id/include"
+            layout="@layout/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/headerInformations"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <EditText
+            android:id="@+id/fluxNameTextField"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:ems="10"
+            android:hint="@string/fluxName"
+            android:inputType="textPersonName"
+            android:textColor="@color/MainColorOnMainBackground"
+            android:textColorHint="@color/MainHintColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <info.hoang8f.android.segmented.SegmentedGroup
+            android:id="@+id/segmentedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/amountTextField"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fluxNameTextField"
+            app:sc_border_width="2dp"
+            app:sc_corner_radius="10dp">
+
+        <RadioButton
+                android:id="@+id/expenseSB"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expense" />
+
+        <RadioButton
+                android:id="@+id/incomeSB"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/income" />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
+    <EditText
+            android:id="@+id/amountTextField"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/amount"
+            android:inputType="numberDecimal"
+            android:textColor="@color/MainColorOnMainBackground"
+            android:textColorHint="@color/MainHintColor"
+            app:layout_constraintEnd_toEndOf="@+id/fluxNameTextField"
+            app:layout_constraintTop_toBottomOf="@+id/fluxNameTextField" />
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="409dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/amountTextField" />
+
+
+</android.support.constraint.ConstraintLayout>
