@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Equal</string>
+    <string name="app_name">≠Equal</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_createwallet">CreateWallet</string>
@@ -32,12 +32,21 @@
     <string name="Edit">Edit</string>
     <string name="Cancel">Cancel</string>
     <string name="Share">Share</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="History">History</string>
     <string name="More">More</string>
     <string name="Approve">Approve</string>
     <string name="Decline">Decline</string>
     <string name="MemberName">Member name</string>
+    <string name="errorPercentage">The percentage is between 0 or 100</string>
+    <string name="errorAmount">You need to enter an amount for the flux</string>
+    <string name="headerParticipation">Member Participations</string>
+    <string name="headerInvolvements">Member Involvements</string>
+    <string name="headerInformations">Flux informations</string>
+    <string name="newFlux">New Flux</string>
+    <string name="fluxName">Name</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
+    <string name="amount">Amount</string>
+    <string name="symbolPercentage">%</string>
 </resources>

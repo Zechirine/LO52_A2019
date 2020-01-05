@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         package="com.startup42.equal">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -8,33 +9,29 @@
     <application
             android:name=".Equal"
             android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/equal_icon"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/equal_icon_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
 
-        <activity
-                android:name=".view.LoginActivity"
-                android:label="@string/title_activity_login">
+        <activity android:name=".view.LoginActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-                android:name=".view.RegisterActivity"
-                android:label="@string/title_activity_register"/>
-        <activity
-                android:name=".view.CreateWalletActivity"
-                android:label="@string/title_activity_createwallet"/>
-        <activity
-                android:name=".view.WalletActivity"
-                android:label="@string/title_activity_createwallet"/>
-        <activity
-                android:name=".view.HomeActivity"
-                android:label="@string/title_activity_home"/>
+        <activity android:name=".view.RegisterActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.CreateWalletActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.HomeActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.CreateFluxActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

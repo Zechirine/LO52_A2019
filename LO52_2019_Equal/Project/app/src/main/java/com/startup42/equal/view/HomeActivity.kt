@@ -6,7 +6,6 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +19,8 @@ import kotlinx.android.synthetic.main.custom_toolbar.*
 
 class HomeActivity : AppCompatActivity() {
 
-    val viewModel = HomeViewModel()
-    var wallets: ArrayList<HomeResult>? = null
+    private val viewModel = HomeViewModel()
+    private var wallets: ArrayList<HomeResult>? = null
 
     private var adapter: HomeAdapter? = null
 
@@ -33,10 +32,7 @@ class HomeActivity : AppCompatActivity() {
         val userId = getSharedPreferences("Login", Context.MODE_PRIVATE)
             .getString("userId", "errorid")
 
-        val listView = findViewById<ListView>(R.id.wallets)
-        val swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
-        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.customToolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(customToolbar)
         setupToolBar()
 
         viewModel.receiveData(userId)
@@ -44,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
                 wallets = it
                 this.runOnUiThread{
                     adapter =  HomeAdapter(this,it)
-                    listView.adapter = adapter
+                    walletsListView.adapter = adapter
 
                 }
             }
@@ -54,6 +50,13 @@ class HomeActivity : AppCompatActivity() {
 
         addWalletButton.setOnClickListener{
             val intent = Intent(this, CreateWalletActivity::class.java)
+            startActivity(intent)
+        }
+
+        walletsListView.setOnItemClickListener { _, _, position, _ ->
+            /** TODO Redirect to flux view */
+            val intent = Intent(this, CreateFluxActivity::class.java)
+            intent.putExtra("walletID",wallets?.get(position)?.walletId)
             startActivity(intent)
         }
 
@@ -70,11 +73,9 @@ class HomeActivity : AppCompatActivity() {
                 .subscribe()
 
             val handler = Handler()
-            handler.postDelayed(object:Runnable {
-                override fun run() {
-                    if (swipeRefresh.isRefreshing()) {
-                        swipeRefresh.setRefreshing(false)
-                    }
+            handler.postDelayed({
+                if (swipeRefresh.isRefreshing) {
+                    swipeRefresh.isRefreshing = false
                 }
             }, 1000)
         }
