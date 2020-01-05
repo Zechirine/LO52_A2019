@@ -20,6 +20,7 @@ import com.startup42.equal.Equal
 import com.startup42.equal.R
 import com.startup42.equal.viewModel.ApproveFluxViewModel
 import com.startup42.equal.viewModel.DeclineFluxViewModel
+import kotlinx.android.synthetic.main.fragment_history.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -83,6 +84,14 @@ class HistoryFragment : Fragment() {
             .doOnError { it.printStackTrace() }
             .doOnComplete{ println("onComplete!") }
             .subscribe()
+
+        /* addFlux.setOnClickListener{
+            /* TODO redirect
+            val intent = Intent(this, CreateFluxActivity::class.java)
+            intent.putExtra("walletID",wallets?.get(position)?.walletId)
+            intent.putStringArrayListExtra("memberList",...)
+            startActivity(intent)*/
+        } */
     }
 
 

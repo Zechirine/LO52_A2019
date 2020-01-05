@@ -5,19 +5,21 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.HistoryFragment" >
+        android:background="@color/backgroundListView"
+        tools:context=".view.HistoryFragment">
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/historySwipeLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/addWalletButton3"
+            android:background="@color/backgroundListView"
+            app:layout_constraintBottom_toTopOf="@+id/addFlux"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/addWalletButton3"
+            android:id="@+id/addFlux"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

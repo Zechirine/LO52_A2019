@@ -54,9 +54,10 @@ class HomeActivity : AppCompatActivity() {
         }
 
         walletsListView.setOnItemClickListener { _, _, position, _ ->
-            /** TODO Redirect to flux view */
-            val intent = Intent(this, CreateFluxActivity::class.java)
-            intent.putExtra("walletID",wallets?.get(position)?.walletId)
+            val intent = Intent(this, WalletActivity::class.java)
+            intent.putExtra("walletId", wallets?.get(position)?.walletId)
+            intent.putExtra("walletName", wallets?.get(position)?.title)
+            intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
 
@@ -146,15 +147,6 @@ class HomeActivity : AppCompatActivity() {
             }
 
             userBalanceTextView.text = text + wallet.userBalance.toString() + "€"
-
-            row.setOnClickListener{
-
-                val intent = Intent(Equal.context, WalletActivity::class.java)
-                intent.putExtra("walletId", wallet.walletId)
-                intent.putExtra("walletName", wallet.title)
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
-                Equal.context.startActivity(intent)
-            }
 
             return row
         }

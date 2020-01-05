@@ -76,13 +76,8 @@ class CreateFluxActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_flux)
 
-        //val memberList = intent.getStringArrayListExtra("memberList") TODO
+        val memberList = intent.getStringArrayListExtra("memberList")
         val walletId = intent.getStringExtra("walletID")
-
-        //TODO Remove
-        val memberList = ArrayList<String>()
-        memberList.add("Alban")
-        memberList.add("Anthony")
 
         setupView(memberList)
 
@@ -94,7 +89,6 @@ class CreateFluxActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable) {
                 if (s.isNotEmpty()) {
-                    //TODO cells
                     amount = s.toString().toIntOrNull()
                 }
             }
