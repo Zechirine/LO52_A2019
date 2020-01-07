@@ -122,7 +122,7 @@ class CreateFluxActivity : AppCompatActivity() {
                 hashMap["walletId"] = walletId
                 hashMap["type"] = type
                 hashMap["amount"] = amountTextField.text.toString().toDouble()
-                hashMap["userId"] = membersToSend
+                hashMap["members"] = membersToSend
                 hashMap["userId"] = userId
 
                 viewModel.sendData(hashMap)
