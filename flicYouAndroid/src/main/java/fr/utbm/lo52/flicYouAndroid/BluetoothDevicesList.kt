@@ -129,6 +129,7 @@ class BluetoothDevicesList : AppCompatActivity() {
     private fun launchListWatchActivity() {
         val intent = Intent(applicationContext, ListWatches::class.java)
         startActivity(intent)
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

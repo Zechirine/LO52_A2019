@@ -10,7 +10,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
-class BluetoothServerController() : IntentService("BluetoothServerController") {
+class BluetoothServerController : IntentService("BluetoothServerController") {
     private val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
     private val btAdapter = BluetoothAdapter.getDefaultAdapter()
     private var serverSocket: BluetoothServerSocket? = null

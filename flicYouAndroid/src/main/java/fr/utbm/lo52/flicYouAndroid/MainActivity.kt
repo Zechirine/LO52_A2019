@@ -1,6 +1,9 @@
 package fr.utbm.lo52.flicYouAndroid
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,17 +11,14 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.*
-import fr.utbm.lo52.flicYouAndroid.R
 import fr.utbm.lo52.flicYouAndroid.devicesManagment.ListButtons
 import fr.utbm.lo52.flicYouAndroid.devicesManagment.ListWatches
 import fr.utbm.lo52.flicYouAndroid.models.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
-    private val myButtonManager: MyButtonManager =
-        MyApplication.myButtonManager
-    private lateinit var buttons: ListView
-    private lateinit var addButton: Button
+
     //for zoneDao
     private var daoZone = ZoneDao()
     private var daoCaregiver = CaregiverDao()
@@ -26,13 +26,40 @@ class MainActivity : AppCompatActivity() {
     private var daoRoom = RoomDao()
     private var daoHave = HaveDao()
 
+    private lateinit var tasks: ListView
+    private val myTaskManager: MyTaskManager = MyApplication.myTaskManager
+
+    var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            tasks.adapter = MyTasksListViewAdapter(context, myTaskManager.myTasks)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("TEST", "Coucou 2")
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("fr.utbm.lo52.flicYouAndroid")
+        registerReceiver(broadcastReceiver, intentFilter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(broadcastReceiver)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         MyFlicManager.setFlicCredentials()
 
+        tasks = findViewById(R.id.tasks)
+        tasks.adapter = MyTasksListViewAdapter(this, myTaskManager.myTasks)
+        startService(Intent(this, TasksController::class.java))
+
 //        setListeners()
+
         //to initiate Model's Data
         //initDatabase()
 
@@ -91,8 +118,14 @@ class MainActivity : AppCompatActivity() {
 //        for(room in daoRoom.queryForAll()){
 //            Log.i("DATA", "le nom du malade est :" + room.nameSufferer + "\n le numéro de sa chambre est : " + room.number)
 //        }
+    }
 
-
+    private fun setListeners() {
+        tasks.adapter
+        tasks.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val task = myTaskManager.myTasks.get(position)
+            myTaskManager.myTasks.remove(task)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

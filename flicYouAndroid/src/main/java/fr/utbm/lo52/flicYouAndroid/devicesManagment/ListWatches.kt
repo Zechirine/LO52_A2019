@@ -43,6 +43,7 @@ class ListWatches : AppCompatActivity() {
     fun launchBluetoothDevicesListActivity(){
         val intent = Intent(this, BluetoothDevicesList::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun launchBluetoothTestActivity() {

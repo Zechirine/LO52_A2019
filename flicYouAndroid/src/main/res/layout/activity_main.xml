@@ -7,8 +7,14 @@
     android:orientation="vertical"
     tools:context="fr.utbm.lo52.flicYouAndroid.MainActivity">
 
-    <TextView
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="Liste des taches" />-->
+
+    <ListView
+        android:id="@+id/tasks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Liste des taches" />
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>
