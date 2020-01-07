@@ -1,0 +1,56 @@
+Implémentation libusb
+
+1.
+
+core.c
+descriptor.c
+io.c
+sync.c
+linux_usbfs.c
+
+linux_usbfs.h
+libusb.h
+libusbi.h
+
+
+
+2.
+
+LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_C_INCLUDES := /external/libusb/os/linux_usbfs.h /external/libusb/libusb.h /external/libusb/libusbi.h
+
+LOCAL_MODULE := libusb
+LOCAL_SRC_FILES := core.c descriptor.c io.c sync.c os/linux_usbfs.c
+LOCAL_MODULE_TAGs := optional
+
+include $(BUILD_SHARED_LIBRARY)
+
+3.
+
+#define TIMESPEC_TO_TIMEVAL(tv, ts)                                     \
+        do {                                                            \
+                (tv)->tv_sec = (ts)->tv_sec;                            \
+                (tv)->tv_usec = (ts)->tv_nsec / 1000;                   \
+        } while (0)
+      
+        
+4.
+
+LOCAL_SHARED_LIBRARIES := libc libusb
+
+Implémentation produit android
+
+1.
+PRODUCT_NAME := lo52_Equal
+
+2.
+# Inherit from the common Open Source product configuration
+$(call inherit-product, device/Linaro/hikey)
+
+3.PRODUCT_PROPERTY_OVERRIDES := ro.hw=lo52 net.dns1=8.8.8.8 net.dns2=4.4.4.4
+
+4.fichier est dans le projet Softkeyboard dans le repertoir res/drawable-mdpi
+        
+ 
