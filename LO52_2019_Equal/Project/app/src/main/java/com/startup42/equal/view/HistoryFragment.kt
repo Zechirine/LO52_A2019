@@ -21,6 +21,7 @@ import com.startup42.equal.R
 import com.startup42.equal.viewModel.ApproveFluxViewModel
 import com.startup42.equal.viewModel.DeclineFluxViewModel
 import kotlinx.android.synthetic.main.fragment_history.*
+import kotlinx.android.synthetic.main.fragment_history.view.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -84,14 +85,6 @@ class HistoryFragment : Fragment() {
             .doOnError { it.printStackTrace() }
             .doOnComplete{ println("onComplete!") }
             .subscribe()
-
-        /* addFlux.setOnClickListener{
-            /* TODO redirect
-            val intent = Intent(this, CreateFluxActivity::class.java)
-            intent.putExtra("walletID",wallets?.get(position)?.walletId)
-            intent.putStringArrayListExtra("memberList",...)
-            startActivity(intent)*/
-        } */
     }
 
 
@@ -99,8 +92,29 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val view: View = inflater!!.inflate(R.layout.fragment_history, container, false)
+
+        view.addFlux.setOnClickListener{
+
+            println("CLICKED")
+
+            val intent = Intent(getActivity(), CreateFluxActivity::class.java)
+            intent.putExtra("walletID",walletId)
+            val list = arrayListOf<String>()
+
+            wallets?.members?.let{
+                for (member in wallets?.members!!) {
+                    list.add(member.name)
+                }
+            }
+
+            intent.putStringArrayListExtra("memberList",list)
+            startActivity(intent)
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
+        return view
     }
 
     override fun onAttach(context: Context) {

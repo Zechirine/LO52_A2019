@@ -21,6 +21,7 @@ import com.startup42.equal.viewModel.ShareViewModel
 import com.startup42.equal.viewModel.WalletViewModel
 import kotlinx.android.synthetic.main.activity_wallet.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
+import kotlinx.android.synthetic.main.fragment_history.*
 
 
 class WalletActivity : AppCompatActivity(), HistoryFragment.OnFragmentInteractionListener,
@@ -73,7 +74,7 @@ class WalletActivity : AppCompatActivity(), HistoryFragment.OnFragmentInteractio
             // Create an instance of the dialog fragment and show it
             val dialog = ShareDialogFragment.newInstance(walletId)
             dialog.show(supportFragmentManager, "ShareDialogFragment")
-        }
+       }
     }
 
     private fun setupToolBar() {
