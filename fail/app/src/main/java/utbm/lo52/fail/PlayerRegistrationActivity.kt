@@ -4,9 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.TextView
@@ -17,27 +16,41 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.player_widget.view.*
 import kotlinx.android.synthetic.main.registration_activity.*
+import utbm.lo52.fail.constants.MAX_ORDERING
+import utbm.lo52.fail.constants.MIN_ORDERING
 import utbm.lo52.fail.db.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 @ExperimentalStdlibApi
 class PlayerRegistrationActivity : AppCompatActivity() {
 
     val teams = ArrayList<Team>()
-    private var players = LinkedList<Player>()
+    private var players = ArrayList<Player>()
+    private var sorted = false
 
     private lateinit var playerAdapter: PlayerAdapter
     private lateinit var db: DBHelper
     private lateinit var race: Race
 
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.sortButton -> {
+            sorted = true
+            orderPlayers()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.reorganize, menu)
+        return true;
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registration_activity)
 
         db = DBHelper(this, null)
-        playerAdapter = PlayerAdapter(this, db)
+        playerAdapter = PlayerAdapter(this)
 
         // Get the current race
         // This should not fail, normally
@@ -48,6 +61,10 @@ class PlayerRegistrationActivity : AppCompatActivity() {
                 if (savedInstanceState != null) savedInstanceState?.getInt("raceID", 0) else 0
             )
         ) as Race
+        sorted = if (savedInstanceState != null) savedInstanceState?.getBoolean(
+            "sorted",
+            false
+        ) else false
 
         // Restore player and team list
         for (team in db.request(Team::class).filterRelated(
@@ -85,55 +102,72 @@ class PlayerRegistrationActivity : AppCompatActivity() {
                 addPlayer()
         }
 
+        if (sorted)
+            orderPlayers()
     }
+
+    private fun orderPlayers() {
+        players.sortWith(nullsLast(compareBy({ it.team.id }, { it.ordering })))
+        playerAdapter.notifyDataSetChanged()
+    }
+
 
     private fun addPlayer() {
-        val player = db.save(Player(null, "", 0, ForeignKey(Team::class, teams[0].id!!))) as Player
-        players = LinkedList(players)
+        val player = db.save(
+            Player(
+                null,
+                "",
+                MIN_ORDERING,
+                ForeignKey(Team::class, teams[0].id!!)
+            )
+        ) as Player
         players.add(player)
-        playerAdapter.submitList(players)
+        playerAdapter.notifyDataSetChanged()
     }
 
-    fun removePlayer(id: Int?) {
-        val newPlayers = LinkedList<Player>()
-        for (player in players) {
-            if (player.id != id) {
-                newPlayers.add(player)
-            } else {
-                db.delete(player)
-            }
-        }
-        players = newPlayers
-        playerAdapter.submitList(players)
+    fun removePlayer(player: Player) {
+        db.delete(player)
+        players.remove(player)
+        playerAdapter.notifyDataSetChanged()
+    }
+
+    fun updatePlayer(saved: Player, position: Int) {
+        silentUpdatePlayer(saved, position)
+        playerAdapter.notifyItemChanged(position)
+    }
+
+    fun silentUpdatePlayer(saved: Player, position: Int) {
+        players[position] = db.save(saved) as Player
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
         outState?.putInt("raceID", race.id!!)
+        outState?.putBoolean("sorted", sorted)
     }
 }
 
 
 @UseExperimental(ExperimentalStdlibApi::class)
-class PlayerAdapter(private val activity: PlayerRegistrationActivity, private val db: DBHelper) :
+class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
     ListAdapter<Player, PlayerAdapter.PlayerViewHolder>(PlayerDiffCallback()) {
 
     @ExperimentalStdlibApi
     class PlayerViewHolder(
         private val view: View,
-        private val activity: PlayerRegistrationActivity,
-        val db: DBHelper
+        private val activity: PlayerRegistrationActivity
     ) :
         RecyclerView.ViewHolder(view) {
-        fun bind(player: Player) {
+        fun bind(player: Player, position: Int) {
 
+            Log.v("test", player.toString())
             // Handle Text entry
-            if (player.name != "") {
-                view.playerNameText.setText(player.name)
-            }
+            view.playerNameText.setText(player.name)
             view.playerNameText.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {}
+                override fun afterTextChanged(s: Editable?) {
+                }
+
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
@@ -144,7 +178,9 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity, private va
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     player.name = s?.toString() ?: ""
-                    db.save(player)
+                    activity.silentUpdatePlayer(
+                        player, position
+                    )
                 }
             })
 
@@ -159,13 +195,14 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity, private va
                     id: Long
                 ) {
                     // Save the selected team for the player
-                    val player = Player(
-                        player.id,
-                        player.name,
-                        player.ordering,
-                        ForeignKey(Team::class, adapter.getItem(pos).id)
+                    activity.silentUpdatePlayer(
+                        Player(
+                            player.id,
+                            player.name,
+                            player.ordering,
+                            ForeignKey(Team::class, adapter.getItem(pos).id)
+                        ), position
                     )
-                    db.save(player)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -177,20 +214,53 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity, private va
 
             // Handle delete button
             view.deletePlayerButton.setOnClickListener {
-                activity.removePlayer(player.id)
+                activity.removePlayer(player)
             }
+
+            // Handle ordering
+            view.orderingText.setText(player.ordering.toString())
+//            view.orderingText.setOnFocusChangeListener { v, hasFocus ->
+//                if (hasFocus) v.orderingText.setText(
+//                    ""
+//                )
+//                else view.orderingText.setText(player.ordering.toString())
+//            }
+            view.orderingText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    var ordering = s.toString().toIntOrNull()
+                    if (ordering == null || ordering < MIN_ORDERING)
+                        ordering = MIN_ORDERING
+                    if (ordering > MAX_ORDERING)
+                        ordering = MAX_ORDERING
+                    player.ordering = ordering
+                    activity.silentUpdatePlayer(
+                        player, position
+                    )
+                }
+            })
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         return PlayerViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.player_widget, parent, false), activity, db
+                .inflate(R.layout.player_widget, parent, false), activity
         )
     }
 
     override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
 }

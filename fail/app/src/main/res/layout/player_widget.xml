@@ -6,7 +6,7 @@
 
     <EditText
         android:id="@+id/playerNameText"
-        android:layout_width="wrap_content"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
@@ -16,9 +16,18 @@
 
     <Spinner
         android:id="@+id/teamSpinner"
-        android:layout_width="148dp"
+        android:layout_width="131dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/orderingText"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:textAlignment="center" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deletePlayerButton"
@@ -27,4 +36,5 @@
         android:layout_weight="1"
         android:clickable="true"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
 </LinearLayout>

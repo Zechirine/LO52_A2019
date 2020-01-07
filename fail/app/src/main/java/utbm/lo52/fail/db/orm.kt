@@ -80,7 +80,7 @@ abstract class ModelClass(open val id: Int? = null) {
         }
 
         /**
-         * Get all properties of a given ModelCLass instance exept its id
+         * Get all properties of a given ModelCLass instance except its id
          *
          * @param obj a ModelClass instance
          * @return a ContentValues dict
