@@ -84,9 +84,7 @@ class PlayerRegistrationActivity : AppCompatActivity() {
         ItemList.adapter = playerAdapter
         playerAdapter.submitList(players)
 
-        addElementButton.setOnClickListener {
-            addPlayer()
-        }
+        addElementButton.hide()
 
         cancelButton.setOnClickListener {
             // Go back to team creation without touching anything
@@ -97,50 +95,34 @@ class PlayerRegistrationActivity : AppCompatActivity() {
 
         // If there is no player, there are as many default player as the number of team
         if (players.isEmpty()) {
-            for (team in teams)
-                addPlayer()
+            for (team in teams) {
+                for (i in IntRange(1, MAX_ORDERING))
+                    addPlayer(team, i)
+            }
         }
 
         if (sorted)
             orderPlayers()
     }
 
-    private fun notifyDataSetChanged() {
-        // Unfocus
-        currentFocus?.clearFocus()
-        // modify data
-        playerAdapter.notifyDataSetChanged()
-    }
-
     private fun orderPlayers() {
         players.sortWith(nullsLast(compareBy({ it.team.id }, { it.ordering })))
         ItemList.recycledViewPool.clear()
-        notifyDataSetChanged()
+        playerAdapter.notifyDataSetChanged()
     }
 
 
-    private fun addPlayer() {
+    private fun addPlayer(team: Team, ordering: Int) {
         val player = db.save(
             Player(
                 null,
                 "",
-                MIN_ORDERING,
-                ForeignKey(Team::class, teams[0].id!!)
+                ordering,
+                ForeignKey(Team::class, team.id)
             )
         ) as Player
         players.add(player)
-        notifyDataSetChanged()
-    }
-
-    fun removePlayer(player: Player, position: Int) {
-        db.delete(player)
-        players.remove(player)
-        playerAdapter.notifyItemRemoved(position)
-    }
-
-    fun updatePlayer(saved: Player, position: Int) {
-        silentUpdatePlayer(saved, position)
-        playerAdapter.notifyItemChanged(position)
+        playerAdapter.notifyDataSetChanged()
     }
 
     fun silentUpdatePlayer(saved: Player, position: Int) {
@@ -161,9 +143,9 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
     ListAdapter<Player, PlayerAdapter.PlayerViewHolder>(PlayerDiffCallback()) {
 
     class PlayerNameListener(
-        val player: Player,
-        val playerPosition: Int,
-        val activity: PlayerRegistrationActivity
+        private val player: Player,
+        private val playerPosition: Int,
+        private val activity: PlayerRegistrationActivity
     ) : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }
@@ -259,11 +241,6 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
 
                 }
             view.orderingSpinner.setSelection(orderingAdapter.getPositionFromValue(player.ordering))
-
-            // Handle delete button
-            view.deletePlayerButton.setOnClickListener {
-                activity.removePlayer(player, playerPosition)
-            }
         }
     }
 
