@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.BaseAdapter
@@ -106,9 +105,17 @@ class PlayerRegistrationActivity : AppCompatActivity() {
             orderPlayers()
     }
 
+    private fun notifyDataSetChanged() {
+        // Unfocus
+        currentFocus?.clearFocus()
+        // modify data
+        playerAdapter.notifyDataSetChanged()
+    }
+
     private fun orderPlayers() {
         players.sortWith(nullsLast(compareBy({ it.team.id }, { it.ordering })))
-        playerAdapter.notifyDataSetChanged()
+        ItemList.recycledViewPool.clear()
+        notifyDataSetChanged()
     }
 
 
@@ -122,13 +129,13 @@ class PlayerRegistrationActivity : AppCompatActivity() {
             )
         ) as Player
         players.add(player)
-        playerAdapter.notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
-    fun removePlayer(player: Player) {
+    fun removePlayer(player: Player, position: Int) {
         db.delete(player)
         players.remove(player)
-        playerAdapter.notifyDataSetChanged()
+        playerAdapter.notifyItemRemoved(position)
     }
 
     fun updatePlayer(saved: Player, position: Int) {
@@ -153,40 +160,52 @@ class PlayerRegistrationActivity : AppCompatActivity() {
 class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
     ListAdapter<Player, PlayerAdapter.PlayerViewHolder>(PlayerDiffCallback()) {
 
+    class PlayerNameListener(
+        val player: Player,
+        val playerPosition: Int,
+        val activity: PlayerRegistrationActivity
+    ) : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(
+            s: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            player.name = s?.toString() ?: ""
+            activity.silentUpdatePlayer(
+                player, playerPosition
+            )
+        }
+    }
+
     @ExperimentalStdlibApi
     class PlayerViewHolder(
         private val view: View,
         private val activity: PlayerRegistrationActivity
     ) :
         RecyclerView.ViewHolder(view) {
-        fun bind(player: Player, position: Int) {
 
-            Log.v("test", player.toString())
+        private var playerNameListener: TextWatcher? = null
+
+        fun bind(player: Player, playerPosition: Int) {
+
             // Handle Text entry
+            if (playerNameListener != null) {
+                view.playerNameText.removeTextChangedListener(playerNameListener)
+            }
+            playerNameListener = PlayerNameListener(player, playerPosition, activity)
             view.playerNameText.setText(player.name)
-            view.playerNameText.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    player.name = s?.toString() ?: ""
-                    activity.silentUpdatePlayer(
-                        player, position
-                    )
-                }
-            })
+            view.playerNameText.addTextChangedListener(playerNameListener)
 
             // Handle drop down team list
-            val adapter = TeamSpinnerAdapter(activity.teams)
-            view.teamSpinner.adapter = adapter
+            val teamAdapter = TeamSpinnerAdapter(activity.teams)
+            view.teamSpinner.adapter = teamAdapter
             view.teamSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -200,8 +219,8 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
                             player.id,
                             player.name,
                             player.ordering,
-                            ForeignKey(Team::class, adapter.getItem(pos).id)
-                        ), position
+                            ForeignKey(Team::class, teamAdapter.getItem(pos).id)
+                        ), playerPosition
                     )
                 }
 
@@ -210,45 +229,41 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
                 }
 
             }
-            view.teamSpinner.setSelection(adapter.getPositionFromDbId(player.team.id))
+            view.teamSpinner.setSelection(teamAdapter.getPositionFromDbId(player.team.id))
+
+            // Handle drop down ordering list
+            val orderingAdapter = OrderingAdapter()
+            view.orderingSpinner.adapter = orderingAdapter
+            view.orderingSpinner.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        // It can not happen (hopefully)
+                    }
+
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        pos: Int,
+                        id: Long
+                    ) {
+                        // Save the selected team for the player
+                        activity.silentUpdatePlayer(
+                            Player(
+                                player.id,
+                                player.name,
+                                orderingAdapter.getItem(pos),
+                                player.team
+                            ), playerPosition
+                        )
+                    }
+
+                }
+            view.orderingSpinner.setSelection(orderingAdapter.getPositionFromValue(player.ordering))
 
             // Handle delete button
             view.deletePlayerButton.setOnClickListener {
-                activity.removePlayer(player)
+                activity.removePlayer(player, playerPosition)
             }
-
-            // Handle ordering
-            view.orderingText.setText(player.ordering.toString())
-//            view.orderingText.setOnFocusChangeListener { v, hasFocus ->
-//                if (hasFocus) v.orderingText.setText(
-//                    ""
-//                )
-//                else view.orderingText.setText(player.ordering.toString())
-//            }
-            view.orderingText.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    var ordering = s.toString().toIntOrNull()
-                    if (ordering == null || ordering < MIN_ORDERING)
-                        ordering = MIN_ORDERING
-                    if (ordering > MAX_ORDERING)
-                        ordering = MAX_ORDERING
-                    player.ordering = ordering
-                    activity.silentUpdatePlayer(
-                        player, position
-                    )
-                }
-            })
         }
     }
 
@@ -272,7 +287,10 @@ class PlayerDiffCallback : DiffUtil.ItemCallback<Player>() {
     }
 
     override fun areContentsTheSame(oldItem: Player, newItem: Player): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id &&
+                oldItem.name == newItem.name &&
+                oldItem.ordering == newItem.ordering &&
+                oldItem.team.id == newItem.team.id
     }
 }
 
@@ -304,5 +322,38 @@ class TeamSpinnerAdapter(private val teams: List<Team>) : BaseAdapter() {
         }
         return 0
     }
+}
+
+class OrderingAdapter : BaseAdapter() {
+    private val orders = IntRange(MIN_ORDERING, MAX_ORDERING).toList()
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val view = LayoutInflater.from(parent?.context)
+            .inflate(android.R.layout.simple_spinner_dropdown_item, parent, false) as TextView
+        view.text = this.getItem(position).toString()
+        view.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+        return view
+    }
+
+    fun getPositionFromValue(value: Int): Int {
+        for ((pos, ordering) in orders.withIndex()) {
+            if (value == ordering)
+                return pos
+        }
+        return 0
+    }
+
+    override fun getItem(position: Int): Int {
+        return orders[position]
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getCount(): Int {
+        return orders.size
+    }
+
 }
 

@@ -6,7 +6,7 @@
 
     <EditText
         android:id="@+id/playerNameText"
-        android:layout_width="174dp"
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
@@ -20,14 +20,12 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <EditText
-        android:id="@+id/orderingText"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
+    <Spinner
+        android:id="@+id/orderingSpinner"
+        android:layout_width="85dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:ems="10"
-        android:inputType="numberSigned"
-        android:textAlignment="center" />
+        android:textAlignment="textEnd" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deletePlayerButton"
