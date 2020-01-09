@@ -135,3 +135,73 @@ include $(call all-subdir-makefiles)
 Enfin, on surcharge le fichier *sym_keyboard_delete.png* en le plaçant dans *Rsc-libusb/device/utbm/lo52_fail/overlay/sample/SoftKeyboard/res/drawable-mdpi*.
 
 # Utilisation de la JNI
+
+## Création du projet
+
+Cette étape reviens à suivre l'assistant de création de projet d'Android studio pour un projet de type *Native C++*.
+
+Toutes les dépendances sont automatiquement téléchargées par Android studio. C'est très pratique.
+
+## Création d'une application simple
+
+Une application utilisant la JNI se compose, comme une application classique, d'activités Android Java (ou Kotlin dans ce cas).
+
+Ici, notre activité se nomme *MainActivity* et se situe dans *MainActivity.kt*. Elle utilise un layout xml crée comme pour une application Android classique.
+
+Le code cpp se situe dans le fichier *native-lib.cpp* qui se situe dans *app/src/main/cpp*.
+
+```c++
+#include <iostream>
+#include <jni.h>
+#include <random>
+#include <string>
+
+float get_random(int min, int max) {
+  static std::default_random_engine e;
+  static std::uniform_real_distribution<> dis(min, max); // rage 0 - 1
+  return dis(e);
+}
+
+// Exemple d'une des fonctions demandées, ici, la fonction READ
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_e_testjni_MainActivity_READ(
+        JNIEnv* env,
+        jobject obj) {
+    auto a = int(get_random(-1, 11));
+    std::string label = std::to_string(a * a);
+    return env->NewStringUTF(label.c_str());
+}
+```
+
+Le lien avec l'activité se fait directement dans celle-ci. On déclare les fonctions comme des méthodes externes de la classe de l'activité et on défini une fonction init dans l'objet compagnon de celle-ci.
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        /* Gestion des autres boutons */
+        ...
+
+        /* Utilisation de la fonction READ déclarée en JNI */
+        read.setOnClickListener({
+            readLabelOut.text = READ()
+        })
+    }
+
+    /* Déclaration des fonctions présentes dans la lib native c++ */
+    external fun READ(): String
+    external fun WRITE(): String
+    external fun ToGerman(text: String): String
+
+    companion object {
+
+        /* Chargement de la librairie */
+        init {
+            System.loadLibrary("native-lib")
+        }
+    }
+}
+```
