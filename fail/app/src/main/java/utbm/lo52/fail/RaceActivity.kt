@@ -1,8 +1,10 @@
 package utbm.lo52.fail
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_race.*
 import utbm.lo52.fail.constants.MIN_ORDERING
 import utbm.lo52.fail.db.DBHelper
@@ -15,13 +17,24 @@ class RaceActivity : AppCompatActivity() {
 
     private val teams = ArrayList<Team>()
 
+    private var timeAtPause: Long = 0
+    private var isChronoStarted = false
+
     private lateinit var db: DBHelper
     private lateinit var race: Race
+
+    private fun elapsedTime() = SystemClock.elapsedRealtime() - chrono.base
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_race)
 
+        if (savedInstanceState != null) {
+            timeAtPause = savedInstanceState?.getLong("elapsedSeconds", 0)
+            isChronoStarted = savedInstanceState?.getBoolean("isChronoStarted", false)
+        }
+
+        chrono.base = SystemClock.elapsedRealtime() - timeAtPause
         db = DBHelper(this, null)
         race = db.request(Race::class).get(
             "id",
@@ -46,12 +59,38 @@ class RaceActivity : AppCompatActivity() {
             but.text = "${team.name}\n${player.name}"
             teamButtonLayout.addView(but)
         }
-        chrono.start()
+
+        pauseButton.isEnabled = false
+        pauseButton.isVisible = false
+        startButton.setOnClickListener {
+            isChronoStarted = true
+            chrono.base = SystemClock.elapsedRealtime() - timeAtPause
+            chrono.start()
+            startButton.isEnabled = false
+            startButton.isVisible = false
+            pauseButton.isEnabled = true
+            pauseButton.isVisible = true
+        }
+
+        pauseButton.setOnClickListener {
+            isChronoStarted = false
+            chrono.stop()
+            timeAtPause = elapsedTime()
+            startButton.isEnabled = true
+            startButton.isVisible = true
+            pauseButton.isEnabled = false
+            pauseButton.isVisible = false
+        }
+
+        if (isChronoStarted) startButton.callOnClick()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
         outState?.putInt("raceID", race.id!!)
+        if (isChronoStarted) outState?.putLong("elapsedSeconds", elapsedTime())
+        else outState?.putLong("elapsedSeconds", timeAtPause)
+        outState?.putBoolean("isChronoStarted", isChronoStarted)
     }
 }
