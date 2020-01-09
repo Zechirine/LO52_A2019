@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.CreateTopicActivity">
+    <include layout="@layout/nav_bar"/>
+
+    <EditText
+        android:textSize="@dimen/inputTitleSize"
+        android:id="@+id/in_topic_name"
+        android:hint="@string/in_topic_name"
+        android:layout_marginBottom="@dimen/marginSize"
+        android:layout_width="match_parent"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_height="@dimen/inputViewHeight"
+        />
+
+    <Button
+        android:id="@+id/take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="prendre un photo"/>
+    <Button
+        android:id="@+id/select_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="choisir un photo vient d\'album"/>
+    <ImageView
+        android:id="@+id/image_selected"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+    <Button
+        style="@style/commitBtn"
+        android:id="@+id/create_topic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Créer un thème"/>
+
+</LinearLayout>

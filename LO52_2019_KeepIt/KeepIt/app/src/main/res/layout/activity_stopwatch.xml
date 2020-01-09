@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context=".activities.StopwatchActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"><!--内部元素TextView，Button居中方式-->
+    <TextView
+        android:id="@+id/time_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="92sp" />
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_view"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickStart"
+        android:text="@string/start" /><!--在res文件夹下的values下的string.xml中需要添加的值如下图-->
+    <Button
+        android:id="@+id/stop_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_button"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickStop"
+        android:text="@string/stop" />
+        <Button
+            android:id="@+id/rest_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/stop_button"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:onClick="onClickReset"
+            android:text="@string/reset" />
+<LinearLayout
+    android:layout_marginTop="@dimen/marginSize"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/previousExercise"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:onClick="onClickprevious"
+        android:textSize="9sp"
+        android:text="précédent" />
+        <com.utbm.keepit.ui.views.WEqalsHImageView
+            android:layout_marginRight="@dimen/marginSize"
+            android:layout_marginLeft="@dimen/marginSize"
+            android:src="@mipmap/muscle"
+            android:id="@+id/stopWatchImage"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"/>
+    <Button
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Suivant"
+        android:layout_width="80dp"
+        android:textSize="9sp"
+        android:onClick="onClickNext"
+        android:id="@+id/nextExercise"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+<!--    <Button-->
+<!--        android:id="@+id/create_timer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Créer un timer"/>-->
+</LinearLayout>

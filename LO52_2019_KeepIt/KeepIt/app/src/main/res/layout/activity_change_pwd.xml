@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.ChangePwdActivity">
+    <include layout="@layout/nav_bar"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/keep"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/marginSize"
+        />
+    <com.utbm.keepit.ui.views.InputView
+        android:layout_width="match_parent"
+        android:id="@+id/input_pwdo"
+        android:layout_height="@dimen/navBarHeight"
+        android:layout_marginTop="@dimen/marginSize"
+        app:input_icon="@mipmap/passwd"
+        app:input_hint="@string/changepwd_pwdo_hint"
+
+        app:is_passwd="true"
+        />
+    <View
+        style="@style/line"/>
+    <com.utbm.keepit.ui.views.InputView
+        android:id="@+id/input_pwdn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navBarHeight"
+        app:input_icon="@mipmap/passwd"
+        app:input_hint="@string/changepwd_pwdn_hint"
+        app:is_passwd="true"
+        />
+    <View
+        style="@style/line"/>
+    <com.utbm.keepit.ui.views.InputView
+        android:id="@+id/input_pwdc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navBarHeight"
+        app:input_icon="@mipmap/passwd"
+        app:input_hint="@string/changepwd_pwdc_hint"
+        app:is_passwd="true"
+        />
+    <View
+        style="@style/line"/>
+    <Button
+        style="@style/commitBtn"
+        android:text="@string/profile_passwd_change"
+        android:layout_marginTop="@dimen/marginSize"
+        android:onClick="onChangeClick"
+        />
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <com.utbm.keepit.ui.views.WEqalsHImageView
+        android:id="@+id/exercise_image"
+        android:layout_gravity="left"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/muscle">
+    </com.utbm.keepit.ui.views.WEqalsHImageView>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_marginLeft="@dimen/marginSize"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/exercise_name"
+        android:text="title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/titleSize" />
+    <TextView
+        android:id="@+id/exercise_public"
+        android:textSize="@dimen/infoSize"
+        android:text="public"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/marginSize"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/exercise_level"
+            android:text="level"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/infoSize"
+            />
+        <TextView
+            android:id="@+id/exercise_diff"
+            android:textSize="@dimen/infoSize"
+            android:text="diff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

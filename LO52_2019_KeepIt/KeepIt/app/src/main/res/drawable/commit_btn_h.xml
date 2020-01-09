@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--实体颜色-->
+    <solid android:color="@color/mainColorH"/>
+    <!--边角弧度-->
+    <corners android:radius="@dimen/radius"/>
+</shape>

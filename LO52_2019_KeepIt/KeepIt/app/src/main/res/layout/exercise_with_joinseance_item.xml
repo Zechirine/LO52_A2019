@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="@dimen/marginSize"
+    android:layout_marginTop="@dimen/marginSize"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <com.utbm.keepit.ui.views.WEqalsHImageView
+        android:id="@+id/exercise_image"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/muscle">
+    </com.utbm.keepit.ui.views.WEqalsHImageView>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/marginSize"
+        android:layout_marginRight="@dimen/marginSize"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+            android:id="@+id/exercise_name"
+            android:text="title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/titleSize" />
+            <TextView
+               android:layout_weight="1"
+                android:gravity="right"
+                android:id="@+id/exercise_duration"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:text="duration"
+                android:textSize="@dimen/infoSize" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/exercise_public"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:text="public"
+                android:textSize="@dimen/infoSize" />
+            <TextView
+                android:id="@+id/exercise_level"
+                android:text="level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/infoSize"
+                />
+            <TextView
+                android:layout_gravity="right"
+                android:id="@+id/exercise_diff"
+                android:textSize="@dimen/infoSize"
+                android:text="diff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+

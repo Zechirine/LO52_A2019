@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    tools:context=".activities.CreateExerciseActivity"
+    android:layout_height="match_parent">
+    <EditText
+        android:textSize="@dimen/inputTitleSize"
+        android:id="@+id/input_exercise_name"
+        android:hint="@string/in_exercise_name"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_marginBottom="@dimen/marginSize"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/inputViewHeight"
+        />
+    <EditText
+        android:textSize="@dimen/inputTitleSize"
+        android:id="@+id/input_exercise_desc"
+        android:layout_width="match_parent"
+        android:gravity="top"
+        android:layout_marginBottom="@dimen/marginSize"
+        android:layout_height="wrap_content"
+        android:minLines="1"
+        android:maxLines="3"
+        android:hint="@string/in_exercise_description"
+        />
+    <TextView
+        android:textSize="@dimen/inputTitleSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choisir la type public"
+        />
+    <Spinner
+        android:id="@+id/input_exercise_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/marginSize"
+        />
+    <TextView
+        android:textSize="@dimen/inputTitleSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choisir la difficulté"
+        />
+    <Spinner
+        android:id="@+id/input_exercise_diff"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/marginSize"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textSize="@dimen/inputTitleSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choisir la groupe"
+        />
+    <Spinner
+        android:id="@+id/input_exercise_group"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/marginSize"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/info_topics"
+        android:layout_height="22sp"
+        android:text="Thèmes:"
+        android:textSize="@dimen/titleSize"
+        android:textColor="@color/infoColor"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/topics_selected"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+    android:id="@+id/select_topics"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="choisir les thèmes"/>
+
+    <Button
+        android:id="@+id/take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="prendre un photo"/>
+    <Button
+        android:id="@+id/select_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="choisir image vient d'album"/>
+    <Button
+        style="@style/commitBtn"
+        android:id="@+id/create_exercise"
+        android:layout_marginBottom="@dimen/marginSize"
+        android:onClick="onCreateExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Créer une entraînement"/>
+    <ImageView
+        android:id="@+id/image_selected"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+</LinearLayout>
+</ScrollView>

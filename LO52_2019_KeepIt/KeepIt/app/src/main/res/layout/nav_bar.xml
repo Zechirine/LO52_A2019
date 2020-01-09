@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="@dimen/navBarHeight"
+    android:background="@color/mainColor"
+    android:paddingLeft="@dimen/marginSize"
+    android:paddingRight="@dimen/marginSize">
+<ImageView
+    android:id="@+id/navBack"
+    android:layout_width="@dimen/iconSize"
+    android:layout_height="@dimen/iconSize"
+    android:src="@mipmap/back"
+    android:layout_gravity="start|center_vertical"/>
+    <TextView
+        android:id="@+id/navTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/navBarTitleSize"
+        android:textColor="@android:color/white"
+        android:text="@string/app_name"
+        android:layout_gravity="center"
+        />
+    <ImageView
+        android:id="@+id/navMe"
+        android:layout_width="@dimen/iconSize"
+        android:layout_height="@dimen/iconSize"
+        android:src="@mipmap/profile"
+        android:layout_gravity="end|center_vertical"
+        />
+</FrameLayout>

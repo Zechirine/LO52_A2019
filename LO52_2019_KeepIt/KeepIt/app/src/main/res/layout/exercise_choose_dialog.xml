@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#11ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="Choisir Entrînement et enter la duration"
+            android:textColor="#38ADFF"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/seance_exercise_chose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginSize"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.utbm.keepit.ui.views.PickerView
+                android:id="@+id/seance_exercise_hour_pick"
+                android:layout_width="60dp"
+                android:layout_height="160dp" />
+
+            <TextView
+                android:id="@+id/seance_exercise_h"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/seance_exercise_hour_pick"
+                android:text="H"
+                android:textColor="#ffaa33"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <com.utbm.keepit.ui.views.PickerView
+                android:id="@+id/seance_exercise_minute_pick"
+                android:layout_width="60dp"
+                android:layout_height="160dp"
+                android:layout_toRightOf="@id/seance_exercise_h" />
+
+            <TextView
+                android:id="@+id/seance_exercise_minute_m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/seance_exercise_minute_pick"
+                android:text="M"
+                android:textColor="#ffaa33"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <com.utbm.keepit.ui.views.PickerView
+                android:id="@+id/seance_exercise_second_pick"
+                android:layout_width="60dp"
+                android:layout_height="160dp"
+                android:layout_toRightOf="@id/seance_exercise_minute_m" />
+
+            <TextView
+                android:id="@+id/second_s"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/seance_exercise_second_pick"
+                android:text="S"
+                android:textColor="#ffaa33"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="15dp"
+            android:background="#E4E4E4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/seance_exercise_no"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="Cancel"
+                android:textColor="#7D7D7D"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#E4E4E4" />
+
+            <Button
+                android:id="@+id/seance_exercise_yes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="Confirm"
+                android:textColor="#38ADFF"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
