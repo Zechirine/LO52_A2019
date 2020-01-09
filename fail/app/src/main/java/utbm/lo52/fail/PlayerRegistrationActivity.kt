@@ -24,7 +24,6 @@ class PlayerRegistrationActivity : AppCompatActivity() {
 
     val teams = ArrayList<Team>()
     private var players = ArrayList<Player>()
-    private var sorted = false
 
     private lateinit var playerAdapter: PlayerAdapter
     private lateinit var db: DBHelper
@@ -32,7 +31,6 @@ class PlayerRegistrationActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.sortButton -> {
-            sorted = true
             orderPlayers()
             true
         }
@@ -60,10 +58,6 @@ class PlayerRegistrationActivity : AppCompatActivity() {
                 if (savedInstanceState != null) savedInstanceState?.getInt("raceID", 0) else 0
             )
         ) as Race
-        sorted = if (savedInstanceState != null) savedInstanceState?.getBoolean(
-            "sorted",
-            false
-        ) else false
 
         // Restore player and team list
         for (team in db.request(Team::class).filterRelated(
@@ -93,6 +87,12 @@ class PlayerRegistrationActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        validateButton.setOnClickListener {
+            val intent = Intent(this, RaceActivity::class.java)
+            intent.putExtra("raceID", race!!.id)
+            startActivity(intent)
+        }
+
         // If there is no player, there are as many default player as the number of team
         if (players.isEmpty()) {
             for (team in teams) {
@@ -101,8 +101,7 @@ class PlayerRegistrationActivity : AppCompatActivity() {
             }
         }
 
-        if (sorted)
-            orderPlayers()
+        orderPlayers()
     }
 
     private fun orderPlayers() {
@@ -116,7 +115,7 @@ class PlayerRegistrationActivity : AppCompatActivity() {
         val player = db.save(
             Player(
                 null,
-                "",
+                "TESTTEST",
                 ordering,
                 ForeignKey(Team::class, team.id)
             )
@@ -133,7 +132,6 @@ class PlayerRegistrationActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         outState?.putInt("raceID", race.id!!)
-        outState?.putBoolean("sorted", sorted)
     }
 }
 
