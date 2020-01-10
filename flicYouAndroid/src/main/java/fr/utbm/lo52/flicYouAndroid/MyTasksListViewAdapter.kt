@@ -30,6 +30,15 @@ class MyTasksListViewAdapter(private val context: Context, private val myTasks: 
         val taskIdTextView = taskRowView.findViewById<View>(R.id.taskId) as TextView
         taskIdTextView.text = myTasks[position].getId().toString()
 
+        val taskStateTextView = taskRowView.findViewById<View>(R.id.taskState) as TextView
+
+        if (myTasks[position].getState() == 0)
+            taskStateTextView.text = "pending"
+        if (myTasks[position].getState() == 1)
+            taskStateTextView.text = "in progress"
+        if (myTasks[position].getState() == 2)
+            taskStateTextView.text = "done"
+
         return taskRowView
     }
 }

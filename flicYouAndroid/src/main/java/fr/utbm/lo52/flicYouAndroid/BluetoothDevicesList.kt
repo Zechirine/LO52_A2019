@@ -24,8 +24,7 @@ class BluetoothDevicesList : AppCompatActivity() {
     private lateinit var m_pairedDevices: Set<BluetoothDevice>
     private val REQUEST_ENABLE_BLUETOOTH = 1
 
-    private val myWatchManager: MyWatchManager =
-        MyApplication.myWatchManager
+    private val myWatchManager: MyWatchManager = MyApplication.myWatchManager
 
     companion object {
         val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
@@ -83,8 +82,6 @@ class BluetoothDevicesList : AppCompatActivity() {
         select_device_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             address = devices[position].address
 
-            val intent = Intent(this, BluetoothDevicesList::class.java)
-//            startActivity(intent)
             connectionAttemptToDevice()
         }
     }

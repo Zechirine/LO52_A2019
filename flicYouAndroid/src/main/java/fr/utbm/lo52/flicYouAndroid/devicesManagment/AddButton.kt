@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import fr.utbm.lo52.flicYouAndroid.*
 import fr.utbm.lo52.flicYouAndroid.FlicAppNotInstalled
@@ -16,44 +14,36 @@ import io.flic.lib.FlicAppNotInstalledException
 import io.flic.lib.FlicBroadcastReceiverFlags
 import io.flic.lib.FlicButton
 import io.flic.lib.FlicManager
+import kotlinx.android.synthetic.main.activity_add_button.*
 
 class AddButton : AppCompatActivity() {
     private val TAG = "AddButton"
-    private lateinit var selectButtonButton: Button
-    private lateinit var addButtonButton: Button
-    private lateinit var roomNumberTextView: TextView
-    private val myButtonManager: MyButtonManager =
-        MyApplication.myButtonManager
-    private var roomNumber: Int = 0
+    private val myButtonManager: MyButtonManager = MyApplication.myButtonManager
     private lateinit var flicButton: FlicButton
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_button)
 
-        selectButtonButton = findViewById(R.id.selectButton)
-        addButtonButton = findViewById(R.id.addButton)
-        roomNumberTextView = findViewById(R.id.roomNumber)
-
         setListeners()
     }
 
     private fun setListeners() {
-        selectButtonButton.setOnClickListener {
+        selectButton.setOnClickListener {
             launchChooseAFlicButtonActivity()
         }
 
-        // TODO prevent if roomNumber not set or flicButton not selected
-        addButtonButton.setOnClickListener {
-            roomNumber = Integer.parseInt(roomNumberTextView.text.toString())
+        addButton.setOnClickListener {
+            if (roomNumber.text.isNotEmpty()) {
+                val myButton = MyButton(Integer.parseInt(roomNumber.text.toString()), flicButton)
+                myButtonManager.myButtons.add(myButton)
 
-            val myButton = MyButton(roomNumber, flicButton)
-            myButtonManager.myButtons.add(myButton)
+                launchListButtonActivity()
 
-            launchListButtonActivity()
-
-            Toast.makeText(this@AddButton, String.format(getString(R.string.this_button_has_been_succesfully_added), myButton.getName()), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddButton, String.format(getString(R.string.this_button_has_been_succesfully_added), myButton.getName()), Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this@AddButton, String.format(getString(R.string.the_room_must_be_fill)), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -90,7 +80,7 @@ class AddButton : AppCompatActivity() {
 
                 if(!isButtonAlreadyAdded(flicButtonPending)){
                     flicButton = flicButtonPending
-                    selectButtonButton.text = flicButtonPending.name
+                    selectButton.text = flicButtonPending.name
                 } else{
                     Toast.makeText(this@AddButton, String.format(getString(R.string.this_button_has_already_been_added), flicButtonPending.name), Toast.LENGTH_SHORT).show()
                 }

@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.*
 import fr.utbm.lo52.flicYouAndroid.devicesManagment.ListButtons
 import fr.utbm.lo52.flicYouAndroid.devicesManagment.ListWatches
 import fr.utbm.lo52.flicYouAndroid.models.*
@@ -26,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     private var daoRoom = RoomDao()
     private var daoHave = HaveDao()
 
-    private lateinit var tasks: ListView
     private val myTaskManager: MyTaskManager = MyApplication.myTaskManager
 
     var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -37,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.i("TEST", "Coucou 2")
         val intentFilter = IntentFilter()
         intentFilter.addAction("fr.utbm.lo52.flicYouAndroid")
         registerReceiver(broadcastReceiver, intentFilter)
@@ -54,11 +51,8 @@ class MainActivity : AppCompatActivity() {
 
         MyFlicManager.setFlicCredentials()
 
-        tasks = findViewById(R.id.tasks)
         tasks.adapter = MyTasksListViewAdapter(this, myTaskManager.myTasks)
         startService(Intent(this, TasksController::class.java))
-
-//        setListeners()
 
         //to initiate Model's Data
         //initDatabase()
@@ -118,14 +112,6 @@ class MainActivity : AppCompatActivity() {
 //        for(room in daoRoom.queryForAll()){
 //            Log.i("DATA", "le nom du malade est :" + room.nameSufferer + "\n le numéro de sa chambre est : " + room.number)
 //        }
-    }
-
-    private fun setListeners() {
-        tasks.adapter
-        tasks.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            val task = myTaskManager.myTasks.get(position)
-            myTaskManager.myTasks.remove(task)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

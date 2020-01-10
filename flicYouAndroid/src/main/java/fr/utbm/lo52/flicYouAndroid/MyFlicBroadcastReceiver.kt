@@ -2,7 +2,6 @@ package fr.utbm.lo52.flicYouAndroid
 
 import android.content.Context
 import android.util.Log
-import fr.utbm.lo52.flicYouAndroid.models.StateTask
 import io.flic.lib.FlicBroadcastReceiver
 import io.flic.lib.FlicButton
 

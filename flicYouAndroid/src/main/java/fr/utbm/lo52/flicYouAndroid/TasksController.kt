@@ -4,7 +4,8 @@ import android.app.IntentService
 import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.util.Log
-import fr.utbm.lo52.flicYouAndroid.models.StateTask
+import android.view.View
+import android.widget.TextView
 import java.io.IOException
 
 class TasksController : IntentService("TasksController") {
@@ -35,6 +36,7 @@ class TasksController : IntentService("TasksController") {
                                         socket = watch.getBluetoothSocket()
                                         sendCommand(task.getName())
                                         watch.setAvailable(false)
+                                        task.setState(StateTask.INPROGRESS)
                                     } catch (e: Exception) {
                                         Log.i("Error", "Watch not connected")
                                     }

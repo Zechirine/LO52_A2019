@@ -13,7 +13,6 @@ class CurrentTaskActivity : WearableActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_task)
 
-
         var data = intent.extras
         var task = data?.getParcelable<TaskModel>("task")
         text.text = "Chambre ${task?.roomNumber} \n ${task?.typeOfTask}"

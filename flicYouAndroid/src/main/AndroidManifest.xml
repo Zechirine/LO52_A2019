@@ -18,7 +18,6 @@
         <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.ListButtons" />
         <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.AddButton" />
         <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.ListWatches" />
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.ListTasks" />
         <activity android:name="fr.utbm.lo52.flicYouAndroid.FlicAppNotInstalled" />
         <activity android:name="fr.utbm.lo52.flicYouAndroid.MainActivity">
             <intent-filter>

@@ -56,7 +56,7 @@ class MainActivity : WearableActivity() {
                 text.text = "Tâche terminée"
             }
         } else {
-            TaskModel("Manger", 4, false)
+            TaskModel(text.text.toString(), 4, false)
         }
 
         // Enables Always-on
@@ -92,7 +92,7 @@ class MainActivity : WearableActivity() {
             return
         }
 
-        if(!m_bluetoothAdapter!!.isEnabled){
+        if(!m_bluetoothAdapter.isEnabled){
             val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BLUETOOTH)
         }
@@ -113,11 +113,8 @@ class MainActivity : WearableActivity() {
     private fun launchTaskActivity(task: TaskModel) {
         if (text.text != waitingTaskText) {
             val intent = Intent(this, CurrentTaskActivity::class.java)
-
             intent.putExtra("task", task)
-
             startActivity(intent)
-            //finish()
         }
     }
 }
