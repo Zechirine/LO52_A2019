@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name">Badtastic</string>
+
+    <!-- Activité AddExerciseActivity -->
+    <string name="add_ex_title">Ajouter un exercice</string>
+    <string name="add_ex_name">Nom de l\'exercice</string>
+    <string name="add_ex_desc">Description de l\'exercice</string>
+    <string name="add_ex_diff">Difficulté:</string>
+    <string name="add_ex_tag">Thématiques</string>
+    <string name="add_ex_duree">Durée</string>
+    <string name="add_ex_public">Type de public:</string>
+
+    <!-- Activité SessionActivity -->
+    <string name="session_title">Exécuter une session (debug)</string>
+    <string name="exercise_nbr">Exercice numéro </string>
+    <string name="exercise_name">Nom : </string>
+    <string name="exercise_theme">Thème(s) : </string>
+    <string name="exercise_rep">Répétitions : </string>
+    <string name="exercise_desc">Descriptif : </string>
+    <string name="grp_nbr">Groupe </string>
+
+    <!-- Activité CreateSessionRandomActivity -->
+    <string name="create_session_title">Créer une session aléatoirement</string>
+    <string name="create_session_name">Nom de la session</string>
+    <string name="create_session_duration">Durée totale de la séance (en min)</string>
+    <string name="create_session_add_group">Ajouter un groupe</string>
+    <string name="create_session_low_cor">Corrélation faible !</string>
+    <string name="create_session_low_cor_desc">La session généré ne peut pas répondre exactement à vos demandes. Il est recommandé d\'ajouter plus d\'exercices pour obtenir un résultat satisfaisant.\nSouhaitez-vous conserver la session ?</string>
+
+    <!-- Activité CreateGroupTraining -->
+    <string name="create_group_title">Créer un groupe</string>
+    <string name="create_group_difficulte">Difficulté:</string>
+    <string name="create_group_tags">Thématiques</string>
+    <string name="create_group_public">Type de public:</string>
+
+    <!-- Utils -->
+    <string name="confirm_util">Confirmer</string>
+    <string name="ajouter_util">Ajouter</string>
+    <string name="creer_util">Créer</string>
+    <string name="modif_util">Modifier</string>
+    <string name="validate_changes">Valider</string>
+    <string name="label_date">Date</string>
+    <string name="label_hour">Heure</string>
+    <string name="very_long_placeholder">Placeholder that is extremely long so that we can make sure that ellipsize actually works</string>
+    <string name="placeholder_util">Placeholder</string>
+    <string name="suppr_util">Supprimer</string>
+
+    <!-- Levels -->
+    <string name="type_public_debutant">Débutant</string>
+    <string name="type_public_confirme">Confirmé</string>
+    <string name="type_public_deux">Les deux</string>
+
+    <!-- Scheduled session manager -->
+    <string name="title_activity_calendar">CalendarActivity</string>
+    <string name="sched_session_manager_name">Sessions planifiées</string>
+    <string name="session_number_format">Séance %d</string>
+    <string name="confirm_session_deletion_title">Supprimer une séance</string>
+    <string name="confirm_session_deletion_text">Voulez-vous vraiment supprimer la séance de %s ?</string>
+    <string name="title_activity_add_scheduled_session">AddScheduledSessionActivity</string>
+    <string name="sched_session_add">Planification d\'une nouvelle séance</string>
+    <string name="sched_session_edit">Modification d\'une séance planifiée</string>
+    <string name="session_select">Choix de la séance</string>
+    <string name="session_search">Rechercher une séance&#8230;</string>
+    <string name="session_invalid">Séance inexistante</string>
+
+    <!-- Exercise browser -->
+    <string name="browse_exercise_title">Exercices</string>
+    <string name="confirm_exercise_deletion_title">Supprimer un exercice</string>
+    <string name="confirm_exercise_deletion_text">Voulez-vous vraiment supprimer l\'exercice « %s » ?</string>
+
+    <!-- Exercise Viewer -->
+    <string name="exercise_viewer_title">Consulter un exercice</string>
+    <string name="exercise_viewer_duration">Durée de l\'exercice: %d s</string>
+    <string name="exercise_viewer_public">Type de public: %s</string>
+
+    <!-- Session browser -->
+    <string name="browse_sessions_title">Sessions</string>
+    <string name="confirm_sessions_deletion_title">Supprimer une session</string>
+    <string name="confirm_sessions_deletion_text">Voulez-vous vraiment supprimer la session « %s » ?</string>
+</resources>

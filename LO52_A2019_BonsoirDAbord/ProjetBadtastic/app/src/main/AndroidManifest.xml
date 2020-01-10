@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bonsoirdabord.lo52_badtastic">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ExerciseViewerActivity"></activity>
+        <activity android:name=".SessionBrowserActivity"></activity>
+        <activity
+            android:name=".AddScheduledSessionActivity"
+            android:label="@string/title_activity_add_scheduled_session" />
+
+        <activity
+            android:name=".CalendarActivity"
+            android:label="@string/title_activity_calendar" />
+
+        <activity
+            android:name=".ExerciseBrowserActivity"
+            android:label="@string/placeholder_util" />
+
+        <activity android:name=".CreatGroupTrainingActivity"></activity>
+        <activity android:name=".CreateSessionRandomActivity" />
+        <activity android:name=".AddExerciseActivity" />
+        <activity android:name=".SessionActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
