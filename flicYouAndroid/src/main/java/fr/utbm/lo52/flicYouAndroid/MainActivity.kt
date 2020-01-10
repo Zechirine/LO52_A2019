@@ -130,6 +130,10 @@ class MainActivity : AppCompatActivity() {
                 launchListWatchesActivity()
                 true
             }
+            R.id.stats -> {
+                launchStatsActivity()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -142,6 +146,12 @@ class MainActivity : AppCompatActivity() {
     private fun launchListWatchesActivity() {
         val intent = Intent(this, ListWatches::class.java)
         startActivity(intent)
+    }
+
+    private fun launchStatsActivity() {
+        val intent = Intent(this, StatsActivity::class.java)
+        startActivity(intent)
+
     }
 
     //to destroy instance of database and close it

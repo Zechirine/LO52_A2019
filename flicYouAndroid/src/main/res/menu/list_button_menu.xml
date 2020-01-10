@@ -2,15 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <!--TODO-->
+
     <item
         android:id="@+id/button_navigation"
         android:icon="@drawable/ic_radio_button_checked_black_24dp"
         android:title="@string/buttons"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/watches_navigation"
-        android:icon="@drawable/ic_watch_black_24dp"
-        android:title="@string/watches"
-        app:showAsAction="ifRoom" />
-
+    android:id="@+id/watches_navigation"
+    android:icon="@drawable/ic_watch_black_24dp"
+    android:title="@string/watches"
+    app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/stats"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/stats"
+        app:showAsAction="ifRoom"/>
 </menu>

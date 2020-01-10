@@ -12,5 +12,11 @@
         android:icon="@drawable/ic_watch_black_24dp"
         android:title="@string/watches"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/stats"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/stats"
+        app:showAsAction="ifRoom"
+        />
 
 </menu>
