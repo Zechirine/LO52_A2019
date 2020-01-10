@@ -13,8 +13,9 @@
     <string name="registration_team_placeholder">Team name</string>
     <string name="registration_team_base_name">Team</string>
     <string name="menu_sort_button">Sort by team</string>
-    <string name="lap_type_sprint">sprint</string>
-    <string name="lap_type_split_up">split-up</string>
-    <string name="lap_type_pit_stop">pit-stop</string>
+    <string name="lap_type_sprint">Sprint</string>
+    <string name="lap_type_split_up">Split-up</string>
+    <string name="lap_type_pit_stop">Pit-stop</string>
     <string name="history_see_results">See results</string>
+    <string name="score_average">Average</string>
 </resources>

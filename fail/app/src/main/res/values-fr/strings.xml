@@ -14,8 +14,9 @@
     <string name="registration_team_placeholder">Nom d\'équipe</string>
     <string name="registration_team_base_name">Équipe</string>
     <string name="menu_sort_button">Trier par équipe</string>
-    <string name="lap_type_pit_stop">pit-stop</string>
-    <string name="lap_type_split_up">fractionné</string>
-    <string name="lap_type_sprint">sprint</string>
+    <string name="lap_type_pit_stop">Pit-stop</string>
+    <string name="lap_type_split_up">Fractionné</string>
+    <string name="lap_type_sprint">Sprint</string>
     <string name="history_see_results">Voir les résultats</string>
+    <string name="score_average">Moyenne</string>
 </resources>

@@ -1,5 +1,6 @@
 package utbm.lo52.fail
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -65,12 +66,12 @@ class RaceActivity : AppCompatActivity() {
         val laps = db.request(Lap::class).filterRelated(Player::class, "id", player.id!!).all().size
 
         Log.v(
-            "TEST",
+            "DEBUG",
             (db.save(
                 Lap(
                     null,
                     chronoTime(),
-                    laps,
+                    LapType.LAP_TYPE_ORDER[laps].id,
                     ForeignKey(Player::class, player.id)
                 )
             ) as Lap).toString()
@@ -119,7 +120,10 @@ class RaceActivity : AppCompatActivity() {
                 addLap(team)
                 if (hasLapLeft(team))
                     button.text = teamInfo(team)
-                else button.isEnabled = false
+                else {
+                    button.isEnabled = false
+                    if (isFinished()) goToResults()
+                }
             }
             button.isEnabled = false
             buttonMap[team.id!!] = button
@@ -158,6 +162,20 @@ class RaceActivity : AppCompatActivity() {
         }
 
         if (isChronoStarted) startButton.callOnClick()
+    }
+
+    private fun isFinished(): Boolean {
+        for (team in teams) {
+            if (hasLapLeft(team))
+                return false
+        }
+        return true
+    }
+
+    private fun goToResults() {
+        val intent = Intent(this, ScoreActivity::class.java)
+        intent.putExtra("raceID", race!!.id)
+        startActivity(intent)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

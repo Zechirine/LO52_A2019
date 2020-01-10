@@ -33,6 +33,7 @@ class HistoryActivity : AppCompatActivity() {
         ItemList.adapter = raceAdapter
 
         races.addAll(db.request(Race::class).all() as List<Race>)
+        races.sortByDescending { it.id }
         raceAdapter.submitList(races)
 
         validateButton.hide()
