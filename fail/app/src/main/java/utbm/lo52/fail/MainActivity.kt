@@ -36,5 +36,9 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("raceID", race!!.id)
             startActivity(intent)
         }
+        historyRaceButton.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

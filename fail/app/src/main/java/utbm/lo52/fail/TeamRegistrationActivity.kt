@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.registration_activity.*
-import kotlinx.android.synthetic.main.team_widget.view.*
+import kotlinx.android.synthetic.main.activity_registration.*
+import kotlinx.android.synthetic.main.widget_team.view.*
 import utbm.lo52.fail.constants.MAX_TEAM_PER_RACE
 import utbm.lo52.fail.db.DBHelper
 import utbm.lo52.fail.db.ForeignKey
@@ -32,7 +32,7 @@ class TeamRegistrationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.registration_activity)
+        setContentView(R.layout.activity_registration)
 
         db = DBHelper(this, null)
         teamAdapter = TeamAdapter(this, db)
@@ -174,7 +174,7 @@ class TeamAdapter(private val activity: TeamRegistrationActivity, private val db
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
         return TeamViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.team_widget, parent, false), activity, db
+                .inflate(R.layout.widget_team, parent, false), activity, db
         )
     }
 

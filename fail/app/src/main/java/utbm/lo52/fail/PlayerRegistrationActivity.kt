@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.player_widget.view.*
-import kotlinx.android.synthetic.main.registration_activity.*
+import kotlinx.android.synthetic.main.activity_registration.*
+import kotlinx.android.synthetic.main.widget_player.view.*
 import utbm.lo52.fail.constants.MAX_ORDERING
 import utbm.lo52.fail.db.*
 
@@ -29,7 +29,7 @@ class PlayerRegistrationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.registration_activity)
+        setContentView(R.layout.activity_registration)
 
         db = DBHelper(this, null)
         playerAdapter = PlayerAdapter(this, db)
@@ -179,7 +179,7 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity, private va
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         return PlayerViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.player_widget, parent, false), activity, db
+                .inflate(R.layout.widget_player, parent, false), activity, db
         )
     }
 
