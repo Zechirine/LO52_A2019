@@ -8,11 +8,11 @@
 
     <Button
         android:id="@+id/beginRaceButton"
-        android:layout_width="140dp"
-        android:layout_height="153dp"
-        android:background="#7B4D83"
+        android:layout_width="210dp"
+        android:layout_height="237dp"
+        android:background="#F44336"
         android:text="@string/activity_main_begin_race"
-        android:textColor="#FFEB3B"
+        android:textColor="#F8F8F2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,11 +21,11 @@
 
     <Button
         android:id="@+id/historyRaceButton"
-        android:layout_width="172dp"
-        android:layout_height="79dp"
-        android:background="#7B4D83"
+        android:layout_width="214dp"
+        android:layout_height="131dp"
+        android:background="#F44336"
         android:text="@string/activity_main_history"
-        android:textColor="#FFEB3B"
+        android:textColor="#EEEEE9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
