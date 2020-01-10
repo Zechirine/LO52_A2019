@@ -13,17 +13,19 @@
         android:hint="@string/registration_player_placeholder"
         android:inputType="textPersonName" />
 
-    <Spinner
-        android:id="@+id/teamSpinner"
-        android:layout_width="131dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
-
-    <Spinner
-        android:id="@+id/orderingSpinner"
-        android:layout_width="85dp"
+    <TextView
+        android:id="@+id/teamTextView"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textAlignment="textEnd" />
+        android:gravity="center"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/orderingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textAlignment="center" />
 
 </LinearLayout>

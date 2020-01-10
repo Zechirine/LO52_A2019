@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
-import android.widget.AdapterView
-import android.widget.BaseAdapter
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,38 +15,24 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.player_widget.view.*
 import kotlinx.android.synthetic.main.registration_activity.*
 import utbm.lo52.fail.constants.MAX_ORDERING
-import utbm.lo52.fail.constants.MIN_ORDERING
 import utbm.lo52.fail.db.*
 
 @ExperimentalStdlibApi
 class PlayerRegistrationActivity : AppCompatActivity() {
 
-    val teams = ArrayList<Team>()
+    private val teams = ArrayList<Team>()
     private var players = ArrayList<Player>()
 
     private lateinit var playerAdapter: PlayerAdapter
     private lateinit var db: DBHelper
     private lateinit var race: Race
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.sortButton -> {
-            orderPlayers()
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.reorganize, menu)
-        return true;
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registration_activity)
 
         db = DBHelper(this, null)
-        playerAdapter = PlayerAdapter(this)
+        playerAdapter = PlayerAdapter(this, db)
 
         // Get the current race
         // This should not fail, normally
@@ -100,22 +85,14 @@ class PlayerRegistrationActivity : AppCompatActivity() {
                     addPlayer(team, i)
             }
         }
-
-        orderPlayers()
+        validation()
     }
-
-    private fun orderPlayers() {
-        players.sortWith(nullsLast(compareBy({ it.team.id }, { it.ordering })))
-        ItemList.recycledViewPool.clear()
-        playerAdapter.notifyDataSetChanged()
-    }
-
 
     private fun addPlayer(team: Team, ordering: Int) {
         val player = db.save(
             Player(
                 null,
-                "TESTTEST",
+                "Player ${players.size + 1}",
                 ordering,
                 ForeignKey(Team::class, team.id)
             )
@@ -133,11 +110,20 @@ class PlayerRegistrationActivity : AppCompatActivity() {
 
         outState?.putInt("raceID", race.id!!)
     }
+
+    fun validation() {
+        validateButton.isEnabled = true
+
+        // Check that every player has a non empty name
+        if (players.any { it.name == "" }) {
+            validateButton.isEnabled = false
+        }
+    }
 }
 
 
 @UseExperimental(ExperimentalStdlibApi::class)
-class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
+class PlayerAdapter(private val activity: PlayerRegistrationActivity, private val db: DBHelper) :
     ListAdapter<Player, PlayerAdapter.PlayerViewHolder>(PlayerDiffCallback()) {
 
     class PlayerNameListener(
@@ -161,13 +147,15 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
             activity.silentUpdatePlayer(
                 player, playerPosition
             )
+            activity.validation()
         }
     }
 
     @ExperimentalStdlibApi
     class PlayerViewHolder(
         private val view: View,
-        private val activity: PlayerRegistrationActivity
+        private val activity: PlayerRegistrationActivity,
+        private val db: DBHelper
     ) :
         RecyclerView.ViewHolder(view) {
 
@@ -183,69 +171,15 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity) :
             view.playerNameText.setText(player.name)
             view.playerNameText.addTextChangedListener(playerNameListener)
 
-            // Handle drop down team list
-            val teamAdapter = TeamSpinnerAdapter(activity.teams)
-            view.teamSpinner.adapter = teamAdapter
-            view.teamSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    pos: Int,
-                    id: Long
-                ) {
-                    // Save the selected team for the player
-                    activity.silentUpdatePlayer(
-                        Player(
-                            player.id,
-                            player.name,
-                            player.ordering,
-                            ForeignKey(Team::class, teamAdapter.getItem(pos).id)
-                        ), playerPosition
-                    )
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    // It can not happen (hopefully)
-                }
-
-            }
-            view.teamSpinner.setSelection(teamAdapter.getPositionFromDbId(player.team.id))
-
-            // Handle drop down ordering list
-            val orderingAdapter = OrderingAdapter()
-            view.orderingSpinner.adapter = orderingAdapter
-            view.orderingSpinner.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        // It can not happen (hopefully)
-                    }
-
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        pos: Int,
-                        id: Long
-                    ) {
-                        // Save the selected team for the player
-                        activity.silentUpdatePlayer(
-                            Player(
-                                player.id,
-                                player.name,
-                                orderingAdapter.getItem(pos),
-                                player.team
-                            ), playerPosition
-                        )
-                    }
-
-                }
-            view.orderingSpinner.setSelection(orderingAdapter.getPositionFromValue(player.ordering))
+            view.teamTextView.text = (player.team.getRelated(db) as Team).name
+            view.orderingTextView.text = player.ordering.toString()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         return PlayerViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.player_widget, parent, false), activity
+                .inflate(R.layout.player_widget, parent, false), activity, db
         )
     }
 
@@ -268,67 +202,3 @@ class PlayerDiffCallback : DiffUtil.ItemCallback<Player>() {
                 oldItem.team.id == newItem.team.id
     }
 }
-
-class TeamSpinnerAdapter(private val teams: List<Team>) : BaseAdapter() {
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(parent?.context)
-            .inflate(android.R.layout.simple_spinner_dropdown_item, parent, false) as TextView
-        view.text = this.getItem(position).name
-        return view
-    }
-
-    override fun getItem(position: Int): Team {
-        return teams[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return teams[position].id!!.toLong()
-    }
-
-    override fun getCount(): Int {
-        return teams.size
-    }
-
-    fun getPositionFromDbId(id: Int?): Int {
-        for ((pos, team) in teams.withIndex()) {
-            if (team.id == id)
-                return pos
-        }
-        return 0
-    }
-}
-
-class OrderingAdapter : BaseAdapter() {
-    private val orders = IntRange(MIN_ORDERING, MAX_ORDERING).toList()
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(parent?.context)
-            .inflate(android.R.layout.simple_spinner_dropdown_item, parent, false) as TextView
-        view.text = this.getItem(position).toString()
-        view.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
-        return view
-    }
-
-    fun getPositionFromValue(value: Int): Int {
-        for ((pos, ordering) in orders.withIndex()) {
-            if (value == ordering)
-                return pos
-        }
-        return 0
-    }
-
-    override fun getItem(position: Int): Int {
-        return orders[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getCount(): Int {
-        return orders.size
-    }
-
-}
-
