@@ -49,6 +49,14 @@ class RaceActivity : AppCompatActivity() {
         return minPlayer!!
     }
 
+    private fun lapTime(team: Team): Int {
+        return chronoTime() - (db.request(Lap::class).filterRelated(
+            Player::class,
+            "team_id",
+            team.id!!
+        ).all() as List<Lap>).map { it.chrono }.sum()
+    }
+
     private fun hasLapLeft(team: Team): Boolean {
         val player = currentRunner(team)
         val lastPlayer = db.request(Player::class).filterRelated(
@@ -70,7 +78,7 @@ class RaceActivity : AppCompatActivity() {
             (db.save(
                 Lap(
                     null,
-                    chronoTime(),
+                    lapTime(team),
                     LapType.LAP_TYPE_ORDER[laps].id,
                     ForeignKey(Player::class, player.id)
                 )
