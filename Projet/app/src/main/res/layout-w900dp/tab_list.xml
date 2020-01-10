@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    tools:context="view.MenuActivity">
+
+    <!--
+    This layout is a two-pane layout for the tabs
+    master/detail flow.
+    
+    -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tab_list"
+        android:name="com.example.testmasterflow.tabListFragment"
+        android:layout_width="@dimen/item_width"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.example.testmasterflow.TabListActivity"
+        tools:listitem="@layout/tab_list_content" />
+
+    <LinearLayout
+        android:id="@+id/tab_detail_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/app_name"
+            android:textSize="60sp" />
+
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/socks" />
+    </LinearLayout>
+
+</LinearLayout>
