@@ -19,4 +19,5 @@
     <string name="buttons">Boutons</string>
     <string name="taskName">TaskName</string>
     <string name="taskId">TaskId</string>
+    <string name="stats">Stats</string>
 </resources>

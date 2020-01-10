@@ -13,14 +13,15 @@
         android:roundIcon="@mipmap/flic_me_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.BluetoothControl"/>
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.BluetoothDevicesList" />
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.ListButtons" />
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.AddButton" />
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.ListWatches" />
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.devicesManagment.ListTasks" />
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.FlicAppNotInstalled" />
-        <activity android:name="fr.utbm.lo52.flicYouAndroid.MainActivity">
+        <activity android:name=".StatsActivity"></activity>
+        <activity android:name=".BluetoothControl" />
+        <activity android:name=".BluetoothDevicesList" />
+        <activity android:name=".devicesManagment.ListButtons" />
+        <activity android:name=".devicesManagment.AddButton" />
+        <activity android:name=".devicesManagment.ListWatches" />
+        <activity android:name=".devicesManagment.ListTasks" />
+        <activity android:name=".FlicAppNotInstalled" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +30,7 @@
         </activity>
 
         <receiver
-            android:name="fr.utbm.lo52.flicYouAndroid.MyFlicBroadcastReceiver"
+            android:name=".MyFlicBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -37,7 +38,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="TasksController"/>
+        <service android:name=".TasksController" />
     </application>
 
 </manifest>
