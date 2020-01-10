@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 int max=10;
                 Random rand=new Random();
                 int nombreAleatoire = rand.nextInt(max - min + 1) + min;
-                ed.setText("WRITE : "+squareFromJNI(nombreAleatoire));
+                ed.setText("WRITE : "+cubedFromJNI(nombreAleatoire));
             }
         });
     }
