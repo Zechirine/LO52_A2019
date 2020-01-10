@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_registration.*
+import kotlinx.android.synthetic.main.activity_recycler_navigation.*
 import kotlinx.android.synthetic.main.widget_race.view.*
 import utbm.lo52.fail.db.DBHelper
 import utbm.lo52.fail.db.Race
@@ -25,13 +25,13 @@ class HistoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registration)
+        setContentView(R.layout.activity_recycler_navigation)
 
         db = DBHelper(this, null)
         raceAdapter = RaceAdapter(this)
         ItemList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         ItemList.adapter = raceAdapter
-       
+
         races.addAll(db.request(Race::class).all() as List<Race>)
         raceAdapter.submitList(races)
 
