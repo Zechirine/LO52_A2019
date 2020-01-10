@@ -2,6 +2,7 @@ package utbm.lo52.fail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_recycler_navigation.*
-import kotlinx.android.synthetic.main.widget_player_score.view.*
+import kotlinx.android.synthetic.main.widget_score.view.*
 import utbm.lo52.fail.constants.LapType
 import utbm.lo52.fail.db.*
 
@@ -27,6 +28,7 @@ class ScoreActivity : AppCompatActivity() {
     private lateinit var race: Race
     private lateinit var db: DBHelper
     private lateinit var playerScoreAdapter: PlayerScoreAdapter
+    private lateinit var teamScoreAdapter: TeamScoreAdapter
 
     override fun onBackPressed() {
         moveTaskToBack(false)
@@ -67,6 +69,8 @@ class ScoreActivity : AppCompatActivity() {
         playerScoreAdapter = PlayerScoreAdapter(db)
         ItemList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         ItemList.adapter = playerScoreAdapter
+
+        // Sort players by rank
         players.sortBy {
             (db.request(Lap::class).filterRelated(
                 Player::class,
@@ -75,6 +79,19 @@ class ScoreActivity : AppCompatActivity() {
             ).all() as List<Lap>).map { lap -> lap.chrono }.sum()
         }
         playerScoreAdapter.submitList(players)
+
+        teamScoreAdapter = TeamScoreAdapter(db)
+        // Sort teams by winning
+        teams.sortBy {
+            (db.request(Lap::class).filterRelated(
+                Player::class,
+                "team_id",
+                it.id!!
+            ).all() as List<Lap>).map { lap -> lap.chrono }.sum()
+        }
+        Log.v("debug", teams.toString())
+        ItemList.adapter = teamScoreAdapter
+        teamScoreAdapter.submitList(teams)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -90,56 +107,84 @@ class ScoreActivity : AppCompatActivity() {
 
 }
 
+@ExperimentalStdlibApi
+class ScoreViewHolder(private val view: View, private val db: DBHelper) :
+    RecyclerView.ViewHolder(view) {
+    fun bind(baseRequest: DBHelper.SQLRequest, name: String, rank: Int) {
+        val sprints =
+            (baseRequest.filter(
+                "laptype",
+                LapType.SPRINT.id
+            ).all() as List<Lap>).map { it.chrono }
+        val splitUp =
+            (baseRequest.filter(
+                "laptype",
+                LapType.SPLIT_UP.id
+            ).all() as List<Lap>).map { it.chrono }
+        val pitStop =
+            (baseRequest.filter(
+                "laptype",
+                LapType.PIT_STOP.id
+            ).all() as List<Lap>).map { it.chrono }
+        val runningTime = ArrayList<Int>()
+        runningTime.addAll(sprints)
+        runningTime.addAll(splitUp)
+
+        view.rankText.text = rank.toString()
+        view.nameText.text = name
+        view.sprintAverageText.text = formatTime(sprints.average())
+        view.splitUpAverageText.text = formatTime(splitUp.average())
+        view.pitStopAverageText.text = formatTime(pitStop.average())
+        view.runningAverageText.text = formatTime(runningTime.average())
+    }
+}
+
 @UseExperimental(ExperimentalStdlibApi::class)
 class PlayerScoreAdapter(private val db: DBHelper) :
-    ListAdapter<Player, PlayerScoreAdapter.PlayerScoreViewHolder>(PlayerDiffCallback()) {
-
-    class PlayerScoreViewHolder(
-        private val view: View,
-        private val db: DBHelper
-    ) : RecyclerView.ViewHolder(view) {
-        fun bind(player: Player, position: Int) {
-            val baseRequest = db.request(Lap::class).filterRelated(Player::class, "id", player.id!!)
-            val sprints =
-                (baseRequest.filter(
-                    "laptype",
-                    LapType.SPRINT.id
-                ).all() as List<Lap>).map { it.chrono }
-            val splitUp =
-                (baseRequest.filter(
-                    "laptype",
-                    LapType.SPLIT_UP.id
-                ).all() as List<Lap>).map { it.chrono }
-            val pitStop =
-                (baseRequest.filter(
-                    "laptype",
-                    LapType.PIT_STOP.id
-                ).all() as List<Lap>).map { it.chrono }
-            val runningTime = ArrayList<Int>()
-            runningTime.addAll(sprints)
-            runningTime.addAll(splitUp)
-
-            view.playerRank.text = position.toString()
-            view.playerNameText.text = player.name
-            view.playerSprintTime.text = formatTime(sprints.average())
-            view.playerSplitTime.text = formatTime(splitUp.average())
-            view.playerPitTime.text = formatTime(pitStop.average())
-            view.playerMeanTime.text = formatTime(runningTime.average())
-        }
-    }
-
+    ListAdapter<Player, ScoreViewHolder>(PlayerDiffCallback()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PlayerScoreViewHolder {
-        return PlayerScoreViewHolder(
+    ): ScoreViewHolder {
+        return ScoreViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.widget_player_score, parent, false), db
+                .inflate(R.layout.widget_score, parent, false), db
         )
     }
 
-    override fun onBindViewHolder(holder: PlayerScoreViewHolder, position: Int) {
-        holder.bind(getItem(position), position + 1)
+    override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
+        val player = getItem(position)
+        holder.bind(
+            db.request(Lap::class).filterRelated(Player::class, "id", player.id!!),
+            player.name,
+            position + 1
+        )
+    }
+}
+
+@ExperimentalStdlibApi
+class TeamScoreAdapter(private val db: DBHelper) :
+    ListAdapter<Team, ScoreViewHolder>(TeamDiffCallback()) {
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ScoreViewHolder {
+        return ScoreViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.widget_score, parent, false), db
+        )
+    }
+
+    override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
+        val team = getItem(position)
+        holder.bind(
+            db.request(Lap::class).filterRelated(
+                Player::class,
+                "team_id",
+                team.id!!
+            ), team.name, position + 1
+        )
     }
 }

@@ -19,4 +19,5 @@
     <string name="lap_type_sprint">Sprint</string>
     <string name="history_see_results">Voir les résultats</string>
     <string name="score_average">Moyenne</string>
+    <string name="score_rank">Rang</string>
 </resources>

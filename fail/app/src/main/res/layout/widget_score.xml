@@ -13,12 +13,18 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/playerNameText"
+                android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/playerRank"
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/score_rank" />
+
+            <TextView
+                android:id="@+id/rankText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </TableRow>
@@ -28,13 +34,12 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/playerSprint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lap_type_sprint" />
 
             <TextView
-                android:id="@+id/playerSprintTime"
+                android:id="@+id/sprintAverageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -46,13 +51,12 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/playerSplit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lap_type_split_up" />
 
             <TextView
-                android:id="@+id/playerSplitTime"
+                android:id="@+id/splitUpAverageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -64,13 +68,12 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/playerPit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lap_type_pit_stop" />
 
             <TextView
-                android:id="@+id/playerPitTime"
+                android:id="@+id/pitStopAverageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -82,13 +85,12 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/playerMean"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/score_average" />
 
             <TextView
-                android:id="@+id/playerMeanTime"
+                android:id="@+id/runningAverageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"

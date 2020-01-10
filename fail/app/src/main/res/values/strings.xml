@@ -18,4 +18,5 @@
     <string name="lap_type_pit_stop">Pit-stop</string>
     <string name="history_see_results">See results</string>
     <string name="score_average">Average</string>
+    <string name="score_rank">Rank</string>
 </resources>

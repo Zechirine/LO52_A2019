@@ -165,11 +165,11 @@ class PlayerAdapter(private val activity: PlayerRegistrationActivity, private va
 
             // Handle Text entry
             if (playerNameListener != null) {
-                view.playerNameText.removeTextChangedListener(playerNameListener)
+                view.nameText.removeTextChangedListener(playerNameListener)
             }
             playerNameListener = PlayerNameListener(player, playerPosition, activity)
-            view.playerNameText.setText(player.name)
-            view.playerNameText.addTextChangedListener(playerNameListener)
+            view.nameText.setText(player.name)
+            view.nameText.addTextChangedListener(playerNameListener)
 
             view.teamTextView.text = (player.team.getRelated(db) as Team).name
             view.orderingTextView.text = player.ordering.toString()
