@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".OtherActivities.LaunchGameActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btBegin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Begin" />
+        <Chronometer
+            android:id="@+id/chrnoAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <GridLayout
+        android:id="@+id/listGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:useDefaultMargins="true"
+        android:columnCount="3">
+    </GridLayout>
+    <!-- <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Group 2"
+         android:textColor="@color/color0" />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Group 3"
+         android:textColor="@color/color0" />
+ -->
+
+
+    <Button
+        android:id="@+id/btResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Results" />
+</LinearLayout>

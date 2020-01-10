@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled = "false"
+            android:text="Group"/>
+
+        <Chronometer
+            android:id="@+id/chrnoGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            /><!-- android:visibility="invisible"-->
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/runner11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:checked="true"
+            android:visibility="invisible"/>
+
+        <CheckBox
+            android:id="@+id/runner12"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checked="true"
+            android:text="2"
+            android:visibility="invisible" />
+        <CheckBox
+            android:id="@+id/runner13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:checked="true"
+            android:visibility="invisible"/>
+        <CheckBox
+            android:id="@+id/runner21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:checked="true"
+            android:visibility="invisible"/>
+        <CheckBox
+            android:id="@+id/runner22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:checked="true"
+            android:visibility="invisible"/>
+        <CheckBox
+            android:id="@+id/runner23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:checked="true"
+            android:visibility="invisible"/>
+    </LinearLayout>
+</LinearLayout>

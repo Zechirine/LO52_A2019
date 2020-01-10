@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".OtherActivities.CreateCompetition">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_competition" />
+
+                <EditText
+                    android:id="@+id/newCompetitionName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_enter_competition"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/addGroups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/addGroupToCompetitionIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_plus_green" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/confirmAddCompetition"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btn_confirm" />
+
+                <Button
+                    android:id="@+id/annulAddCompetition"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btn_annul" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!--<LinearLayout
+        android:id="@+id/addGroupLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/label_group" />
+
+        <AutoCompleteTextView
+            android:id="@+id/spinnerGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:completionThreshold="1"
+            android:hint="@string/hint_enter_group" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/removeGroupFromCompetition"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_minus_red"/>
+    </LinearLayout>-->
+
+</LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".Fragments.CompetitionFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="">
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:text="@string/label_research" />
+
+                <EditText
+                    android:id="@+id/searchCompetition"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_enter_competition"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLength="20"
+                    android:singleLine="true" />
+
+                <Button
+                    android:id="@+id/btnOkCompetition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/btn_ok" />
+            </LinearLayout>-->
+
+            <ExpandableListView
+                android:id="@+id/competitionView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ExpandableListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnAddCompetition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_add" />
+
+            </LinearLayout>
+        </LinearLayout>
+</FrameLayout>

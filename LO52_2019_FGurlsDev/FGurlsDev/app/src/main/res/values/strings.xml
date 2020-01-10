@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">FGurlsDev</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="tab_text_1">Coureur</string>
+    <string name="tab_text_2">Equipe</string>
+    <string name="tab_text_3">Course</string>
+    <string name="tab_text_4">Statistique</string>
+
+    <string name="label_competition">Nom de course : </string>
+    <string name="label_groupName">Nom d\'equipe : </string>
+    <string name="label_groupRunner1">Coureur 1 : </string>
+    <string name="label_groupRunner2">Coureur 2 : </string>
+    <string name="label_groupRunner3">Coureur 3 : </string>
+    <string name="label_group">Equipe : </string>
+    <string name="label_research">Recherche:</string>
+
+    <string name="label_sprint1">Sprint 1</string>
+    <string name="label_tourObstacle1">Tour D\'obstacle 1</string>
+    <string name="label_pitStop">Pit-Stop</string>
+    <string name="label_sprint2">Sprint 2</string>
+    <string name="label_tourObstacle2">Tour D\'obstacle 2</string>
+
+    <string name="label_simple_competition">Course</string>
+    <string name="label_simple_groupName">Equipe</string>
+    <string name="label_simple_runner">Runner</string>
+    <string name="label_simple_passage">Passage</string>
+    <string name="label_simple_turn">Tour</string>
+    <string name="label_simple_result">Resultat</string>
+
+    <string name="hint_enter_runner">Saisissez le nom de coureur</string>
+    <string name="hint_enter_group">Saisissez le nom d\'equipe</string>
+    <string name="hint_enter_competition">Saisissez le nom de course</string>
+
+    <string name="runner_col1">Nom PRENOM</string>
+    <string name="runner_col2">Traitement</string>
+
+    <string name="btn_add">Ajouter</string>
+    <string name="btn_annul">Annul</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_delete">Del</string>
+    <string name="btn_modify">Modify</string>
+    <string name="btn_ok">OK</string>
+
+    <string name="radioBtn_top1">Top 1</string>
+    <string name="radioBtn_top3">Top 3</string>
+    <string name="radioBtn_All">All</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

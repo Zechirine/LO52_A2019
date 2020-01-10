@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.RunnerFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:scrollbars="">
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/label_research"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+            <EditText
+                android:id="@+id/searchRunnerName"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_enter_runner"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:inputType="text"
+                android:importantForAutofill="no" />
+
+            <Button
+                android:id="@+id/btnOkRunner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/btn_ok" />
+
+        </LinearLayout>-->
+
+        <TableLayout
+            android:id="@+id/coureurLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0">
+
+            <TableRow
+                android:id="@+id/runnerRow">
+
+                <TextView
+                    android:id="@+id/runnerName"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/runner_col1" />
+
+                <TextView
+                    android:layout_gravity="start"
+                    android:text="@string/runner_col2" />
+
+                <Space/>
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnAddRunner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_add" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
