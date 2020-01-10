@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TableLayout
@@ -12,13 +13,13 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/PlayerNameText"
+                android:id="@+id/playerNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/PlayerRank"
+                android:id="@+id/playerRank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
@@ -26,16 +27,16 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/PlayerSprint"
+                android:id="@+id/playerSprint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <EditText
-                android:id="@+id/PlayerSprintTime"
+                android:id="@+id/playerSprintTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -44,16 +45,16 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/PlayerSplit"
+                android:id="@+id/playerSplit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <EditText
-                android:id="@+id/PlayerSplitTime"
+                android:id="@+id/playerSplitTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -62,16 +63,16 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/PlayerPit"
+                android:id="@+id/playerPit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <EditText
-                android:id="@+id/PlayerPitTime"
+                android:id="@+id/playerPitTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -80,16 +81,16 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/PlayerMean"
+                android:id="@+id/playerMean"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <EditText
-                android:id="@+id/PlayerMeanTime"
+                android:id="@+id/playerMeanTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"

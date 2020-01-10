@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -10,14 +11,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/TeamNameText"
+            android:id="@+id/teamNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/TeamRank"
+            android:id="@+id/teamRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,14 +32,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/TeamSprint"
+            android:id="@+id/teamSprint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
 
         <EditText
-            android:id="@+id/TeamSprintTime"
+            android:id="@+id/teamSprintTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -53,14 +54,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/TeamSplit"
+            android:id="@+id/teamSplit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
 
         <EditText
-            android:id="@+id/TeamSplitTime"
+            android:id="@+id/teamSplitTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -75,14 +76,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/TeamPit"
+            android:id="@+id/teamPit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
 
         <EditText
-            android:id="@+id/TeamPitTime"
+            android:id="@+id/teamPitTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -97,14 +98,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/TeamMean"
+            android:id="@+id/teamMean"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
 
         <EditText
-            android:id="@+id/TeamMeanTime"
+            android:id="@+id/teamMeanTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
