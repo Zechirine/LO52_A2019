@@ -92,7 +92,7 @@ class PlayerRegistrationActivity : AppCompatActivity() {
         val player = db.save(
             Player(
                 null,
-                "Player ${players.size + 1}",
+                "",
                 ordering,
                 ForeignKey(Team::class, team.id)
             )

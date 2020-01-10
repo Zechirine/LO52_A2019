@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_race.*
 import utbm.lo52.fail.constants.LapType
-import utbm.lo52.fail.constants.MIN_ORDERING
 import utbm.lo52.fail.db.*
 
 @ExperimentalStdlibApi
@@ -117,11 +116,6 @@ class RaceActivity : AppCompatActivity() {
             Race::class, "id", race.id!!
         ).all() as List<Team>) {
             teams.add(team)
-            val player = db.request(Player::class).filterRelated(
-                Team::class,
-                "id",
-                team.id!!
-            ).filter("ordering", MIN_ORDERING).first() as Player
             val button = Button(this)
             button.text = teamInfo(team)
             button.setOnClickListener {
