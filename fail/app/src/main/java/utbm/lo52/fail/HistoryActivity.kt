@@ -44,7 +44,9 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     fun goToResults(race: Race) {
-        // Todo
+        val intent = Intent(this, ScoreActivity::class.java)
+        intent.putExtra("raceID", race!!.id)
+        startActivity(intent)
     }
 }
 

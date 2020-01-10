@@ -6,7 +6,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_runner_inscription">Runner Registration</string>
-    <string name="title_activity_main">Main menu</string>
+    <string name="title_activity_main">fail</string>
     <string name="activity_main_begin_race">BEGIN RACE</string>
     <string name="activity_main_history">History</string>
     <string name="registration_player_placeholder">Player name</string>
