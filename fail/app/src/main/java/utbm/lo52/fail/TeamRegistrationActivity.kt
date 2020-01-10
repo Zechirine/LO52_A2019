@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.registration_activity.*
 import kotlinx.android.synthetic.main.team_widget.view.*
+import utbm.lo52.fail.constants.MAX_TEAM_PER_RACE
 import utbm.lo52.fail.db.DBHelper
 import utbm.lo52.fail.db.ForeignKey
 import utbm.lo52.fail.db.Race
@@ -95,6 +96,7 @@ class TeamRegistrationActivity : AppCompatActivity() {
         teams = LinkedList(teams)
         teams.add(team)
         teamAdapter.submitList(teams)
+        validation()
     }
 
     fun removeTeam(id: Int?) {
@@ -108,6 +110,18 @@ class TeamRegistrationActivity : AppCompatActivity() {
         }
         teams = newTeams
         teamAdapter.submitList(teams)
+        validation()
+    }
+
+    fun validation() {
+        validateButton.isEnabled = true
+        addElementButton.isEnabled = true
+
+        if (teams.isEmpty() || teams.any { it.name == "" })
+            validateButton.isEnabled = false
+
+        if (teams.size >= MAX_TEAM_PER_RACE)
+            addElementButton.isEnabled = false
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -128,11 +142,13 @@ class TeamAdapter(private val activity: TeamRegistrationActivity, private val db
         val db: DBHelper
     ) :
         RecyclerView.ViewHolder(view) {
+
+        private var teamNameListener: TextWatcher? = null
         fun bind(team: Team) {
-            if (team.name != "") {
-                view.teamNameText.setText(team.name)
-            }
-            view.teamNameText.addTextChangedListener(object : TextWatcher {
+            view.teamNameText.setText(team.name)
+            if (teamNameListener != null)
+                view.teamNameText.removeTextChangedListener(teamNameListener)
+            teamNameListener = object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {}
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -145,8 +161,10 @@ class TeamAdapter(private val activity: TeamRegistrationActivity, private val db
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     team.name = s?.toString() ?: ""
                     db.save(team)
+                    activity.validation()
                 }
-            })
+            }
+            view.teamNameText.addTextChangedListener(teamNameListener)
             view.deleteTeamButton.setOnClickListener {
                 activity.removeTeam(team.id)
             }

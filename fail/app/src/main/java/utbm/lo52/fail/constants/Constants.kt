@@ -3,6 +3,7 @@ package utbm.lo52.fail.constants
 import android.content.Context
 import utbm.lo52.fail.R
 
+const val MAX_TEAM_PER_RACE = 12
 const val LAP_PER_RACE = 3
 const val MAX_ORDERING = 3
 const val MIN_ORDERING = 1
