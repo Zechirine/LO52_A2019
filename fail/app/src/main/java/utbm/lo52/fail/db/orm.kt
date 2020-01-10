@@ -200,7 +200,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     inner class SQLRequest(val db: SQLiteDatabase, val klass: KClass<*>, val request: String?) {
 
         private val lastRequest: String
-            get() = if (request == null) "SELECT ${craftSelect(klass)} FROM ${klass.simpleName} ${joinKeys()} WHERE" else "$request AND"
+            get() = if (request == null) "SELECT ${craftSelect(klass)} FROM ${klass.simpleName} ${joinKeys()} WHERE" else "$request AND "
 
         /**
          * Add a systematic left join on every foreign key
@@ -261,7 +261,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
          *
          * @return String
          */
-        fun toSQL() = lastRequest.subSequence(0, lastRequest.length - 4).toString()
+        fun toSQL() = lastRequest.subSequence(0, lastRequest.length - 5).toString()
 
         /**
          * Get the first element of the query

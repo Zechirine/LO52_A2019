@@ -16,4 +16,5 @@
     <string name="lap_type_sprint">sprint</string>
     <string name="lap_type_split_up">split-up</string>
     <string name="lap_type_pit_stop">pit-stop</string>
+    <string name="history_see_results">See results</string>
 </resources>
