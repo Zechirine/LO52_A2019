@@ -429,7 +429,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     companion object {
         private val MODELS =
-            listOf(Player::class, Team::class, Race::class, Lap::class, Type::class)
+            listOf(Player::class, Team::class, Race::class, Lap::class)
         private val DATABASE_VERSION = 1
         private val DATABASE_NAME = "fail.db"
         fun classFromAttributeName(name: String) =
