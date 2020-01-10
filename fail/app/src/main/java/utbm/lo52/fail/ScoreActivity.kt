@@ -2,10 +2,8 @@ package utbm.lo52.fail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.format.DateUtils
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -16,7 +14,7 @@ import utbm.lo52.fail.constants.LapType
 import utbm.lo52.fail.db.*
 
 fun formatTime(seconds: Double): String {
-    return seconds.toString()
+    return DateUtils.formatElapsedTime(seconds.toLong())
 }
 
 @ExperimentalStdlibApi
@@ -25,11 +23,30 @@ class ScoreActivity : AppCompatActivity() {
     private val players = ArrayList<Player>()
     private val teams = ArrayList<Team>()
 
+    private var isPlayerScore = true
+
     private lateinit var race: Race
     private lateinit var db: DBHelper
     private lateinit var playerScoreAdapter: PlayerScoreAdapter
     private lateinit var teamScoreAdapter: TeamScoreAdapter
 
+    // Add behavior on navbar menus
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.swapButton -> {
+            isPlayerScore = !isPlayerScore
+            selectAdapter()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    // Attach layout to navbar
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.swap, menu)
+        return true
+    }
+
+    // Avoid back button to return to timer view
     override fun onBackPressed() {
         moveTaskToBack(false)
         goBack()
@@ -38,6 +55,9 @@ class ScoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler_navigation)
+
+        if (savedInstanceState != null) isPlayerScore =
+            savedInstanceState.getBoolean("isPlayerScore", true)
 
         db = DBHelper(this, null)
         race = db.request(Race::class).get(
@@ -68,7 +88,6 @@ class ScoreActivity : AppCompatActivity() {
         }
         playerScoreAdapter = PlayerScoreAdapter(db)
         ItemList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        ItemList.adapter = playerScoreAdapter
 
         // Sort players by rank
         players.sortBy {
@@ -89,20 +108,27 @@ class ScoreActivity : AppCompatActivity() {
                 it.id!!
             ).all() as List<Lap>).map { lap -> lap.chrono }.sum()
         }
-        Log.v("debug", teams.toString())
-        ItemList.adapter = teamScoreAdapter
         teamScoreAdapter.submitList(teams)
+        selectAdapter()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
         outState?.putInt("raceID", race.id!!)
+        outState?.putBoolean("isPlayerScore", isPlayerScore)
     }
 
     private fun goBack() {
         val intent = Intent(this, HistoryActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun selectAdapter() {
+        if (isPlayerScore)
+            ItemList.adapter = playerScoreAdapter
+        else
+            ItemList.adapter = teamScoreAdapter
     }
 
 }

@@ -12,7 +12,7 @@
     <string name="registration_player_placeholder">Player name</string>
     <string name="registration_team_placeholder">Team name</string>
     <string name="registration_team_base_name">Team</string>
-    <string name="menu_sort_button">Sort by team</string>
+    <string name="menu_swap_button">Change score view</string>
     <string name="lap_type_sprint">Sprint</string>
     <string name="lap_type_split_up">Split-up</string>
     <string name="lap_type_pit_stop">Pit-stop</string>
